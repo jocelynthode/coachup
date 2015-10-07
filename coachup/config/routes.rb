@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
-  devise_for :users, controllers: { sessions: 'users/sessions' }
+  devise_for :users, controllers: { sessions: 'users/sessions' },
+    path: "/", path_names: { sign_in: 'login', sign_up: 'register' }
   get 'welcome/index'
 
   # The priority is based upon order of creation: first created -> highest priority.
