@@ -8,7 +8,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :authentication_keys => [ :login ]
-  has_many :courses
+  has_many :taught_courses, class_name: "Course"
+  has_many :subscriptions
+  has_many :courses, through: :subscriptions
 
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
