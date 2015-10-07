@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151007205107) do
+ActiveRecord::Schema.define(version: 20151007212605) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -37,6 +37,19 @@ ActiveRecord::Schema.define(version: 20151007205107) do
   add_index "subscriptions", ["course_id"], name: "index_subscriptions_on_course_id", using: :btree
   add_index "subscriptions", ["user_id"], name: "index_subscriptions_on_user_id", using: :btree
 
+  create_table "training_sessions", force: :cascade do |t|
+    t.string   "description"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.float    "lat"
+    t.float    "lng"
+    t.integer  "course_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "training_sessions", ["course_id"], name: "index_training_sessions_on_course_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -60,4 +73,5 @@ ActiveRecord::Schema.define(version: 20151007205107) do
   add_foreign_key "courses", "users", column: "coach_id"
   add_foreign_key "subscriptions", "courses"
   add_foreign_key "subscriptions", "users"
+  add_foreign_key "training_sessions", "courses"
 end
