@@ -1,4 +1,4 @@
-class CoursesController < ApplicationController
+class TrainingSessionsController < ApplicationController
 
   # GET /resource/sign_up
   # def new
@@ -24,6 +24,7 @@ class CoursesController < ApplicationController
   # def destroy
   #   super
   # end
+
 
 
 

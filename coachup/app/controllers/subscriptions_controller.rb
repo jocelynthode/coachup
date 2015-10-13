@@ -1,4 +1,4 @@
-class CoursesController < ApplicationController
+class SubscriptionsController < ApplicationController
 
   # GET /resource/sign_up
   # def new
