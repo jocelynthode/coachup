@@ -7,8 +7,4 @@ class Course < ActiveRecord::Base
   validates :title, presence: true
   validates :description, presence: true
   validates :coach_id, presence: true
-
-  def test_func
-
-  end
 end
