@@ -72,15 +72,27 @@
             <!-- /input-group -->
           </li>
           <li>
-            <%= link_to root_path do %>
+            <%= link_to courses_path do %>
                 <span class="glyphicon glyphicon-home"></span>
-                Training Session Overview
+                Courses Overview
             <% end %>
           </li>
           <li>
-            <%= link_to root_path do %>
+            <%= link_to courses_by_my_coaches_index_courses_path do %>
                 <span class="glyphicon glyphicon-tasks"></span>
-                My Training Sessions
+                Courses By My Coaches
+            <% end %>
+          </li>
+          <li>
+            <%= link_to courses_i_am_subscribed_to_index_courses_path do %>
+                <span class="glyphicon glyphicon-ok"></span>
+                Courses I Am Subscribed To
+            <% end %>
+          </li>
+          <li>
+            <%= link_to my_courses_index_courses_path do %>
+                <span class="glyphicon glyphicon-user"></span>
+                My Courses
             <% end %>
           </li>
           <li>
