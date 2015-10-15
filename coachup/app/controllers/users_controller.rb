@@ -11,11 +11,13 @@ class UsersController < ApplicationController
   end
 
   def show
-    response = RestClient.get(User.url + 'users/' + params[:id],
-                              accept: :json)
     response = rest_request(:get, User.url + 'users/' + params[:id],
                             accept: :json) 
-    @user = response.reject { |k, v| k == 'uri' || v == '*' } 
+   if bad_request?(response)
+     redirect_to action: :index
+     return
+   end
+   @user = response.reject { |k, v| k == 'uri' || v == '*' } 
   end
 
   def new
@@ -45,8 +47,20 @@ class UsersController < ApplicationController
   end
 
   def rest_request(method, url, **args)
-    response = RestClient::Request.execute(method: method, url: url,
-                                           headers: args)
-    JSON.parse(response)
+    begin
+      response = RestClient::Request.execute(method: method, url: url,
+                                             headers: args)
+      JSON.parse(response)
+    rescue RestClient::Exception => exception
+      exception
+    end
+  end
+
+  def bad_request?(response)
+    if response.is_a?(RestClient::Exception)
+      true
+    else
+      false
+    end
   end
 end
