@@ -5,17 +5,17 @@ class UsersController < ApplicationController
   def index
     start = params[:start] || 0
     size = params[:size] || 20
-    response = RestClient.get(User.url + 'users/', accept: :json,
-                              params: {start: start, size: size})
-    hash = JSON.parse(response)
-    @users = hash['users'].map { |user| user['username'] }
+    response = rest_request(:get, User.url + 'users/', accept: :json,
+                            params: {start: start, size: size})
+    @users = response['users'].map { |user| user['username'] }
   end
 
   def show
     response = RestClient.get(User.url + 'users/' + params[:id],
                               accept: :json)
-    hash = JSON.parse(response)
-    @user = hash.reject { |k, v| k == 'uri' || v == '*' } 
+    response = rest_request(:get, User.url + 'users/' + params[:id],
+                            accept: :json) 
+    @user = response.reject { |k, v| k == 'uri' || v == '*' } 
   end
 
   def new
@@ -42,5 +42,11 @@ class UsersController < ApplicationController
   def user_params
     params.require(:user).permit(:username, :password, :realname,
                                  :email, :publicvisible)
+  end
+
+  def rest_request(method, url, **args)
+    response = RestClient::Request.execute(method: method, url: url,
+                                           headers: args)
+    JSON.parse(response)
   end
 end
