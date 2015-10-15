@@ -12,6 +12,10 @@ class User < ActiveRecord::Base
   has_many :subscriptions
   has_many :courses, through: :subscriptions
 
+  def self.url
+    'http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/'
+  end
+
   def self.find_for_database_authentication(warden_conditions)
     conditions = warden_conditions.dup
       if login = conditions.delete(:login)
