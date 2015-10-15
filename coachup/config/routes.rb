@@ -1,7 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { sessions: 'users/sessions' },
     path: "/", path_names: { sign_in: 'login', sign_up: 'register' }
-  get 'welcome/index'
+  get 'overview/welcome'
+  get 'overview/index'
 
   resources :users do
   end
@@ -10,7 +11,11 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'welcome#index'
+
+  authenticated :user do
+    root to: 'overview#index', as: 'authenticated_root'
+  end
+  root 'overview#welcome'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
