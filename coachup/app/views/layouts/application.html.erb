@@ -84,7 +84,12 @@
             <% end %>
           </li>
           <li>
-            <a href=""><i class="fa fa-user-plus"></i> My Partnerships</a>
+            <%= link_to '/users/:user_id/subscriptions/my_partnerships_index' do %>
+                <span class="glyphicon glyphicon-tasks"></span>
+                My Partnerships
+            <% end %>
+
+
           </li>
           <li>
             <a href=""><i class="fa fa-group"></i> My Coaches</a>

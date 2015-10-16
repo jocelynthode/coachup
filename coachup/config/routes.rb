@@ -21,6 +21,26 @@ Rails.application.routes.draw do
     resources :training_sessions
   end
 
+  resources :subscriptions
+  resources :courses do
+    resources :subscriptions do
+      collection do
+        get 'my_partnerships_index'
+      end
+    end
+  end
+  resources :users do
+    resources :subscriptions do
+      collection do
+        get 'my_partnerships_index'
+      end
+    end
+  end
+
+
+
+
+
   # Example resource route with options:
   #   resources :products do
   #     member do
