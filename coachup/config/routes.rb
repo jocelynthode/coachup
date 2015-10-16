@@ -3,6 +3,11 @@ Rails.application.routes.draw do
     path: "/", path_names: { sign_in: 'login', sign_up: 'register' }
   get 'welcome/index'
 
+  #resources :profiles, only: [:edit]
+  get 'profiles/:id' => 'profiles#show', as: "user_profile"
+  get 'profiles/' => 'profiles#index', as: "profiles"
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
