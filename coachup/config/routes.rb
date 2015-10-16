@@ -7,6 +7,11 @@ Rails.application.routes.draw do
   resources :users do
   end
 
+  #resources :profiles, only: [:edit]
+  get 'profiles/:id' => 'profiles#show', as: "user_profile"
+  get 'profiles/' => 'profiles#index', as: "profiles"
+
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

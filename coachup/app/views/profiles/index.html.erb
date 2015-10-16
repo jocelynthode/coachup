@@ -1,0 +1,13 @@
+<% @users = User.all %>
+<% @users.each do |user| %>
+    <% if user.coach? %>
+        <h2> Coaches </h2><br>
+        <%= link_to user.username, user_profile_path(user.id) %>
+    <% end %>
+<% end %>
+<% @users.each do |user| %>
+    <% if !user.coach? %>
+        <h2> Trainees </h2><br>
+        <%= link_to user.username, user_profile_path(user.id) %>
+    <% end %>
+<% end %>
