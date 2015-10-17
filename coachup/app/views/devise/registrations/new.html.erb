@@ -18,9 +18,7 @@
         <%= f.label :email %>
         <%= f.email_field :email, class: "form-control" %>
       </div>
-      <div class="form-group">
-        <%= f.check_box :coach, {} %> <%= f.label :coach, "Coach" %>
-      </div>
+
       <div class="form-group">
         <%= f.label :password %>
         <% if @minimum_password_length %>
