@@ -3,6 +3,9 @@ Rails.application.routes.draw do
     path: "/", path_names: { sign_in: 'login', sign_up: 'register' }
   get 'welcome/index'
 
+  resources :users do
+  end
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
