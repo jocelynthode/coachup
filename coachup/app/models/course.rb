@@ -7,4 +7,8 @@ class Course < ActiveRecord::Base
   validates :title, presence: true
   validates :description, presence: true
   validates :coach_id, presence: true
+
+  def self.url
+    'http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/'
+  end
 end
