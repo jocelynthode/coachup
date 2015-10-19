@@ -1,0 +1,27 @@
+<div class="jumbotron cancel-wrapper-margin">
+    <div class="container">
+      <h1>Welcome to CoachUP!</h1>
+      <p>CoachUP! is a service designed to give people wanting to improve their skill in a sport the opportunity to find the coach they need.</p>
+      <p>
+        <%= link_to 'Sign up', new_user_registration_path,
+                    class:'btn btn-primary btn-lg', role: 'button'%>
+      </p>
+
+    </div>
+</div>
+<div class="container">
+  <div class="row welcome-arguments">
+    <%= render 'description', heading: 'Easy choice', content: %q(
+        You want to start training in a sport but you feel overwhelmed by all the possibilities?
+        Here you only have to choose between 4 old-time classics.
+    )%>
+    <%= render 'description', heading: 'Ratings', content: %q(
+        Get the coach you deserve! You can easily judge of the quality of your next
+        coach by looking at the ratings left by the last trainees.
+    )%>
+    <%= render 'description', heading: 'Free to use', content: %q(
+        Get started now and enjoy using the whole service for free until we
+        implement a payment system.
+    )%>
+  </div>
+</div>

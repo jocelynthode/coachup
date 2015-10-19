@@ -1,0 +1,7 @@
+<h1><%= @user.delete('username') %></h1>
+<% @user.each do |key, value| %>
+  <div>
+    <b><%= key %>: </b>
+    <%= value %>
+  </div>
+<% end %>

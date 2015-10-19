@@ -1,0 +1,117 @@
+<%= stylesheet_link_tag 'style.min' %>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <h2 class="page-header"> Profile Page </h2>
+    </div>
+
+  </div>
+    <!-- start: Content -->
+    <div id="content" class="col-lg-10 col-sm-12 ">
+
+      <div class="row profile">
+
+        <div class="col-sm-3">
+
+          <div class="row">
+            <div class="col-xs-7 col-sm-12">
+              <%= image_tag("photo9.jpg",:class=>"profile-image")%>
+            </div>
+            <div class="col-xs-5 col-sm-12">
+              <h3>General Information</h3>
+              <ul class="profile-details">
+                <li>
+                  <div><i class="fa fa-user"></i> Full Name </div>
+                    <%= @user.name %>  <%= @user.last_name %>
+                </li>
+                <li>
+                  <div><i class="fa fa-briefcase"></i> Education</div>
+                    <%= @user.education %>
+                </li>
+                <li>
+                  <div><i class="fa fa-star"></i> Trophies</div>
+                    <%= @user.trophies %>
+                </li>
+                <li>
+                  <div><i class="fa fa-birthday-cake"></i> Date Of Birth</div>
+                  <%= @user.date_of_birth %>
+                </li>
+              </ul>
+
+              <h3>Contact Information</h3>
+
+              <ul class="profile-details">
+                <li>
+                  <div><i class="fa fa-phone"></i> Phone</div>
+                    <%= @user.phone %>
+                </li>
+                <li>
+                  <div><i class="fa fa-envelope"></i> E-mail</div>
+                  <%= @user.email %>
+                </li>
+                <li>
+                  <div><i class="fa fa-map-marker"></i> Address</div>
+                  <%= @user.address %>, <%= @user.country %>
+                </li>
+              </ul>
+            </div>
+          </div><!--/row-->
+
+        </div><!--/col-->
+
+        <div class="col-sm-9">
+
+          <ul class="nav nav-tabs" id="myTab">
+            <% if current_user == @user  %>
+                <%= button_to "Edit Profile", edit_user_registration_path, :class => "btn btn-primary pull-right", :method => :get  %>
+            <% end %>
+            <li class="active"><a href="page-profile.html#skills">Skills</a></li>
+            <li><a href="">Friends</a></li>
+            <li><a href="">Photos</a></li>
+          </ul>
+
+          <div class="tab-content">
+            <div class="tab-pane active" id="skills">
+
+              <div class="row">
+                <div class="col-sm-8">
+                  <h2>About Me</h2>
+                  <%= @user.aboutme %></p>
+
+                  <h2>Bio</h2>
+                  <p><%= @user.bio %></p>
+                  <h2>Personal Records</h2>
+                  <p><%= @user.personal_records %></p>
+
+                </div><!--/col-->
+
+              </div><!--/row-->
+
+            </div>
+            <div class="tab-pane" id="friends">
+
+
+            </div>
+            <div class="tab-pane" id="photos">
+
+
+            </div>
+          </div>
+
+        </div><!--/col-->
+
+      </div><!--/profile-->
+
+
+
+    </div>
+    <!-- end: Content -->
+
+  </div><!--/row-->
+
+</div><!--/container-->
+
+
+
+</body>
+</html>

@@ -4,10 +4,6 @@
   <title>Coachup</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= stylesheet_link_tag 'sb-admin-2' %>
-
-  <%= javascript_include_tag 'sb-admin-2' %>
-  <%= javascript_include_tag 'jquery' %>
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -37,12 +33,14 @@
           <i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
         </a>
         <ul class="dropdown-menu dropdown-user">
+          <% if user_signed_in? %>
           <li>
-          <%= link_to edit_user_registration_path do %>
+          <%= link_to user_profile_path(current_user.id) do %>
               <span class="glyphicon glyphicon-user"></span>
                Profile
           <% end %>
           </li>
+          <% end %>
           <li class="divider"></li>
           <li>
             <%= link_to destroy_user_session_path, :method => :delete do %>
@@ -72,15 +70,27 @@
             <!-- /input-group -->
           </li>
           <li>
-            <%= link_to root_path do %>
+            <%= link_to courses_path do %>
                 <span class="glyphicon glyphicon-home"></span>
-                Training Session Overview
+                Courses Overview
             <% end %>
           </li>
           <li>
-            <%= link_to root_path do %>
+            <%= link_to courses_by_my_coaches_index_courses_path do %>
                 <span class="glyphicon glyphicon-tasks"></span>
-                My Training Sessions
+                Courses By My Coaches
+            <% end %>
+          </li>
+          <li>
+            <%= link_to courses_i_am_subscribed_to_index_courses_path do %>
+                <span class="glyphicon glyphicon-ok"></span>
+                Courses I Am Subscribed To
+            <% end %>
+          </li>
+          <li>
+            <%= link_to my_courses_index_courses_path do %>
+                <span class="glyphicon glyphicon-user"></span>
+                My Courses
             <% end %>
           </li>
           <li>
@@ -93,6 +103,12 @@
           </li>
           <li>
             <a href=""><i class="fa fa-group"></i> My Coaches</a>
+          </li>
+          <li>
+            <%= link_to profiles_path  do %>
+                <span class="glyphicon glyphicon-star"></span>
+                User Profiles
+            <% end %>
           </li>
         </ul>
       </div>

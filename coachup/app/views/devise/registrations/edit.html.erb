@@ -19,6 +19,62 @@
         <%= f.email_field :email, class: "form-control" %>
       </div>
 
+      <div class="form-group">
+        <%= f.label :name %>
+        <%= f.text_field :name, class: "form-control" %>
+      </div>
+
+
+      <div class="form-group">
+        <%= f.label :last_name %>
+        <%= f.text_field :last_name, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :address %>
+        <%= f.text_field :address, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :country %>
+        <%= f.text_field :country, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :phone %>
+        <%= f.text_field :phone, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :date_of_birth %>
+        <%= f.text_field :date_of_birth, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :education %>
+        <%= f.text_field :education, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :trophies %>
+        <%= f.text_field :trophies, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :aboutme %>
+        <%= f.text_area :aboutme, class: "form-control" %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :bio %>
+        <%= f.text_area :bio, class: "form-control" %>
+      </div>
+
+        <div class="form-group">
+          <%= f.label :personal_records %>
+          <%= f.text_area :personal_records, class: "form-control" %>
+        </div>
+
       <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
         <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
       <% end %>
@@ -48,4 +104,5 @@
 
       <%= link_to "Back", :back %>
     </div>
+  </div>
 </div>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151007212605) do
+ActiveRecord::Schema.define(version: 20151019121144) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,8 +21,10 @@ ActiveRecord::Schema.define(version: 20151007212605) do
     t.string   "description"
     t.integer  "price"
     t.integer  "coach_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
+    t.string   "sport"
+    t.integer  "max_participants", default: 1
   end
 
   add_index "courses", ["coach_id"], name: "index_courses_on_coach_id", using: :btree
@@ -64,6 +66,17 @@ ActiveRecord::Schema.define(version: 20151007212605) do
     t.datetime "created_at",                          null: false
     t.datetime "updated_at",                          null: false
     t.string   "username"
+    t.string   "name"
+    t.string   "last_name"
+    t.string   "address"
+    t.string   "country"
+    t.string   "phone"
+    t.string   "date_of_birth"
+    t.string   "trophies"
+    t.string   "personal_records"
+    t.string   "education"
+    t.string   "bio"
+    t.string   "aboutme"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

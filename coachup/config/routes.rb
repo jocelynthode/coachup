@@ -1,13 +1,26 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { sessions: 'users/sessions' },
     path: "/", path_names: { sign_in: 'login', sign_up: 'register' }
-  get 'welcome/index'
+  get 'overview/welcome'
+  get 'overview/index'
+
+  resources :users do
+  end
+
+  #resources :profiles, only: [:edit]
+  get 'profiles/:id' => 'profiles#show', as: "user_profile"
+  get 'profiles/' => 'profiles#index', as: "profiles"
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  root 'welcome#index'
+
+  authenticated :user do
+    root to: 'overview#index', as: 'authenticated_root'
+  end
+  root 'overview#welcome'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
@@ -18,6 +31,12 @@ Rails.application.routes.draw do
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
   resources :courses do
+    collection do
+      get 'my_courses_index'
+      get 'courses_by_my_coaches_index'
+      get 'courses_i_am_subscribed_to_index'
+    end
+
     resources :training_sessions
   end
 
