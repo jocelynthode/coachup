@@ -3,12 +3,12 @@ class SubscriptionsController < ApplicationController
   def index
 
     @subscriptions = Subscription.all
-
   end
 
   def show
 
-    @subscription = Subscription.find(params[:id])
+    #@subscription = Subscription.find(params[:id])
+    @subscription = Subscription.includes(:users).find(params[:id])
 
   end
 
@@ -68,12 +68,16 @@ class SubscriptionsController < ApplicationController
   def get_my_partnerships
     @my_subscriptions = Array.new
 
+
+    
+
     Subscription.find_each do |subscription|
 
       if subscription.course_id == subscription.user_id
         @my_subscriptions.push subscription
       end
     end
+
 
     return @my_subscriptions
   end
