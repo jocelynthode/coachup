@@ -18,7 +18,7 @@
 
 #content{overflow:hidden}
 #content .breadcrumb{margin:-4px -5px 30px -5px}#sidebar-left{min-height:0;padding:0!important}.sidebar-nav{border-bottom:1px solid #dbdee0}.sidebar-nav>ul{margin:0;background:#f3f3f3}.message-view{margin:0}.price-table-overlay{width:100%!important;overflow-x:scroll}.price-table.five{width:1000px}.price-table.four{width:800px}.price-table.three{width:900px}.price-table.five ul{width:200px}.price-table.four ul{width:200px}.price-table.three ul{width:300px}
-#content{padding:5px}}@media only screen and (max-width:479px){body{padding:0}.col-xxs-12{width:100%}
+#content{padding:5px}@media only screen and (max-width:479px){body{padding:0}.col-xxs-12{width:100%}
 #content{padding:5px}.quick-button,.quick-button-small{margin-bottom:20px}.discussions ul li .date{display:none}}
 #content{padding:20px;position:relative;background:#F8F8F8 ;z-index:1}#content:before{position:absolute;content:'';height:100%;width:1px;border-left:1px solid #dbdee0;z-index:1;top:0;left:-1px}
 #content.sidebar-minified{width:100%!important;border-left:40px solid #e9ebec;margin-right:1px!important}
