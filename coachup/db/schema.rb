@@ -77,6 +77,7 @@ ActiveRecord::Schema.define(version: 20151018133152) do
     t.string   "trophies"
     t.string   "personal_records"
     t.string   "education"
+    t.boolean  "coach"
     t.string   "bio"
     t.string   "aboutme"
   end

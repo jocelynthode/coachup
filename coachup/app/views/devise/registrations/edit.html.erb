@@ -44,7 +44,9 @@
         <%= f.label :phone %>
         <%= f.text_field :phone, class: "form-control" %>
       </div>
-
+      <div class="form-group">
+        <%= f.check_box :coach, {} %> <%= f.label :coach, "Coach" %>
+      </div>
       <div class="form-group">
         <%= f.label :date_of_birth %>
         <%= f.text_field :date_of_birth, class: "form-control" %>
@@ -54,26 +56,28 @@
         <%= f.label :education %>
         <%= f.text_field :education, class: "form-control" %>
       </div>
-
+    <% if @user.coach? %>
       <div class="form-group">
         <%= f.label :trophies %>
         <%= f.text_field :trophies, class: "form-control" %>
       </div>
-
+    <% end %>
       <div class="form-group">
         <%= f.label :aboutme %>
         <%= f.text_area :aboutme, class: "form-control" %>
       </div>
-
+    <% if @user.coach? %>
       <div class="form-group">
         <%= f.label :bio %>
         <%= f.text_area :bio, class: "form-control" %>
       </div>
-      <div class="form-group">
+    <% end %>
+    <% if @user.coach? %>
+        <div class="form-group">
           <%= f.label :personal_records %>
           <%= f.text_area :personal_records, class: "form-control" %>
-      </div>
-
+        </div>
+    <% end %>
 
       <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
         <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>

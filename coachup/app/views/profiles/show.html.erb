@@ -28,12 +28,12 @@
                   <div><i class="fa fa-briefcase"></i> Education</div>
                     <%= @user.education %>
                 </li>
-
-                <li>
-                  <div><i class="fa fa-star"></i> Trophies</div>
-                    <%= @user.trophies %>
-                </li>
-
+                <% if @user.coach? %>
+                    <li>
+                      <div><i class="fa fa-star"></i> Trophies</div>
+                        <%= @user.trophies %>
+                    </li>
+                <% end %>
                 <li>
                   <div><i class="fa fa-birthday-cake"></i> Date Of Birth</div>
                   <%= @user.date_of_birth %>
@@ -79,12 +79,12 @@
                 <div class="col-sm-8">
                   <h2>About Me</h2>
                   <%= @user.aboutme %></p>
-
-                  <h2>Bio</h2>
-                  <p><%= @user.bio %></p>
-                  <h2>Personal Records</h2>
-                  <p><%= @user.personal_records %></p>
-
+                  <% if @user.coach? %>
+                      <h2>Bio</h2>
+                      <p><%= @user.bio %></p>
+                      <h2>Personal Records</h2>
+                      <p><%= @user.personal_records %></p>
+                  <% end %>
                 </div><!--/col-->
 
               </div><!--/row-->
