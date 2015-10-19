@@ -7,8 +7,8 @@ class SubscriptionsController < ApplicationController
 
   def show
 
-    #@subscription = Subscription.find(params[:id])
-    @subscription = Subscription.includes(:users).find(params[:id])
+    @subscription = Subscription.find(params[:id])
+
 
   end
 
