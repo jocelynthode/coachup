@@ -59,6 +59,7 @@ class CoursesController < ApplicationController
 
   private
     def get_courses_by_my_coaches
+
       return Course.all
 
 =begin

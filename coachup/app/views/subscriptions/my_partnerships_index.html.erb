@@ -10,23 +10,24 @@
           <table class="table">
             <thead>
             <tr>
-              <th>Course</th>
               <th>Coach</th>
+              <th>Email</th>
             </tr>
             </thead>
             <tbody>
 
-            <% @subscriptions.each do |subscription| %>
+            <% @partnerships.each do |subscription| %>
+
                 <tr>
-                  <td><%= subscription.course_id %></td>
-                  <td><%= subscription.user_id %></td>
+
+                  <td><%= subscription.username %></td>
+                  <td><%= subscription.email %></td>
                   <td><%= link_to 'Show', subscription_path(subscription) %></td>
-                  <% if user_signed_in? and current_user.id == subscription.user_id %>
-                      <td><%= link_to 'Edit', edit_course_path(subscription) %></td>
-                      <td><%= link_to 'Destroy', course_path(subscription),
-                                      method: :delete,
-                                      data: { confirm: 'Are you sure?' } %> </td>
-                  <% end %>
+
+                  <td><%= link_to 'Edit', edit_course_path(subscription) %></td>
+                  <td><%= link_to 'Destroy', course_path(subscription),
+                                  method: :delete,
+                                  data: { confirm: 'Are you sure?' } %> </td>
                 </tr>
             <% end %>
 
