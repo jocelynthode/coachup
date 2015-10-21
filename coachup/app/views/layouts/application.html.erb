@@ -23,8 +23,8 @@
     <!-- /.navbar-header -->
 
     <ul class="nav navbar-top-links navbar-right">
-      <%= link_to 'Sign Up', new_user_registration_path %>
-      <%= link_to new_user_session_path  do%>
+      <%= link_to 'Sign Up', new_user_path %>
+      <%= link_to new_user_path  do%>
           <span class="glyphicon glyphicon-log-in"></span>
           Log In
       <% end %>
@@ -43,7 +43,7 @@
           <% end %>
           <li class="divider"></li>
           <li>
-            <%= link_to destroy_user_session_path, :method => :delete do %>
+            <%= link_to users_path, :method => :delete do %>
                 <span class="glyphicon glyphicon-log-out"></span>
                 Log Out
             <% end %>
