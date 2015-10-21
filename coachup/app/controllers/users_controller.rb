@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  skip_before_action :authenticate_user!
+  skip_before_action :require_login
 
   def index
     start = params[:start] || 0
