@@ -1,13 +1,13 @@
 class User < ActiveRecord::Base
   # Virtual attribute for authenticating with either username or email
-  attr_accessor :login
-  validates_presence_of :username
+  attr_accessor :login, :username, :email, :realname, :publicvisible
+  validates :real_name, presence: true
+  validates :username, presence: true, length: {within: 3..50}, uniqueness: true
+  validates :email, format: {with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i}
+  validates :password, length: {within: 3..50}
+  validates_presence_of :password_confirmation
+  validates_confirmation_of :password
 
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable,
-         :authentication_keys => [ :login ]
   has_many :taught_courses, class_name: "Course"
   has_many :subscriptions
   has_many :courses, through: :subscriptions
@@ -16,12 +16,19 @@ class User < ActiveRecord::Base
     'http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/'
   end
 
-  def self.find_for_database_authentication(warden_conditions)
-    conditions = warden_conditions.dup
-      if login = conditions.delete(:login)
-        where(conditions.to_hash).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
+  def self.authenticate(username, password)
+    begin
+      response = RestClient::Request.execute(method: :get,
+                                             url: self.url+'authenticateduser/',
+                                             user: username, password: password,
+                                             headers: { accept: :json })
+      if response.code == 200
+        JSON.parse(response, symbolize_names: true)
       else
-        where(conditions.to_hash).first
+        false
       end
+    rescue
+      false
+    end
   end
 end
