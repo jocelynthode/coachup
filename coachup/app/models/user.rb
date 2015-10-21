@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
   # Virtual attribute for authenticating with either username or email
-  attr_accessor :login
+  attr_accessor :login, :username, :email, :realname, :publicvisible
   validates_presence_of :username
 
   # Include default devise modules. Others available are:
@@ -16,12 +16,24 @@ class User < ActiveRecord::Base
     'http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/'
   end
 
-  def self.find_for_database_authentication(warden_conditions)
-    conditions = warden_conditions.dup
-      if login = conditions.delete(:login)
-        where(conditions.to_hash).where(["lower(username) = :value OR lower(email) = :value", { :value => login.downcase }]).first
+  def self.authenticate(username, password)
+    begin
+      response = RestClient::Request.execute(method: :get,
+                                             url: self.url+'authenticateduser/',
+                                             headers: { accept: :json })
+      if response.code == 200
+        session[:username] = username
+        session[:password] = password
+        JSON.parse(response, symbolize_names: true)
       else
-        where(conditions.to_hash).first
+        false
       end
+    rescue RestClient::Exception => exception
+      exception
+    end
+  end
+
+  def self.current_user
+    session[:username]
   end
 end
