@@ -24,7 +24,7 @@
 
     <ul class="nav navbar-top-links navbar-right">
       <%= link_to 'Sign Up', new_user_path %>
-      <%= link_to new_user_path  do%>
+      <%= link_to login_path do %>
           <span class="glyphicon glyphicon-log-in"></span>
           Log In
       <% end %>
@@ -43,7 +43,7 @@
           <% end %>
           <li class="divider"></li>
           <li>
-            <%= link_to users_path, :method => :delete do %>
+            <%= link_to logout_path do %>
                 <span class="glyphicon glyphicon-log-out"></span>
                 Log Out
             <% end %>
