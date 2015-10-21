@@ -35,7 +35,7 @@
         <ul class="dropdown-menu dropdown-user">
           <% if user_signed_in? %>
           <li>
-          <%= link_to user_profile_path(current_user.id) do %>
+          <%= link_to user_profile_path(current_user) do %>
               <span class="glyphicon glyphicon-user"></span>
                Profile
           <% end %>
