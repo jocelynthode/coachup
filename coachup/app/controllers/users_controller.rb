@@ -43,8 +43,8 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:username, :password, :realname,
-                                 :email, :publicvisible)
+    params.require(:user).permit(:username, :password, :realname, :email,
+                                 :publicvisible, :password_confirmation)
   end
 
   def rest_request(method, url, **args)

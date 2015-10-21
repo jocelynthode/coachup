@@ -2,7 +2,7 @@ Rails.application.routes.draw do
 
   get 'login' => 'sessions#new', as: 'login'
   post 'login' => 'sessions#create'
-  delete 'logout' => 'sessions#destroy', as: 'logout'
+  get 'logout' => 'sessions#destroy', as: 'logout'
 
   devise_for :users, controllers: { sessions: 'users/sessions' },
     path: "/", path_names: { sign_in: 'login', sign_up: 'register' }

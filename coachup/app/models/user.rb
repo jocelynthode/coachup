@@ -20,20 +20,15 @@ class User < ActiveRecord::Base
     begin
       response = RestClient::Request.execute(method: :get,
                                              url: self.url+'authenticateduser/',
+                                             user: username, password: password,
                                              headers: { accept: :json })
       if response.code == 200
-        session[:username] = username
-        session[:password] = password
         JSON.parse(response, symbolize_names: true)
       else
         false
       end
-    rescue RestClient::Exception => exception
-      exception
+    rescue
+      false
     end
-  end
-
-  def self.current_user
-    session[:username]
   end
 end

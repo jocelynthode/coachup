@@ -8,7 +8,15 @@ class ApplicationController < ActionController::Base
   protected
 
   def require_login
-    redirect_to new_user_path unless session[:username].present?
+    redirect_to login_path unless session[:username].present?
+  end
+
+  def current_user
+    if session[:username].present?
+      session[:username]
+    else
+      nil
+    end
   end
 
   def configure_permitted_parameters
