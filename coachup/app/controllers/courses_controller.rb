@@ -34,7 +34,7 @@ class CoursesController < ApplicationController
     @course = Course.find(params[:id])
 
     if @course.update(course_params)
-      redirect_to @article
+      redirect_to @course
     else
       render 'edit'
     end
