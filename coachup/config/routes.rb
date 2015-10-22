@@ -16,6 +16,9 @@ Rails.application.routes.draw do
   get 'profiles/:id' => 'profiles#show', as: "user_profile"
   get 'profiles/' => 'profiles#index', as: "profiles"
 
+  resources :googlemaps do
+  end
+
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
