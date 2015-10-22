@@ -31,7 +31,7 @@ class CoursesController < ApplicationController
   end
 
   def update
-    @course = Course.find(params[:id])
+    @course = Couse.find(params[:id])
 
     if @course.update(course_params)
       redirect_to @article
