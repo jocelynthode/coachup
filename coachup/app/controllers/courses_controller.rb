@@ -1,5 +1,5 @@
 class CoursesController < ApplicationController
-  skip_before_action :require_login, only: [:index]
+  skip_before_action :require_login, only: [:index, :show]
 
   def index
     @courses = Course.all
@@ -31,7 +31,7 @@ class CoursesController < ApplicationController
   end
 
   def update
-    @course = Couse.find(params[:id])
+    @course = Course.find(params[:id])
 
     if @course.update(course_params)
       redirect_to @article
