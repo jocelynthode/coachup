@@ -1,13 +1,13 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
-  skip_before_action :authenticate_user!
+  skip_before_action :require_login
 
   def index
     start = params[:start] || 0
     size = params[:size] || 20
     response = rest_request(:get, User.url + 'users/', accept: :json,
                             params: {start: start, size: size})
-    @users = response['users'].map { |user| user['username'] }
+    @users = response[:users].map { |user| user[:username] }
   end
 
   def show
@@ -17,7 +17,7 @@ class UsersController < ApplicationController
      redirect_to action: :index
      return
    end
-   @user = response.reject { |k, v| k == 'uri' || v == '*' } 
+   @user = response.reject { |k, v| k == :uri || v == '*' } 
   end
 
   def new
@@ -43,15 +43,15 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:username, :password, :realname,
-                                 :email, :publicvisible)
+    params.require(:user).permit(:username, :password, :realname, :email,
+                                 :publicvisible, :password_confirmation)
   end
 
   def rest_request(method, url, **args)
     begin
       response = RestClient::Request.execute(method: method, url: url,
                                              headers: args)
-      JSON.parse(response)
+      JSON.parse(response, symbolize_names: true)
     rescue RestClient::Exception => exception
       exception
     end
