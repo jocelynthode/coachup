@@ -18,7 +18,7 @@
             <% @courses.each do |course| %>
                 <tr>
                   <td><%= course.title %></td>
-                  <td><%= course.coach_id %></td>
+                  <td><%= course.username %></td>
                   <td><%= link_to 'Show', course_path(course) %></td>
                   <% if user_signed_in? and current_user.id == course.coach_id %>
                       <td><%= link_to 'Edit', edit_course_path(course) %></td>

@@ -7,10 +7,18 @@ Rails.application.routes.draw do
   resources :users do
   end
 
+=begin
+  resources :my_partnerships do
+  end
+=end
+
   #resources :profiles, only: [:edit]
   get 'profiles/:id' => 'profiles#show', as: "user_profile"
   get 'profiles/' => 'profiles#index', as: "profiles"
 
+
+  get '/partnerships/', to: 'my_partnerships#index' , as: 'partnerships'
+  get '/partnerships/:id/', to: 'my_partnerships#show' , as: 'partnership'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -42,7 +50,7 @@ Rails.application.routes.draw do
 
   resources :subscriptions do
     collection do
-      get 'my_partnerships_index'
+      get 'my_coaches_index'
     end
   end
 
