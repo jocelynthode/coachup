@@ -96,15 +96,16 @@
             <% end %>
           </li>
           <li>
-            <%= link_to my_partnerships_index_subscriptions_path do %>
+            <%= link_to partnerships_path do %>
                 <span class="glyphicon glyphicon-tasks"></span>
                 My Partnerships
             <% end %>
-
-
           </li>
           <li>
-            <a href=""><i class="fa fa-group"></i> My Coaches</a>
+            <%= link_to my_coaches_index_subscriptions_path do %>
+                <span class="glyphicon glyphicon-tasks"></span>
+                My Coaches
+            <% end %>
           </li>
           <li>
             <%= link_to profiles_path  do %>
