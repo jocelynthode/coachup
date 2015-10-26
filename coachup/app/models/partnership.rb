@@ -41,7 +41,7 @@ class Partnership
           (fulldata[:user2][:username] == @username and fulldata[:userconfirmed2]) then
 
         partnerships << ps.merge(:user => user,
-                                 :created_at => fulldata[:datecreated],
+                                 :created_at => Time.at(fulldata[:datecreated]/1000.0),
                                  :publicvisible => fulldata[:publicvisible])
       end
     end
