@@ -115,7 +115,7 @@ class CoursesController < ApplicationController
     end
 
     def course_params
-      params.require(:course).permit(:title, :description, :price, :coach_id)
+      params.require(:course).permit(:title, :description, :price, :coach_id, :sport, :max_participants)
     end
 
     def rest_request(method, url, **args)

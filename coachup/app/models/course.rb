@@ -11,7 +11,7 @@ class Course < ActiveRecord::Base
   def self.url
     'http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/'
   end
-  # maybe cache that like in a singleton
+  # TODO rework th rescue part
   def self.get_all_sports
     begin
       response = RestClient::Request.execute(method: :get,
