@@ -19,8 +19,8 @@ class CoursesController < ApplicationController
 
   def create
     @course = Course.new(course_params)
-
-    @course.coach = current_user
+    #todo: current user instead of 3 :D
+    @course.coach = User.find(3)
 
     if @course.save
       redirect_to courses_path
@@ -52,91 +52,19 @@ class CoursesController < ApplicationController
   end
 
   def my_courses_index
-    @courses = get_my_courses
+    @courses = Course.get_my_courses
   end
 
   def courses_by_my_coaches_index
-    @courses = get_courses_by_my_coaches
+    @courses = Course.get_courses_by_my_coaches
   end
 
   def courses_i_am_subscribed_to_index
-    @courses = get_my_subscribed_courses
+    @courses = Course.get_my_subscribed_courses
   end
 
   private
-    def get_courses_by_my_coaches
-
-      return Course.all
-
-=begin
-      response = rest_request(:get, Course.url + 'partnerships/', accept: :json)
-
-      @partnerships = response['partnerships'].map { |p| { user1: p.respond_to?("User1"), user2: p.respond_to?("User2") } }
-
-      # puts response
-
-      for partnership in @partnerships
-        if partnership.user1 == current_user.id
-          Course.find_each do |course|
-            if course.coach_id == partnership.user2
-              @my_courses.push course
-            end
-          end
-        elsif partnership.user2 == current_user.id
-          Course.find_each do |course|
-            if course.coach_id == partnership.user1
-              @my_courses.push course
-            end
-          end
-        end
-      end
-=end
-
-    end
-
-    def get_my_subscribed_courses
-      @my_courses = Array.new
-
-      Subscription.find_each do |sub|
-        if sub.user_id == current_user.id
-          @my_courses.push Course.find(sub.course_id)
-        end
-      end
-
-      return @my_courses
-    end
-
-    def get_my_courses
-      @my_courses = Array.new
-
-      Course.find_each do |course|
-        if course.coach_id == current_user.id
-          @my_courses.push course
-        end
-      end
-
-      return @my_courses
-    end
-
     def course_params
       params.require(:course).permit(:title, :description, :price, :coach_id, :sport, :max_participants)
-    end
-
-    def rest_request(method, url, **args)
-      begin
-        response = RestClient::Request.execute(method: method, url: url,
-                                             headers: args)
-        JSON.parse(response)
-      rescue RestClient::Exception => exception
-        exception
-      end
-    end
-
-    def bad_request?(response)
-      if response.is_a?(RestClient::Exception)
-        true
-      else
-        false
-      end
     end
 end
