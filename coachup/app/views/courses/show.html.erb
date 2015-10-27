@@ -1,0 +1,41 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <%= @course.title %>
+      </div>
+      <!-- /.panel-heading -->
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>Title </th>
+              <th>Description </th>
+              <th>Price </th>
+              <th>Coach </th>
+              <th>Sport </th>
+              <th>Max Participants </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+              <td><%= @course.title  %>
+              <td><%= @course.description  %>
+              <td><%= @course.price  %>
+              <td><%= @course.coach.name  %>
+              <td><%= @course.sport  %>
+              <td><%= @course.max_participants  %>
+            </tr>
+            </tbody>
+          </table>
+          <%= link_to 'Apply', course_apply_path(@course), :controller => :courses_controller %>
+        </div>
+        <!-- /.table-responsive -->
+      </div>
+      <!-- /.panel-body -->
+    </div>
+    <!-- /.panel -->
+  </div>
+  <!-- /.col-lg-6 -->
+</div>

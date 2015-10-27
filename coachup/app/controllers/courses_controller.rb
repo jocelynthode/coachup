@@ -63,6 +63,11 @@ class CoursesController < ApplicationController
     @courses = Course.get_my_subscribed_courses
   end
 
+  def apply
+    #todo application stuff
+    redirect_to course_path(@course)
+  end
+
   private
     def course_params
       params.require(:course).permit(:title, :description, :price, :coach_id, :sport, :max_participants)

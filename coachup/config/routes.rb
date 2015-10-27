@@ -35,13 +35,14 @@ Rails.application.routes.draw do
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
+
   resources :courses do
     collection do
       get 'my_courses_index'
       get 'courses_by_my_coaches_index'
       get 'courses_i_am_subscribed_to_index'
     end
-
+    get 'apply', :action => :apply
     resources :training_sessions
   end
 
