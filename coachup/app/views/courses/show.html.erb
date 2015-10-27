@@ -19,16 +19,17 @@
             </tr>
             </thead>
             <tbody>
-                <tr>
-                  <td><%= @course.title  %>
-                  <td><%= @course.description  %>
-                  <td><%= @course.price  %>
-                  <td><%= @course.username  %>
-                  <td><%= @course.sport  %>
-                  <td><%= @course.max_participants  %>
-                </tr>
+            <tr>
+              <td><%= @course.title  %>
+              <td><%= @course.description  %>
+              <td><%= @course.price  %>
+              <td><%= @course.coach.name  %>
+              <td><%= @course.sport  %>
+              <td><%= @course.max_participants  %>
+            </tr>
             </tbody>
           </table>
+          <%= link_to 'Apply', course_apply_path(@course), :controller => :courses_controller %>
         </div>
         <!-- /.table-responsive -->
       </div>
