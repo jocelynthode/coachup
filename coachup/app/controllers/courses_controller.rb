@@ -1,5 +1,5 @@
 class CoursesController < ApplicationController
-  skip_before_action :require_login, only: [:index]
+  skip_before_action :require_login, only: [:index, :show]
 
   def index
     @courses = Course.all
@@ -31,10 +31,14 @@ class CoursesController < ApplicationController
   end
 
   def update
-    @course = Couse.find(params[:id])
+=begin
+    TODO find the location and update it using the params
+    I think you'll have to create a locations_params
+=end
+    @course = Course.find(params[:id])
 
     if @course.update(course_params)
-      redirect_to @article
+      redirect_to @course
     else
       render 'edit'
     end
@@ -115,7 +119,7 @@ class CoursesController < ApplicationController
     end
 
     def course_params
-      params.require(:course).permit(:title, :description, :price, :coach_id)
+      params.require(:course).permit(:title, :description, :price, :coach_id, :sport, :max_participants)
     end
 
     def rest_request(method, url, **args)
