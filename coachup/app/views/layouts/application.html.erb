@@ -114,9 +114,9 @@
             <% end %>
           </li>
           <li>
-            <%= link_to new_googlemap_path  do %>
+            <%= link_to new_location_path  do %>
                 <span class="glyphicon glyphicon-star"></span>
-                Google Maps
+                google maps
             <% end %>
           </li>
         </ul>
@@ -140,6 +140,13 @@
 <% end %>
 <% if alert %>
     <p class="alert alert-danger"><%= alert %></p>
+<% end %>
+
+<% if params[:controller] == 'locations' and params[:action] == "new" %>
+<script type="text/javascript">
+    //$(document).ready(loadScript());
+    $(document).ready(loadScript());
+</script>
 <% end %>
 
 </body>

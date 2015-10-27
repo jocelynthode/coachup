@@ -21,7 +21,7 @@ Rails.application.routes.draw do
   get 'profiles/:id' => 'profiles#show', as: "user_profile"
   get 'profiles/' => 'profiles#index', as: "profiles"
 
-  resources :googlemaps do
+  resources :locations do
   end
 
 

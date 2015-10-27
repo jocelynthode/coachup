@@ -2,40 +2,31 @@
 <script src='//google-maps-utility-library-v3.googlecode.com/svn/tags/markerclustererplus/2.0.14/src/markerclusterer_packed.js' type='text/javascript'></script>
 
 <p>
-  <strong>Title:</strong>
-  <%= @googlemap.title %>
-</p>
-
-<p>
   <strong>address:</strong>
-  <%= @googlemap.address %>
+  <%= @location.address %>
 </p>
 
 <p>
   <strong>Long:</strong>
-  <%= @googlemap.longitude %>
+  <%= @location.longitude %>
 </p>
 
 <p>
   <strong>Lat:</strong>
-  <%= @googlemap.latitude %>
+  <%= @location.latitude %>
 </p>
 
 
-<p>
-  <strong>desc:</strong>
-  <%= @googlemap.description %>
-</p>
-<div style='width: 800px;'>
-  <div id="map" style='width: 800px; height: 400px;'></div>
+<div id="map-container">
+  <div id="map-canvas"></div>
 </div>
 
 <script type="text/javascript">
     handler = Gmaps.build('Google');
-    handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+    handler.buildMap({ provider: {}, internal: {id: 'map-container'}}, function(){
         markers = handler.addMarkers(<%=raw @hash.to_json %>);
         handler.bounds.extendWith(markers);
         handler.fitMapToBounds();
-    });</script>
+    });
+</script>
 
-<%= link_to 'Back', googlemaps_path %>
