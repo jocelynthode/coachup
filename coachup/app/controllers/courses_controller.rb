@@ -69,6 +69,12 @@ class CoursesController < ApplicationController
     redirect_to course_path(@course)
   end
 
+  def leave
+    @course = Course.find(params[:course_id])
+    Course.leave(@course, flash)
+    redirect_to course_path(@course)
+  end
+
   private
     def course_params
       params.require(:course).permit(:title, :description, :price, :coach_id, :sport, :max_participants)
