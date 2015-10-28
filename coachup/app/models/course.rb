@@ -92,4 +92,31 @@ class Course < ActiveRecord::Base
     return @my_courses
   end
 
+  def self.apply(course, flash)
+    if course.coach.id = 3
+      flash[:alert] = "You are the owner of this course!"
+      return
+    end
+
+    @subscribtions = course.subscriptions
+    if @subscribtions.present?
+      @subscribtions.each do |sub|
+        #todo: currentuser
+        if sub.user == User.find(3)
+          flash[:alert] = "You are already subscribed!"
+          return
+        end
+      end
+    end
+
+    if course.max_participants <= @subscribtions.count
+      flash[:alert] = "Sorry! Maximum number of participants is already reached!"
+      return
+    end
+
+    #todo: currentuser
+    course.subscriptions << Subscription.create(:course => course, :user => User.find(3))
+    flash[:notice] = "You are now subscribed to the course!"
+    return
+  end
 end
