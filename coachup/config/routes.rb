@@ -43,6 +43,7 @@ Rails.application.routes.draw do
       get 'courses_i_am_subscribed_to_index'
     end
     get 'apply', :action => :apply
+    get 'leave', :action => :leave
     resources :training_sessions
   end
 
