@@ -64,7 +64,8 @@ class CoursesController < ApplicationController
   end
 
   def apply
-    #todo application stuff
+    @course = Course.find(params[:course_id])
+    Course.apply(@course, flash)
     redirect_to course_path(@course)
   end
 

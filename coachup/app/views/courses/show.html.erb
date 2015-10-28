@@ -29,7 +29,7 @@
             </tr>
             </tbody>
           </table>
-          <%= link_to 'Apply', course_apply_path(@course), :controller => :courses_controller %>
+          <%= link_to 'Apply', course_apply_path(@course), :controller => :courses_controller, data: { confirm: 'Would you like to subscribe to the course?' } %>
         </div>
         <!-- /.table-responsive -->
       </div>
