@@ -18,6 +18,14 @@
               <%= image_tag("photo9.jpg",:class=>"profile-image")%>
             </div>
             <div class="col-xs-5 col-sm-12">
+
+              <% if @is_following %>
+                  <%= link_to 'Unfollow', '', class: 'btn btn-primary button-follow', role: 'button' %>
+              <% else %>
+                  <%= link_to 'Follow', '', class: 'btn btn-primary button-follow', role: 'button' %>
+              <% end %>
+              </a>
+
               <h3>General Information</h3>
               <ul class="profile-details">
                 <li>
@@ -110,8 +118,3 @@
   </div><!--/row-->
 
 </div><!--/container-->
-
-
-
-</body>
-</html>
