@@ -32,7 +32,6 @@ function initialize(){
         codeLatLng(geocoding);
       });
 
-
 }
 
 var info;
@@ -100,9 +99,9 @@ function codeAddress(geocoding){
           coo = results[0].geometry.location;
           lat = (''+coo).split(',')[0].split('(')[1];
           longi = (''+coo).split(',')[1].split(')')[0];
-          $('#location_latitude').val(lat);
-          $('#location_longitude').val(longi);
-          $('#location_address').val(address);
+          $('#course_latitude').val(lat);
+          $('#course_longitude').val(longi);
+          $('#course_address').val(address);
 
         }else{
         alert("Geocode was not successful for the following reason: " + status);

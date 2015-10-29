@@ -48,6 +48,7 @@ Rails.application.routes.draw do
   #   resources :products
 
   resources :courses do
+    resources :locations
     collection do
       get 'my_courses_index'
       get 'courses_by_my_coaches_index'
