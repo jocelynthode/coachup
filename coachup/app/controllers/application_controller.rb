@@ -19,6 +19,12 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def current_user_partnerships
+    if session[:username].present?
+      Partnership.new(session[:username], session[:password])
+    end
+  end
+
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:username, :email, :password, :password_confirmation, :remember_me) }
     devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:login, :username, :email, :password, :remember_me) }
