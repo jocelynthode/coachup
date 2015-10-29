@@ -36,10 +36,6 @@ class CoursesController < ApplicationController
   end
 
   def update
-=begin
-    TODO find the location and update it using the params
-    I think you'll have to create a locations_params
-=end
     @course = Course.find(params[:id])
 
     if @course.update(course_params)

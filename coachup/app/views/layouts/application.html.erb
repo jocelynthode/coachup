@@ -142,7 +142,7 @@
     <p class="alert alert-danger"><%= alert %></p>
 <% end %>
 
-<% if params[:controller] == 'courses' and params[:action] == "new" or params[:controller] == 'locations' and params[:action] == "new"%>
+<% if (params[:controller] == 'courses' and params[:action] == "new") or (params[:controller] == 'courses' and params[:action] == "edit")%>
 <script type="text/javascript">
     //$(document).ready(loadScript());
     $(document).ready(loadScript());
