@@ -25,10 +25,14 @@
     <!-- /.navbar-header -->
 
     <ul class="nav navbar-top-links navbar-right">
-      <%= link_to 'Sign Up', register_path %>
-      <%= link_to login_path do %>
+      <% if user_signed_in? %>
+        <%= current_user.username %>
+      <% else %>
+        <%= link_to 'Sign Up', register_path %>
+        <%= link_to login_path do %>
           <span class="glyphicon glyphicon-log-in"></span>
           Log In
+        <% end %>
       <% end %>
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -36,20 +40,28 @@
         </a>
         <ul class="dropdown-menu dropdown-user">
           <% if user_signed_in? %>
-          <li>
-          <%= link_to user_profile_path(current_user) do %>
-              <span class="glyphicon glyphicon-user"></span>
-               Profile
-          <% end %>
-          </li>
-          <% end %>
-          <li class="divider"></li>
-          <li>
-            <%= link_to logout_path do %>
+            <li>
+              <%= link_to user_profile_path(current_user) do %>
+                <span class="glyphicon glyphicon-user"></span>
+                Profile
+              <% end %>
+            </li>
+            <li class="divider"></li>
+            <li>
+              <%= link_to logout_path do %>
                 <span class="glyphicon glyphicon-log-out"></span>
                 Log Out
-            <% end %>
-          </li>
+              <% end %>
+            </li>
+          <% else %>
+            <li><%= link_to 'Sign Up', register_path %></li>
+            <li>
+              <%= link_to login_path do %>
+                <span class="glyphicon glyphicon-log-in"></span>
+                Log In
+              <% end %>
+            </li>
+          <% end %>
         </ul>
         <!-- /.dropdown-user -->
       </li>
