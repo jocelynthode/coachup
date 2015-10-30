@@ -1,4 +1,16 @@
 <div class="row">
+  <% if @user && @user.errors.any? %>
+    <div id="error_explanation">
+      <ul>
+        <% @user.errors.each do |attr, msg| %>
+            <% if @user.errors[attr].first == msg %>
+              <li><%= "#{attr.to_s.capitalize!} #{msg}" %></li>
+            <% end %>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
   <div class="col-lg-6">
     <%= form_for(@user, url: { action: 'create' }, html: { role: 'form' }) do |f| %>
       <div class="form-group">

@@ -29,22 +29,26 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(user_params)
-    payload = { email: @user.email, password: @user.password,
-                realname: @user.realname, publicvisible: "2" }
-    payload_xml = payload.to_xml(root: :user, skip_instruct: true)
-    url = User.url + 'users/' + @user.username
-    response = rest_put(url, payload_xml, accept: :json, content_type: :xml)
-    if bad_request?(response)
-      msg = if exception_code(response) == 401
-              "User #{@user.username} already exists"
-            else
-              "Something went wrong"
-            end
-      redirect_to register_path, alert: msg
+    if @user.save
+      payload = { email: @user.email, password: @user.password,
+                  realname: @user.realname, publicvisible: "2" }
+      payload_xml = payload.to_xml(root: :user, skip_instruct: true)
+      url = User.url + 'users/' + @user.username
+      response = rest_put(url, payload_xml, accept: :json, content_type: :xml)
+      if bad_request?(response)
+        msg = if exception_code(response) == 401
+                "User #{@user.username} already exists"
+              else
+                "Something went wrong"
+              end
+        redirect_to register_path, alert: msg
+      else
+        session[:username] = @user.username
+        session[:password] = @user.password
+        redirect_to root_path, notice: "Successfully created user #{@user.username}"
+      end
     else
-      session[:username] = @user.username
-      session[:password] = @user.password
-      redirect_to root_path, notice: "Successfully created user #{@user.username}"
+      render 'new'
     end
   end
 
