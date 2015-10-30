@@ -12,12 +12,12 @@ class UsersController < ApplicationController
 
   def show
     response = rest_request(:get, User.url + 'users/' + params[:id],
-                            accept: :json) 
+                            accept: :json)
    if bad_request?(response)
      redirect_to action: :index
      return
    end
-   @user = response.reject { |k, v| k == :uri || v == '*' } 
+   @user = response.reject { |k, v| k == :uri || v == '*' }
   end
 
   def new
@@ -96,7 +96,7 @@ class UsersController < ApplicationController
       false
     end
   end
-  
+
   def exception_code(exception)
     exception.response.code
   end
