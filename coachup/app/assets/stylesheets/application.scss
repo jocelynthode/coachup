@@ -22,3 +22,11 @@
 @import "framework_and_overrides";
 
 
+/* Cancel margins due to #page-wrapper */
+.cancel-wrapper-margin {
+  margin: 0px -30px;
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+
