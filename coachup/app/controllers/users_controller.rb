@@ -70,7 +70,7 @@ class UsersController < ApplicationController
       if bad_request?(response)
         flash[:alert] = "Could not save changes"
       else
-        flash[:notice] = "Successfully update profile"
+        flash[:notice] = "Successfully updated profile"
         session[:password] = @user.new_password if @user.new_password.present?
       end
       redirect_to edit_profile_path
