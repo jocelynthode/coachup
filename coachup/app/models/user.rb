@@ -31,4 +31,20 @@ class User < ActiveRecord::Base
       false
     end
   end
+
+  def self.request(method, path, **args)
+    raise "Error: not signed in" unless user_signed_in?
+    url = self.url + path
+    header = { accept: :json }
+    header.merge!(args)
+    begin
+      response = RestClient::Request.execute(method: method, url: url,
+                                             user: session[:username],
+                                             password: session[:password],
+                                             headers: header)
+      JSON.parse(response, symbolize_names: true)
+    rescue RestClient::Exception => exception
+      exception
+    end
+  end
 end
