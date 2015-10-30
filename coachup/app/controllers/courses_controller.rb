@@ -17,6 +17,7 @@ class CoursesController < ApplicationController
 
   def new
     @course = Course.new
+    @location = @course.build_location
   end
 
   def edit
