@@ -1,5 +1,6 @@
 class ApplicationController < ActionController::Base
   before_action :require_login
+  helper_method :user_signed_in?, :current_user
 
   # Prevent CSRF attacks by raising an exception.
   # For APIs, you may want to use :null_session instead.
@@ -12,10 +13,14 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    if session[:username].present?
+    if user_signed_in?
       session[:username]
     else
       nil
     end
+  end
+
+  def user_signed_in?
+    session[:username].present?
   end
 end
