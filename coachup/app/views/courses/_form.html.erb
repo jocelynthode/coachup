@@ -48,7 +48,8 @@
         </div>
 
         <div class="form-group">
-          <%= f.hidden_field :address%>
+          <%= f.label :Address %><br>
+          <%= f.text_field :address, class: "form-control", :readonly => true %>
           <%= f.hidden_field :latitude %>
           <%= f.hidden_field :longitude %>
         </div>
