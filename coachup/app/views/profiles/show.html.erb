@@ -63,7 +63,7 @@
 
           <ul class="nav nav-tabs" id="myTab">
             <% if current_user == @user  %>
-                <%= button_to "Edit Profile", edit_user_registration_path, :class => "btn btn-primary pull-right", :method => :get  %>
+                <%= button_to "Edit Profile", edit_profile_path, :class => "btn btn-primary pull-right", :method => :get  %>
             <% end %>
             <li class="active"><a href="page-profile.html#skills">Skills</a></li>
             <li><a href="">Friends</a></li>
