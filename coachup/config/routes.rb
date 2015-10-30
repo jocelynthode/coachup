@@ -4,8 +4,6 @@ Rails.application.routes.draw do
   post 'login' => 'sessions#create'
   get 'logout' => 'sessions#destroy', as: 'logout'
 
-  devise_for :users, controllers: { sessions: 'users/sessions' },
-    path: "/", path_names: { sign_in: 'login', sign_up: 'register' }
   get 'overview/welcome'
   get 'overview/index'
 
