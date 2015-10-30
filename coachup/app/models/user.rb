@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   # Virtual attribute for authenticating with either username or email
   attr_accessor :login, :username, :email, :realname, :publicvisible, :password,
     :password_confirmation
-  validates :real_name, presence: true
+  validates :realname, presence: true
   validates :username, presence: true, length: {within: 3..50}, uniqueness: true
   validates :email, format: {with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i}
   validates :password, length: {within: 3..50}
