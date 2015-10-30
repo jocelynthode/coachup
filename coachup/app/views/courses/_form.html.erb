@@ -46,13 +46,14 @@
           <%= f.label :max_participants %><br>
           <%= f.number_field :max_participants, min: 1, class: "form-control"%>
         </div>
-
+        <%= f.fields_for :location do |location_fields| %>
         <div class="form-group">
-          <%= f.label :Address %><br>
-          <%= f.text_field :address, class: "form-control", :readonly => true %>
-          <%= f.hidden_field :latitude %>
-          <%= f.hidden_field :longitude %>
+          <%= location_fields.label :address %><br>
+          <%= location_fields.text_field :address, class: "form-control", id: "course_address", :readonly => true %>
+          <%= location_fields.hidden_field :latitude, id: "course_latitude" %>
+          <%= location_fields.hidden_field :longitude, id: "course_longitude" %>
         </div>
+        <% end %>
 
         <div class="form-group">
           <%= f.submit  class:"btn btn-primary pull-left"%>
