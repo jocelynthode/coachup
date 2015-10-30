@@ -25,6 +25,12 @@ class UsersController < ApplicationController
   end
 
   def edit
+    response = authenticated_request(:get, "users/#{session[:username]}")
+    unless bad_request?(response)
+      @user = User.find_by username: session[:username]
+      @user.realname = response[:realname]
+      @user.publicvisible = response[:publicvisible]
+    end
   end
 
   def create
@@ -53,6 +59,24 @@ class UsersController < ApplicationController
   end
 
   def update
+    @user = User.find_by username: session[:username]
+    @user.username = session[:username]
+    if @user.update(user_params)
+      payload = { email: @user.email, realname: @user.realname }
+      payload[:password] = @user.new_password if @user.new_password.present?
+      payload_xml = payload.to_xml(root: :user, skip_instruct: true)
+      response = authenticated_put("users/#{@user.username}", payload_xml,
+                                   content_type: :xml)
+      if bad_request?(response)
+        flash[:alert] = "Could not save changes"
+      else
+        flash[:notice] = "Successfully update profile"
+        session[:password] = @user.new_password if @user.new_password.present?
+      end
+      redirect_to edit_profile_path
+    else
+      render 'edit'
+    end
   end
 
   def destroy
@@ -66,7 +90,8 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:username, :password, :realname, :email,
-                                 :publicvisible, :password_confirmation)
+                                 :publicvisible, :password_confirmation,
+                                 :new_password, :new_password_confirmation)
   end
 
   def rest_put(url, payload, **args)

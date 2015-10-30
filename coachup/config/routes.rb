@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   post 'login' => 'sessions#create'
   get 'logout' => 'sessions#destroy', as: 'logout'
   get 'register' => 'users#new', as: 'register'
+  get 'edit_profile' => 'users#edit', as: 'edit_profile'
+  post 'update_profile' => 'users#update'
+  patch 'update_profile' => 'users#update'
 
   get 'overview/welcome'
   get 'overview/index'

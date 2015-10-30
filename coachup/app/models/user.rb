@@ -1,13 +1,18 @@
 class User < ActiveRecord::Base
   # Virtual attribute for authenticating with either username or email
-  attr_accessor :login, :username, :email, :realname, :publicvisible, :password,
-    :password_confirmation
+  attr_accessor :login, :realname, :publicvisible, :password,
+    :password_confirmation, :new_password, :new_password_confirmation
   validates :realname, presence: true
-  validates :username, presence: true, length: {within: 3..50}, uniqueness: true
   validates :email, format: {with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i}
-  validates :password, length: {within: 3..50}
-  validates_presence_of :password_confirmation
-  validates_confirmation_of :password
+  # creating user
+  validates :username, presence: true, length: {within: 3..50}, uniqueness: true
+  validates :password, length: {within: 3..50}, on: :create
+  validates_presence_of :password_confirmation, on: :create
+  validates_confirmation_of :password, on: :create
+  # editing user
+  validates :new_password, length: {within: 3..50}, if: :new_password_present?, on: :update
+  validates_presence_of :new_password_confirmation, if: :new_password_present?, on: :update
+  validates_confirmation_of :new_password, if: :new_password_present?, on: :update
 
   has_many :taught_courses, class_name: "Course"
   has_many :subscriptions
@@ -31,5 +36,10 @@ class User < ActiveRecord::Base
     rescue
       false
     end
+  end
+
+  private
+  def new_password_present?
+    new_password.present?
   end
 end
