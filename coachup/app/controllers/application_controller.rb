@@ -39,4 +39,20 @@ class ApplicationController < ActionController::Base
       exception
     end
   end
+
+  def authenticated_put(path, payload, **args)
+    raise "Error: not signed in" unless user_signed_in?
+    url = User.url + path
+    header = { accept: :json }
+    header.merge!(args)
+    begin
+      response = RestClient::Request.execute(method: :put, url: url,
+                                             user: session[:username],
+                                             password: session[:password],
+                                             payload: payload, headers: header)
+      JSON.parse(response, symbolize_names: true)
+    rescue RestClient::Exception => exception
+      exception
+    end
+  end
 end
