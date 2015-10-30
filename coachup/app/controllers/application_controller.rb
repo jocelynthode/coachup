@@ -23,4 +23,20 @@ class ApplicationController < ActionController::Base
   def user_signed_in?
     session[:username].present?
   end
+
+  def authenticated_request(method, path, **args)
+    raise "Error: not signed in" unless user_signed_in?
+    url = User.url + path
+    header = { accept: :json }
+    header.merge!(args)
+    begin
+      response = RestClient::Request.execute(method: method, url: url,
+                                             user: session[:username],
+                                             password: session[:password],
+                                             headers: header)
+      JSON.parse(response, symbolize_names: true)
+    rescue RestClient::Exception => exception
+      exception
+    end
+  end
 end
