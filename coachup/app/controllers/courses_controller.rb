@@ -7,7 +7,8 @@ class CoursesController < ApplicationController
 
   def show
     @course = Course.find(params[:id])
-    @hash = Gmaps4rails.build_markers(@course) do |location, marker|
+
+    @hash = Gmaps4rails.build_markers(@course.location) do |location, marker|
       marker.lat location.latitude
       marker.lng location.longitude
       marker.title location.address
@@ -78,6 +79,6 @@ class CoursesController < ApplicationController
 
   private
     def course_params
-      params.require(:course).permit(:title, :description, :price, :coach_id, :sport, :max_participants, :latitude, :longitude, :address)
+      params.require(:course).permit(:title, :description, :price, :coach_id, :sport, :max_participants, location_attributes: [:address, :latitude, :longitude])
     end
 end

@@ -4,13 +4,12 @@ class Course < ActiveRecord::Base
   has_many :subscriptions
   has_many :users, through: :subscriptions
   has_many :training_sessions
+  belongs_to :location
+  accepts_nested_attributes_for :location
 
   validates :title, presence: true
   validates :description, presence: true
   validates :coach_id, presence: true
-
-  geocoded_by :address
-  after_validation :geocode
 
   def self.url
     'http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/'
