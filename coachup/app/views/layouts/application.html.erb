@@ -133,20 +133,21 @@
   </nav>
 
   <div id="page-wrapper">
+    <% if notice %>
+        <p class="alert alert-success cancel-wrapper-margin"><%= notice %></p>
+    <% end %>
+    <% if alert %>
+        <p class="alert alert-danger cancel-wrapper-margin"><%= alert %></p>
+    <% end %>
 
-      <%= yield %>
+    <%= yield %>
 
   </div>
   <!-- /#page-wrapper -->
 
 </div>
 <!-- /#wrapper -->
-<% if notice %>
-    <p class="alert alert-success"><%= notice %></p>
-<% end %>
-<% if alert %>
-    <p class="alert alert-danger"><%= alert %></p>
-<% end %>
+
 
 <% if (params[:controller] == 'courses' and params[:action] == "new") or (params[:controller] == 'courses' and params[:action] == "edit")%>
 <script type="text/javascript">
