@@ -27,7 +27,7 @@ class UsersController < ApplicationController
   def edit
     response = authenticated_request(:get, "users/#{session[:username]}")
     unless bad_request?(response)
-      @user = User.find_by username: session[:username]
+      @user = current_user
       @user.realname = response[:realname]
       @user.publicvisible = response[:publicvisible]
     end
@@ -59,7 +59,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    @user = User.find_by username: session[:username]
+    @user = current_user
     @user.username = session[:username]
     if @user.update(user_params)
       payload = { email: @user.email, realname: @user.realname }
