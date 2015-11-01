@@ -42,15 +42,13 @@ class Course < ActiveRecord::Base
         answer = JSON.parse(response, symbolize_names: true)
 
         answer[:partnerships].each do |partnership|
-          #todo: use current_user
-          if partnership.user1 == "user123"
+          if partnership.user1 == current_user.username
             Course.find_each do |course|
               if course.coach.username == partnership.user2
                 @my_courses. << course
               end
             end
-            #todo: use current_user
-          elsif partnership.user2 == "user123"
+          elsif partnership.user2 == current_user.username
             Course.find_each do |course|
               if course.coach_id == partnership.user1
                 @my_courses << course
@@ -84,17 +82,15 @@ class Course < ActiveRecord::Base
     @my_courses = Array.new
 
     Course.find_each do |course|
-      #todo currentuser-thingie
-      if course.coach_id == 3
+      if course.coach_id == current_user.id
         @my_courses << course
       end
     end
     return @my_courses
   end
 
-  def self.apply(course, flash)
-    #todo: currentuser
-    if course.coach.id = 3
+  def self.apply(course, flash, current_user)
+    if course.coach.id == current_user.id
       flash[:alert] = "You are the owner of this course!"
       return
     end
@@ -102,8 +98,7 @@ class Course < ActiveRecord::Base
     @subscribtions = course.subscriptions
     if @subscribtions.present?
       @subscribtions.each do |sub|
-        #todo: currentuser
-        if sub.user == User.find(3)
+        if sub.user == current_user
           flash[:alert] = "You are already subscribed!"
           return
         end
@@ -115,28 +110,23 @@ class Course < ActiveRecord::Base
       return
     end
 
-    #todo: currentuser
-    course.subscriptions << Subscription.create(:course => course, :user => User.find(3))
+    course.subscriptions << Subscription.create(:course => course, :user => current_user)
     flash[:notice] = "You are now subscribed to the course!"
     return
   end
 
-  def self.leave(course, flash)
-    #todo: currentuser
-    if course.coach.id = 3
+  def self.leave(course, flash, current_user)
+    if course.coach == current_user
       flash[:alert] = "You are the coach - you can't leave ;)"
       return
     end
 
-    @subscribtions = course.subscriptions
-    #todo: currentuser
-    if !@subscribtions.any? { |user| user.id == 3}
+    if !course.subscriptions.any? { |user| current_user}
       flash[:alert] = "You are not subscribed to the course!"
       return
     end
 
-    #todo: currentuser
-    @current_subscription = Subscription.find_by(:course => course, :user => User.find(3))
+    @current_subscription = Subscription.find_by(:course => course, :user => current_user)
     if @current_subscription.present?
       @current_subscription.destroy
       flash[:notice] = "You are successfully unsubscribed from the course!"

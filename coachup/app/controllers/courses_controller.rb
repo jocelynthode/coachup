@@ -19,8 +19,7 @@ class CoursesController < ApplicationController
 
   def create
     @course = Course.new(course_params)
-    #todo: current user instead of 3 :D
-    @course.coach = User.find(3)
+    @course.coach.id = current_user.id
 
     if @course.save
       redirect_to courses_path
@@ -65,13 +64,14 @@ class CoursesController < ApplicationController
 
   def apply
     @course = Course.find(params[:course_id])
-    Course.apply(@course, flash)
+
+    Course.apply(@course, flash, current_user)
     redirect_to course_path(@course)
   end
 
   def leave
     @course = Course.find(params[:course_id])
-    Course.leave(@course, flash)
+    Course.leave(@course, flash, current_user)
     redirect_to course_path(@course)
   end
 
