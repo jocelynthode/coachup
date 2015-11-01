@@ -1,7 +1,13 @@
-
-<h2><%=title%></h2>
-<%= form_for @course, html: {class: "form col-md-5"} do |f| %>
-
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <h3 class="page-header">  <%= title %>  </h3>
+    </div>
+  </div>
+</div>
+<%= form_for @course, html: {class: "form"} do |f| %><br>
+<div class="row">
+  <div class="col-md-5">
     <% if @course.errors.any? %>
         <div id="error_explanation">
           <h2>
@@ -40,14 +46,45 @@
       <%= f.label :max_participants %><br>
       <%= f.number_field :max_participants, min: 1, class: "form-control"%>
     </div>
+    <%= f.fields_for :location do |location_fields| %>
+    <div class="form-group">
+      <%= location_fields.label :address %><br>
+      <%= location_fields.text_field :address, class: "form-control", id: "course_address", :readonly => true %>
+      <%= location_fields.hidden_field :latitude, id: "course_latitude" %>
+      <%= location_fields.hidden_field :longitude, id: "course_longitude" %>
+    </div>
+    <% end %>
+  </div>
 
+  <div class="col-md-7">
     <div class="form-group">
       <%= f.label :location %><br>
-      <!--TODO add map edit part -->
+      <div id="map-container">
+        <div id="map-canvas"></div>
+        <div id="geocoding_fields">
+          <input name="search" type="text" id="search_box_geocoding" class="search_box" >
+          <button id="submit_button_geocoding"  type="button" class="submit_button">Search</button>
+        </div>
+      </div>
     </div>
-
-    <div class="form-group">
-      <%= f.submit  class:"btn btn-primary pull-left"%>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-5">
+      <div class="form-group">
+        <%= f.submit  class:"btn btn-primary pull-left"%>
+      </div>
     </div>
-
+</div>
 <% end %>
+
+
+<script type="text/javascript">
+    $('#geocoding_fields').show();
+    $("#search_box_geocoding").keypress(function(event){
+        if(event.keyCode == 13){
+            event.preventDefault();
+            $("#submit_button_geocoding").click();
+        }
+    });
+</script>

@@ -39,46 +39,37 @@ class SubscriptionsController < ApplicationController
 
   def update
 
-    @subscription = Subscription.find(params[:id])
-    if @subscription.update(subscription_params)
-      redirect_to @subscription
-    else
-      render 'edit'
-    end
-
   end
 
   def destroy
 
-    @subscription = Subscription.find(params[:id])
-    @subscription.destroy
-    redirect_to subscriptions_path
+
 
   end
 
-  def my_partnerships_index
-    @partnerships = get_my_partnerships
+  def my_coaches_index
+    @my_coaches = get_my_coaches
   end
 
 
   private
 
-  def get_my_partnerships
+  def get_my_coaches
 
-    @my_partnerships = Array.new
+    @my_coaches = Array.new
 
     Subscription.find_each do |subscription|
       if subscription.user_id == current_user.id
         @sub_courses = Course.find(subscription.course_id)
-        @my_partnerships.push User.find(@sub_courses.coach_id)
+        @my_coaches.push User.find(@sub_courses.coach_id)
       end
     end
 
-    return @my_partnerships
+    return @my_coaches
   end
 
-    def subscription_params
-      params.require(:subscription).permit(:course_id,:user_id)
-    end
+  def subscription_params
+    params.require(:subscription).permit(:course_id,:user_id)
+  end
 
 end

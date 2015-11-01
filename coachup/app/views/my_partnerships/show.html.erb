@@ -10,28 +10,20 @@
           <table class="table">
             <thead>
             <tr>
-              <th>Coach</th>
-              <th>Email</th>
+              <th>Partnership </th>
+
             </tr>
             </thead>
             <tbody>
-
-            <% @partnerships.each do |subscription| %>
-
                 <tr>
 
-                  <td><%= subscription.username %></td>
-                  <td><%= subscription.email %></td>
-                  <td><%= link_to 'Show', subscription_path(subscription) %></td>
-
-                  <td><%= link_to 'Edit', edit_course_path(subscription) %></td>
-                  <td><%= link_to 'Destroy', course_path(subscription),
-                                  method: :delete,
-                                  data: { confirm: 'Are you sure?' } %> </td>
+                  <td><%= link_to @user1 , user_path(@user1) %>
+                  <%=  @user1conf %></td>
+                  <td><%= link_to @user2, user_path(@user2) %>
+                  <%=  @user2conf %></td>
                 </tr>
-            <% end %>
-
             </tbody>
+
           </table>
         </div>
         <!-- /.table-responsive -->
@@ -42,3 +34,7 @@
   </div>
   <!-- /.col-lg-6 -->
 </div>
+
+
+
+

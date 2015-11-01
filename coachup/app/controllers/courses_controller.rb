@@ -7,10 +7,17 @@ class CoursesController < ApplicationController
 
   def show
     @course = Course.find(params[:id])
+
+    @hash = Gmaps4rails.build_markers(@course.location) do |location, marker|
+      marker.lat location.latitude
+      marker.lng location.longitude
+      marker.title location.address
+    end
   end
 
   def new
     @course = Course.new
+    @location = @course.build_location
   end
 
   def edit
@@ -30,10 +37,6 @@ class CoursesController < ApplicationController
   end
 
   def update
-=begin
-    TODO find the location and update it using the params
-    I think you'll have to create a locations_params
-=end
     @course = Course.find(params[:id])
 
     if @course.update(course_params)
@@ -100,6 +103,6 @@ class CoursesController < ApplicationController
 
   private
     def course_params
-      params.require(:course).permit(:title, :description, :price, :coach_id, :sport, :max_participants)
+      params.require(:course).permit(:title, :description, :price, :coach_id, :sport, :max_participants, location_attributes: [:address, :latitude, :longitude])
     end
 end
