@@ -57,7 +57,7 @@ class Course < ActiveRecord::Base
           end
         end
 
-        return my_courses
+        my_courses
       else
         nil
       end
@@ -66,7 +66,7 @@ class Course < ActiveRecord::Base
     end
   end
 
-  def self.get_my_subscribed_courses
+  def self.get_my_subscribed_courses(current_user)
     my_courses = Array.new
 
     Subscription.find_each do |sub|
@@ -75,7 +75,7 @@ class Course < ActiveRecord::Base
       end
     end
 
-    return my_courses
+    my_courses
   end
 
   def apply(current_user)

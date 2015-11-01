@@ -59,7 +59,7 @@ class CoursesController < ApplicationController
   end
 
   def courses_i_am_subscribed_to_index
-    @courses = Course.get_my_subscribed_courses
+    @courses = Course.get_my_subscribed_courses(current_user)
   end
 
   def apply
