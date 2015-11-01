@@ -51,7 +51,7 @@ class CoursesController < ApplicationController
   end
 
   def my_courses_index
-    @courses = Course.get_my_courses(current_user)
+    @courses = Course.where(:coach_id => current_user.id);
   end
 
   def courses_by_my_coaches_index
