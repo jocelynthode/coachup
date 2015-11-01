@@ -32,42 +32,6 @@ class Course < ActiveRecord::Base
     end
   end
 
-=begin
-  def self.get_courses_by_my_coaches
-    begin
-      my_courses = []
-      response = RestClient::Request.execute(method: :get,
-                                             url: self.url+'partnerships/',
-                                             headers: { accept: :json })
-      if response.code == 200
-        answer = JSON.parse(response, symbolize_names: true)
-
-        answer[:partnerships].each do |partnership|
-          if partnership.user1 == current_user.username
-            Course.find_each do |course|
-              if course.coach.username == partnership.user2
-                my_courses. << course
-              end
-            end
-          elsif partnership.user2 == current_user.username
-            Course.find_each do |course|
-              if course.coach_id == partnership.user1
-                my_courses << course
-              end
-            end
-          end
-        end
-
-        my_courses
-      else
-        nil
-      end
-    rescue
-      nil
-    end
-  end
-=end
-
   def apply(current_user)
     if self.coach.id == current_user.id
       state = "You are the owner of this course!", :alert
