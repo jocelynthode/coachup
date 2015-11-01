@@ -32,6 +32,7 @@ class Course < ActiveRecord::Base
     end
   end
 
+=begin
   def self.get_courses_by_my_coaches
     begin
       my_courses = []
@@ -65,18 +66,7 @@ class Course < ActiveRecord::Base
       nil
     end
   end
-
-  def self.get_my_subscribed_courses(current_user)
-    my_courses = Array.new
-
-    Subscription.find_each do |sub|
-      if sub.user_id == current_user.id
-        my_courses.push Course.find(sub.course_id)
-      end
-    end
-
-    my_courses
-  end
+=end
 
   def apply(current_user)
     if self.coach.id == current_user.id

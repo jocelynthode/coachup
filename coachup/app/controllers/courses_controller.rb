@@ -55,11 +55,33 @@ class CoursesController < ApplicationController
   end
 
   def courses_by_my_coaches_index
-    @courses = Course.get_courses_by_my_coaches
+    begin
+      my_courses = []
+      response = RestClient::Request.execute(method: :get,
+                                             url: Course.url+'partnerships/',
+                                             headers: { accept: :json })
+      if response.code == 200
+        answer = JSON.parse(response, symbolize_names: true)
+        answer[:partnerships].each do |partnership|
+          if partnership.include? current_user.username
+            Course.find_each do |course|
+              if partnership.include? course.coach.username
+                unless course.coach_id == current_user.id
+                  my_courses. << course
+                end
+              end
+            end
+          end
+        end
+      else
+        nil
+      end
+    end
+    @courses = my_courses
   end
 
   def courses_i_am_subscribed_to_index
-    @courses = Course.get_my_subscribed_courses(current_user)
+    @courses = Course.joins(:subscriptions).where(subscriptions: { user_id: current_user.id})
   end
 
   def apply
