@@ -89,48 +89,41 @@ class Course < ActiveRecord::Base
     return @my_courses
   end
 
-  def self.apply(course, flash, current_user)
-    if course.coach.id == current_user.id
-      flash[:alert] = "You are the owner of this course!"
-      return
+  def apply(current_user)
+    if self.coach.id == current_user.id
+      return "You are the owner of this course!", :alert
     end
 
-    @subscribtions = course.subscriptions
+    @subscribtions = self.subscriptions
     if @subscribtions.present?
       @subscribtions.each do |sub|
         if sub.user == current_user
-          flash[:alert] = "You are already subscribed!"
-          return
+          return "You are already subscribed!", :alert
         end
       end
     end
 
-    if course.max_participants <= @subscribtions.count
-      flash[:alert] = "Sorry! Maximum number of participants is already reached!"
-      return
+    if self.max_participants <= @subscribtions.count
+      return "Sorry! Maximum number of participants is already reached!", :alert
     end
 
-    course.subscriptions << Subscription.create(:course => course, :user => current_user)
-    flash[:notice] = "You are now subscribed to the course!"
-    return
+    self.subscriptions << Subscription.create(:course => self, :user => current_user)
+    return "You are now subscribed to the course!", :notice
   end
 
-  def self.leave(course, flash, current_user)
-    if course.coach == current_user
-      flash[:alert] = "You are the coach - you can't leave ;)"
-      return
+  def leave(current_user)
+    if self.coach == current_user
+      return "You are the coach - you can't leave ;)", :alert
     end
 
-    if !course.subscriptions.any? { |user| current_user}
-      flash[:alert] = "You are not subscribed to the course!"
-      return
+    if !self.subscriptions.any? { |user| current_user}
+      return "You are not subscribed to the course!", :alert
     end
 
-    @current_subscription = Subscription.find_by(:course => course, :user => current_user)
+    @current_subscription = Subscription.find_by(:course => self, :user => current_user)
     if @current_subscription.present?
       @current_subscription.destroy
-      flash[:notice] = "You are successfully unsubscribed from the course!"
-      return
+      return "You are successfully unsubscribed from the course!", :notice
     end
   end
 end

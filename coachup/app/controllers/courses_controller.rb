@@ -64,14 +64,15 @@ class CoursesController < ApplicationController
 
   def apply
     @course = Course.find(params[:course_id])
-
-    Course.apply(@course, flash, current_user)
+    @msg, @channel = @course.apply(current_user)
+    flash[@channel] = @msg
     redirect_to course_path(@course)
   end
 
   def leave
     @course = Course.find(params[:course_id])
-    Course.leave(@course, flash, current_user)
+    @msg, @channel = @course.leave(current_user)
+    flash[@channel] = @msg
     redirect_to course_path(@course)
   end
 
