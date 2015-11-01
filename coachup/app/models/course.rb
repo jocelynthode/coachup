@@ -78,7 +78,7 @@ class Course < ActiveRecord::Base
     return @my_courses
   end
 
-  def self.get_my_courses
+  def self.get_my_courses(current_user)
     @my_courses = Array.new
 
     Course.find_each do |course|
