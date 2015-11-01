@@ -34,32 +34,30 @@ class Course < ActiveRecord::Base
 
   def apply(current_user)
     if self.coach.id == current_user.id
-      state = "You are the owner of this course!", :alert
+      ["You are the owner of this course!", :alert]
     elsif self.subscriptions.present?
       self.subscriptions.each do |sub|
         if sub.user == current_user
-          state = "You are already subscribed!", :alert
+          ["You are already subscribed!", :alert]
         end
       end
     elsif self.max_participants <= self.subscriptions.count
-      state = "Sorry! Maximum number of participants is already reached!", :alert
+      ["Sorry! Maximum number of participants is already reached!", :alert]
     else
-      self.subscriptions << Subscription.create(:course => self, :user => current_user)
-      state = "You are now subscribed to the course!", :notice
+      self.subscriptions << Subscription.create(course: self, user: current_user)
+      ["You are now subscribed to the course!", :notice]
     end
-    state
   end
 
   def leave(current_user)
-    current_subscription = Subscription.find_by(:course => self, :user => current_user)
+    current_subscription = Subscription.find_by(course: self, user: current_user)
     if self.coach == current_user
-      state = "You are the coach - you can't leave ;)", :alert
-    elsif !self.subscriptions.any? { |sub| sub.user == current_user}
-      state = "You are not subscribed to the course!", :alert
+      ["You are the coach - you can't leave ;)", :alert]
+    elsif self.subscriptions.none? { |sub| sub.user == current_user}
+      ["You are not subscribed to the course!", :alert]
     elsif current_subscription.present?
       current_subscription.destroy
-      state = "You are successfully unsubscribed from the course!", :notice
+      ["You are successfully unsubscribed from the course!", :notice]
     end
-    state
   end
 end
