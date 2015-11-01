@@ -5,75 +5,86 @@
     </div>
   </div>
 </div>
+<%= form_for @course, html: {class: "form"} do |f| %><br>
 <div class="row">
   <div class="col-md-5">
-    <%= form_for @course, html: {class: "form"} do |f| %><br>
-        <% if @course.errors.any? %>
-            <div id="error_explanation">
-              <h2>
-                <%= pluralize(@course.errors.count, "error") %> prohibited
-                this article from being saved:
-              </h2>
-              <ul>
-                <% @course.errors.full_messages.each do |msg| %>
-                    <li><%= msg %></li>
-                <% end %>
-              </ul>
-            </div>
-        <% end %>
-
-        <div class="form-group">
-          <%= f.label :title %><br>
-          <%= f.text_field :title, class: "form-control" %>
+    <% if @course.errors.any? %>
+        <div id="error_explanation">
+          <h2>
+            <%= pluralize(@course.errors.count, "error") %> prohibited
+            this article from being saved:
+          </h2>
+          <ul>
+            <% @course.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+            <% end %>
+          </ul>
         </div>
+    <% end %>
 
-        <div class="form-group">
-          <%= f.label :description %><br>
-          <%= f.text_area :description, class: "form-control" %>
-        </div>
+    <div class="form-group">
+      <%= f.label :title %><br>
+      <%= f.text_field :title, class: "form-control" %>
+    </div>
 
-        <div class="form-group">
-          <%= f.label :price %><br>
-          <%= f.number_field :price, min: 0, class: "form-control" %>
-        </div>
+    <div class="form-group">
+      <%= f.label :description %><br>
+      <%= f.text_area :description, class: "form-control" %>
+    </div>
 
-        <div class="form-group">
-          <%= f.label :sport %><br>
-          <%= f.select :sport, Course.get_all_sports.map {|sport| [sport, sport]}, {}, {class: "form-control"} %>
-        </div>
+    <div class="form-group">
+      <%= f.label :price %><br>
+      <%= f.number_field :price, min: 0, class: "form-control" %>
+    </div>
 
-        <div class="form-group">
-          <%= f.label :max_participants %><br>
-          <%= f.number_field :max_participants, min: 1, class: "form-control"%>
-        </div>
-        <%= f.fields_for :location do |location_fields| %>
-        <div class="form-group">
-          <%= location_fields.label :address %><br>
-          <%= location_fields.text_field :address, class: "form-control", id: "course_address", :readonly => true %>
-          <%= location_fields.hidden_field :latitude, id: "course_latitude" %>
-          <%= location_fields.hidden_field :longitude, id: "course_longitude" %>
-        </div>
-        <% end %>
+    <div class="form-group">
+      <%= f.label :sport %><br>
+      <%= f.select :sport, Course.get_all_sports.map {|sport| [sport, sport]}, {}, {class: "form-control"} %>
+    </div>
 
-        <div class="form-group">
-          <%= f.submit  class:"btn btn-primary pull-left"%>
-        </div>
-
+    <div class="form-group">
+      <%= f.label :max_participants %><br>
+      <%= f.number_field :max_participants, min: 1, class: "form-control"%>
+    </div>
+    <%= f.fields_for :location do |location_fields| %>
+    <div class="form-group">
+      <%= location_fields.label :address %><br>
+      <%= location_fields.text_field :address, class: "form-control", id: "course_address", :readonly => true %>
+      <%= location_fields.hidden_field :latitude, id: "course_latitude" %>
+      <%= location_fields.hidden_field :longitude, id: "course_longitude" %>
+    </div>
     <% end %>
   </div>
 
   <div class="col-md-7">
-      <h5><b>Location</b></h5>
+    <div class="form-group">
+      <%= f.label :location %><br>
       <div id="map-container">
         <div id="map-canvas"></div>
-            <div id="geocoding_fields">
-              <%= text_field_tag :search, params[:search], placeholder: "Enter a place", :id => 'search_box_geocoding', class: 'search_box' %>
-              <%= button_tag "Search", id: "submit_button_geocoding", data: { disable_with: "Please wait..." }, class: "submit_button" %>
-            </div>
+        <div id="geocoding_fields">
+          <input name="search" type="text" id="search_box_geocoding" class="search_box" >
+          <button id="submit_button_geocoding"  type="button" class="submit_button">Search</button>
+        </div>
       </div>
+    </div>
   </div>
 </div>
+<div class="row">
+  <div class="col-md-5">
+      <div class="form-group">
+        <%= f.submit  class:"btn btn-primary pull-left"%>
+      </div>
+    </div>
+</div>
+<% end %>
+
 
 <script type="text/javascript">
     $('#geocoding_fields').show();
+    $("#search_box_geocoding").keypress(function(event){
+        if(event.keyCode == 13){
+            event.preventDefault();
+            $("#submit_button_geocoding").click();
+        }
+    });
 </script>
