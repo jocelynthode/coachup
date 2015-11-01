@@ -3,9 +3,11 @@ Rails.application.routes.draw do
   get 'login' => 'sessions#new', as: 'login'
   post 'login' => 'sessions#create'
   get 'logout' => 'sessions#destroy', as: 'logout'
+  get 'register' => 'users#new', as: 'register'
+  get 'edit_profile' => 'users#edit', as: 'edit_profile'
+  post 'update_profile' => 'users#update'
+  patch 'update_profile' => 'users#update'
 
-  devise_for :users, controllers: { sessions: 'users/sessions' },
-    path: "/", path_names: { sign_in: 'login', sign_up: 'register' }
   get 'overview/welcome'
   get 'overview/index'
 
@@ -22,9 +24,6 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
 
-  authenticated :user do
-    root to: 'overview#index', as: 'authenticated_root'
-  end
   root 'overview#welcome'
 
   # Example of regular route:

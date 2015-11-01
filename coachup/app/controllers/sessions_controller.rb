@@ -12,6 +12,12 @@ class SessionsController < ApplicationController
     if user
       session[:username] = username
       session[:password] = password
+      unless User.find_by username: username
+        new_user = User.new(username: username)
+        response = authenticated_request(:get, "users/#{username}")
+        new_user.email = response[:email]
+        new_user.save(validate: false)
+      end
       redirect_to root_path, notice: "Successfully logged in as #{username}"
     else
       flash[:alert] = "Invalid username or password"

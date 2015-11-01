@@ -1,4 +1,6 @@
 <div class="row">
+  <%= render "errors" %>
+
   <div class="col-lg-6">
     <%= form_for(@user, url: { action: 'create' }, html: { role: 'form' }) do |f| %>
       <div class="form-group">
