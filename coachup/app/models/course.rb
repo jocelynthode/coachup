@@ -94,16 +94,16 @@ class Course < ActiveRecord::Base
       return "You are the owner of this course!", :alert
     end
 
-    @subscribtions = self.subscriptions
-    if @subscribtions.present?
-      @subscribtions.each do |sub|
+    @subscriptions = self.subscriptions
+    if @subscriptions.present?
+      @subscriptions.each do |sub|
         if sub.user == current_user
           return "You are already subscribed!", :alert
         end
       end
     end
 
-    if self.max_participants <= @subscribtions.count
+    if self.max_participants <= @subscriptions.count
       return "Sorry! Maximum number of participants is already reached!", :alert
     end
 
