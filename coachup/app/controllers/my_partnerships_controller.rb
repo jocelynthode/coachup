@@ -11,9 +11,20 @@ class MyPartnershipsController < ApplicationController
     @partnerships = response['partnerships'].map {|partnership| partnership['id']}
 
 
+=begin
+    user= Partnership.new("user123","test123")
+=end
+
+
   end
 
   def show
+
+
+
+
+
+
 
     response = rest_request(:get, MyPartnershipsHelper.url + 'partnerships/' + params[:id],
                             accept: :json)

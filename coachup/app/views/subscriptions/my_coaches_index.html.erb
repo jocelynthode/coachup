@@ -16,16 +16,15 @@
             </thead>
             <tbody>
 
-            <% @my_coaches.each do |subscription| %>
+            <% @my_coaches.each do |coach| %>
 
                 <tr>
+                  <td><%= coach.username %></td>
+                  <td><%= coach.email %></td>
+                  <td><%= link_to 'Show', subscription_path(coach) %></td>
 
-                  <td><%= subscription.username %></td>
-                  <td><%= subscription.email %></td>
-                  <td><%= link_to 'Show', subscription_path(subscription) %></td>
-
-                  <td><%= link_to 'Edit', edit_course_path(subscription) %></td>
-                  <td><%= link_to 'Destroy', course_path(subscription),
+                  <td><%= link_to 'Edit', edit_course_path(coach) %></td>
+                  <td><%= link_to 'Destroy', course_path(coach),
                                   method: :delete,
                                   data: { confirm: 'Are you sure?' } %> </td>
                 </tr>
