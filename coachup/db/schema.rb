@@ -81,7 +81,7 @@ ActiveRecord::Schema.define(version: 20151030145818) do
     t.string   "address"
     t.string   "country"
     t.string   "phone"
-    t.string   "date_of_birth"
+    t.date     "date_of_birth"
     t.string   "trophies"
     t.string   "personal_records"
     t.string   "education"
