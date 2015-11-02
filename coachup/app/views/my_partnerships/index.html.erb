@@ -1,6 +1,7 @@
 <h1>Partnership</h1>
 <% @partnerships.each do |partnership| %>
     <div>
+
       <%= link_to partnership, partnership_path(partnership.to_i)  %>
     </div>
 <% end %>
