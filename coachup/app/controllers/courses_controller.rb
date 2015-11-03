@@ -38,11 +38,16 @@ class CoursesController < ApplicationController
 
   def update
     @course = Course.find(params[:id])
+    response = authenticated_put("users/#{current_user.username}/#{course_params[:sport]}",
+                                 {publicvisible: 2})
 
-    if @course.update(course_params)
+    if @course.update(course_params) && !bad_request?(response)
+
+      flash[:notice] = "Successfully updated Course"
       redirect_to @course
     else
-      render 'edit'
+      flash[:alert] = "Could not save changes"
+      redirect_to edit_course_path
     end
   end
 
@@ -102,7 +107,39 @@ class CoursesController < ApplicationController
   end
 
   private
-    def course_params
-      params.require(:course).permit(:title, :description, :price, :coach_id, :sport, :max_participants, location_attributes: [:address, :latitude, :longitude])
+  def course_params
+    params.require(:course).permit(:title, :description, :price, :coach_id, :sport, :max_participants, location_attributes: [:address, :latitude, :longitude])
+  end
+
+  def rest_put(url, payload, **args)
+    begin
+      response = RestClient::Request.execute(method: :put, url: url,
+                                             payload: payload, headers: args)
+      JSON.parse(response, symbolize_names: true)
+    rescue RestClient::Exception => exception
+      exception
     end
+  end
+
+  def rest_request(method, url, **args)
+    begin
+      response = RestClient::Request.execute(method: method, url: url,
+                                             headers: args)
+      JSON.parse(response, symbolize_names: true)
+    rescue RestClient::Exception => exception
+      exception
+    end
+  end
+
+  def bad_request?(response)
+    if response.is_a?(RestClient::Exception)
+      true
+    else
+      false
+    end
+  end
+
+  def exception_code(exception)
+    exception.response.code
+  end
 end
