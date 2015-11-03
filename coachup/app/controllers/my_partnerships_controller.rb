@@ -1,30 +1,10 @@
 class MyPartnershipsController < ApplicationController
 
   def index
-
-    start = params[:start] || 0
-    size = params[:size] || 10
-
-    response = rest_request(:get, MyPartnershipsHelper.url + 'partnerships/', accept: :json,
-                                          params:{start: start, size:size})
-
-    @partnerships = response['partnerships'].map {|partnership| partnership['id']}
-
-
-=begin
-    user= Partnership.new("user123","test123")
-=end
-
-
+    @partnerships =current_user_partnerships.find()
   end
 
   def show
-
-
-
-
-
-
 
     response = rest_request(:get, MyPartnershipsHelper.url + 'partnerships/' + params[:id],
                             accept: :json)

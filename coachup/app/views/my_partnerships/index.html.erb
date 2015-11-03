@@ -1,7 +1,35 @@
-<h1>Partnership</h1>
-<% @partnerships.each do |partnership| %>
-    <div>
-
-      <%= link_to partnership, partnership_path(partnership.to_i)  %>
+<div class="row">
+  <div class="col-md-12">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        Partnerships
+      </div>
+      <!-- /.panel-heading -->
+      <div class="panel-body">
+        <div class="table-responsive">
+          <table class="table">
+            <thead>
+            <tr>
+              <th>Coach</th>
+              <th>Created at</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% @partnerships.each do |partner| %>
+                <tr>
+                  <td><%= link_to partner[:user], users_path(partner[:id]) %></td>
+                  <td><%= partner[:created_at]   %></td>
+                </tr>
+            <% end %>
+            </tbody>
+          </table>
+        </div>
+        <!-- /.table-responsive -->
+      </div>
+      <!-- /.panel-body -->
     </div>
-<% end %>
+    <!-- /.panel -->
+  </div>
+  <!-- /.col-lg-6 -->
+</div>
+<!-- /.row -->
