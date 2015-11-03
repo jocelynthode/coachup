@@ -95,6 +95,21 @@ class CoursesController < ApplicationController
   def apply
     @course = Course.find(params[:course_id])
     @msg, @channel = @course.apply(current_user)
+
+    url = Course.url + 'users/' + current_user.username + '/' +@course.sport
+    payload = { publicvisible: "2" }
+    payload_xml = payload.to_xml(root: :subscription, skip_instruct: true)
+    begin
+      response = authenticated_put(url, payload_xml, accept: :json, content_type: :xml)
+    rescue RestClient::Exception => exception
+      exception
+    end
+
+    if bad_request?(response)
+      @channel = :alert
+      @msg = "Something went wrong"
+    end
+
     flash[@channel] = @msg
     redirect_to course_path(@course)
   end
