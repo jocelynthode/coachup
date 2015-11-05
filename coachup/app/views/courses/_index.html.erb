@@ -20,19 +20,31 @@
                   <tr>
                     <td><%= course.title %></td>
                     <td><%= course.coach.username %></td>
-                    <td><%= link_to 'Show', course_path(course) %></td>
+                    <td><%= link_to course_path(course), :class => "btn btn-primary btn-sm" do %>
+                      <span class="glyphicon glyphicon-eye-open"></span>
+                          Show
+                      <% end %>
+                    </td>
                     <% if user_signed_in? and current_user.id == course.coach_id %>
-                        <td><%= link_to 'Edit', edit_course_path(course) %></td>
-                        <td><%= link_to 'Destroy', course_path(course),
+                        <td><%= link_to edit_course_path(course), :class => "btn btn-success btn-sm"  do %>
+                          <span class="glyphicon glyphicon-edit"></span>
+                            Edit
+                          <% end %>
+                        </td>
+                        <td><%= link_to course_path(course), :class => "btn btn-danger btn-sm",
                                         method: :delete,
-                                        data: { confirm: 'Are you sure?' } %> </td>
+                                        data: { confirm: 'Are you sure?' } do %>
+                              <span class="glyphicon glyphicon-trash"></span>
+                              Delete
+                          <% end %>
+                        </td>
                     <% end %>
                   </tr>
               <% end %>
             <% end %>
             </tbody>
           </table>
-          <%= link_to 'Create Course', new_course_path %>
+          <%= link_to 'Create Course', new_course_path, :class => "btn btn-default" %>
         </div>
         <!-- /.table-responsive -->
       </div>
