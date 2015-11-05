@@ -28,7 +28,6 @@ Rails.application.routes.draw do
 
 
   get '/partnerships/', to: 'my_partnerships#index' , as: 'partnerships'
-  get '/partnerships/:id/', to: 'my_partnerships#show' , as: 'partnership'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
