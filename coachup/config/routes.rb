@@ -14,11 +14,6 @@ Rails.application.routes.draw do
   resources :users do
   end
 
-=begin
-  resources :my_partnerships do
-  end
-=end
-
   #resources :profiles, only: [:edit]
   get 'profiles/:id' => 'profiles#show', as: "user_profile"
   get 'profiles/' => 'profiles#index', as: "profiles"
@@ -28,6 +23,8 @@ Rails.application.routes.draw do
 
 
   get '/partnerships/', to: 'my_partnerships#index' , as: 'partnerships'
+  post '/partnerships/:username', to: 'my_partnerships#create'
+  delete '/partnerships/:username', to: 'my_partnerships#destroy'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
