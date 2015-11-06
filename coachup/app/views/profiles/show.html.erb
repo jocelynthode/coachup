@@ -15,7 +15,7 @@
 
           <div class="row">
             <div class="col-xs-7 col-sm-12">
-              <%= image_tag("photo9.jpg",:class=>"profile-image")%>
+              <%= image_tag @user.avatar_url(:display, :class=>"profile-image") %>
             </div>
             <div class="col-xs-5 col-sm-12">
               <h3>General Information</h3>
