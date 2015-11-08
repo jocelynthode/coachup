@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151106183424) do
+ActiveRecord::Schema.define(version: 20151108142127) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,9 @@ ActiveRecord::Schema.define(version: 20151106183424) do
     t.string   "sport"
     t.integer  "max_participants", default: 1
     t.integer  "location_id",                  null: false
+    t.string   "schedule"
+    t.datetime "starts_at",                    null: false
+    t.datetime "ends_at"
   end
 
   add_index "courses", ["coach_id"], name: "index_courses_on_coach_id", using: :btree
