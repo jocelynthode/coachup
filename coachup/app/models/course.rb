@@ -7,7 +7,7 @@ class Course < ActiveRecord::Base
   accepts_nested_attributes_for :training_session
   belongs_to :location
   accepts_nested_attributes_for :location
-  serialize :schedule
+  serialize :schedule, Hash
 
   validates_datetime :starts_at, on_or_after: lambda {DateTime.now}
   validates_datetime :ends_at, after: :starts_at
@@ -75,7 +75,10 @@ class Course < ActiveRecord::Base
   end
 
   def schedule=(new_schedule)
-    write_attribute(:schedule, RecurringSelect.dirty_hash_to_rule(new_schedule).to_yaml)
+    if new_schedule == nil
+      new_schedule = IceCube::Schedule.new( self.starts_at )
+    end
+    write_attribute(:schedule, RecurringSelect.dirty_hash_to_rule(new_schedule).to_hash)
   end
 
   def starts_at=(new_starts_at)
@@ -87,8 +90,13 @@ class Course < ActiveRecord::Base
   end
 
   def retrieve_schedule
-    schedule = IceCube::Schedule.new(self.starts_at)
-    schedule.add_recurrence_rule(IceCube::Schedule.from_yaml(self.schedule))
-    schedule
+    if !self.read_attribute(:schedule).empty?
+      schedule = IceCube::Schedule.new( self.starts_at)
+      the_rule = RecurringSelect.dirty_hash_to_rule( self.read_attribute(:schedule) )
+      if RecurringSelect.is_valid_rule?(the_rule)
+        schedule.add_recurrence_rule( the_rule)
+      end
+      schedule
+    end
   end
 end
