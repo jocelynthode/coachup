@@ -2,8 +2,12 @@ class CoursesController < ApplicationController
   skip_before_action :require_login, only: [:index, :show]
 
   def index
-    @courses = Course.all
     @search = Course.search(params[:q])
+    if params[:q] == nil then
+      @courses = Course.all
+    else
+      @courses = @search.result
+    end
   end
 
   def show
