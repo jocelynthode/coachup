@@ -16,4 +16,8 @@
 //= require bootstrap
 //= require underscore
 //= require gmaps/google
+//= require recurring_select
+//= require jquery-mobile-rs
+//= require moment
+//= require bootstrap-datetimepicker
 //= require_tree .
