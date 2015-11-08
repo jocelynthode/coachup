@@ -3,6 +3,7 @@ class CoursesController < ApplicationController
 
   def index
     @courses = Course.all
+    @search = Course.search(params[:q])
   end
 
   def show
