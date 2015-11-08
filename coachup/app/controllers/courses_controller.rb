@@ -38,6 +38,7 @@ class CoursesController < ApplicationController
 
   def update
     @course = Course.find(params[:id])
+
     response = authenticated_put("users/#{current_user.username}/#{course_params[:sport]}",
                                  {publicvisible: 2})
 
@@ -123,7 +124,7 @@ class CoursesController < ApplicationController
 
   private
   def course_params
-    params.require(:course).permit(:title, :description, :price, :coach_id, :sport, :max_participants, location_attributes: [:address, :latitude, :longitude])
+    params.require(:course).permit(:title, :description, :price, :coach_id, :sport, :max_participants, location_attributes: [:address, :latitude, :longitude], training_sessions: [:schedule, :starts_at])
   end
 
   def rest_put(url, payload, **args)
