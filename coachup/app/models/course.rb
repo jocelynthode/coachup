@@ -3,10 +3,16 @@ class Course < ActiveRecord::Base
   delegate :username, :to => :coach
   has_many :subscriptions
   has_many :users, through: :subscriptions
-  has_many :training_sessions
+  has_many :training_session
+  accepts_nested_attributes_for :training_session
   belongs_to :location
   accepts_nested_attributes_for :location
+  serialize :schedule
 
+  validates_datetime :starts_at, on_or_after: lambda {DateTime.now}
+  validates_datetime :ends_at, after: :starts_at
+
+  validates :starts_at, presence: true
   validates :title, presence: true
   validates :description, presence: true
   validates :coach_id, presence: true
@@ -62,5 +68,27 @@ class Course < ActiveRecord::Base
       current_subscription.destroy
       ["You are successfully unsubscribed from the course!", :notice]
     end
+  end
+
+  def training_sessions=(new_training_sessions)
+    @training_session = training_session_attributes
+  end
+
+  def schedule=(new_schedule)
+    write_attribute(:schedule, RecurringSelect.dirty_hash_to_rule(new_schedule).to_yaml)
+  end
+
+  def starts_at=(new_starts_at)
+    write_attribute(:starts_at, DateTime.strptime(new_starts_at, '%d-%m-%Y %H:%M:%S'))
+  end
+
+  def ends_at=(new_ends_at)
+    write_attribute(:ends_at, DateTime.strptime(new_ends_at, '%d-%m-%Y %H:%M:%S'))
+  end
+
+  def retrieve_schedule
+    schedule = IceCube::Schedule.new(self.starts_at)
+    schedule.add_recurrence_rule(IceCube::Schedule.from_yaml(self.schedule))
+    schedule
   end
 end
