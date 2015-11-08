@@ -105,10 +105,14 @@
 
 <script type="text/javascript">
   $(function () {
-    $('#datetimepicker').datetimepicker({format: 'DD-MM-YYYY HH:mm:ss'});
+    $('#datetimepicker').datetimepicker({
+      format: 'DD-MM-YYYY HH:mm:ss',
+      minDate: Date.now()
+    });
     $('#datetimepicker1').datetimepicker({
-      useCurrent: false, //Important! See issue #1075
-      format: 'DD-MM-YYYY HH:mm:ss'
+      useCurrent: false,
+      format: 'DD-MM-YYYY HH:mm:ss',
+      minDate: Date.now()
     });
     $("#datetimepicker").on("dp.change", function (e) {
       $('#datetimepicker1').data("DateTimePicker").minDate(e.date);

@@ -9,6 +9,10 @@ class Course < ActiveRecord::Base
   accepts_nested_attributes_for :location
   serialize :schedule
 
+  validates_datetime :starts_at, on_or_after: lambda {DateTime.now}
+  validates_datetime :ends_at, after: :starts_at
+
+  validates :starts_at, presence: true
   validates :title, presence: true
   validates :description, presence: true
   validates :coach_id, presence: true
@@ -79,7 +83,7 @@ class Course < ActiveRecord::Base
   end
 
   def ends_at=(new_ends_at)
-    write_attribute(:starts_at, DateTime.strptime(new_ends_at, '%d-%m-%Y %H:%M:%S'))
+    write_attribute(:ends_at, DateTime.strptime(new_ends_at, '%d-%m-%Y %H:%M:%S'))
   end
 
   def retrieve_schedule
