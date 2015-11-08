@@ -10,6 +10,7 @@ class Course < ActiveRecord::Base
   serialize :schedule
 
   validates_datetime :starts_at, on_or_after: lambda {DateTime.now}
+  #TODO check for when ends_at doesn't exist
   validates_datetime :ends_at, after: :starts_at
 
   validates :starts_at, presence: true
@@ -83,11 +84,17 @@ class Course < ActiveRecord::Base
   end
 
   def ends_at=(new_ends_at)
-    write_attribute(:ends_at, DateTime.strptime(new_ends_at, '%d-%m-%Y %H:%M:%S'))
+
+      if new_ends_at != ""
+        value = DateTime.strptime(new_ends_at, '%d-%m-%Y %H:%M:%S')
+      else
+        value = nil
+      end
+      write_attribute(:ends_at, value)
   end
 
   def retrieve_schedule
-    schedule = IceCube::Schedule.new(self.starts_at)
+    schedule = IceCube::Schedule.new(start_time: self.starts_at, end_time: self.ends_at)
     schedule.add_recurrence_rule(IceCube::Schedule.from_yaml(self.schedule))
     schedule
   end
