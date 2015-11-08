@@ -124,7 +124,7 @@ class CoursesController < ApplicationController
 
   private
   def course_params
-    params.require(:course).permit(:title, :description, :price, :coach_id, :sport, :max_participants, location_attributes: [:address, :latitude, :longitude], training_sessions: [:schedule, :starts_at])
+    params.require(:course).permit(:title, :description, :price, :coach_id, :sport, :max_participants, :schedule, :starts_at, location_attributes: [:address, :latitude, :longitude])
   end
 
   def rest_put(url, payload, **args)

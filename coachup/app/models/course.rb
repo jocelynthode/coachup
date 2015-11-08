@@ -3,7 +3,7 @@ class Course < ActiveRecord::Base
   delegate :username, :to => :coach
   has_many :subscriptions
   has_many :users, through: :subscriptions
-  has_one :training_session
+  has_many :training_session
   accepts_nested_attributes_for :training_session
   belongs_to :location
   accepts_nested_attributes_for :location
@@ -69,8 +69,17 @@ class Course < ActiveRecord::Base
   def training_sessions=(new_training_sessions)
     @training_session = training_session_attributes
   end
+
   def schedule=(new_schedule)
     write_attribute(:schedule, RecurringSelect.dirty_hash_to_rule(new_schedule).to_yaml)
+  end
+
+  def starts_at=(new_starts_at)
+    write_attribute(:starts_at, DateTime.strptime(new_starts_at, '%d-%m-%y %H:%M'))
+  end
+
+  def ends_at=(new_ends_at)
+    write_attribute(:starts_at, DateTime.strptime(new_ends_at, '%d-%m-%y %H:%M'))
   end
 
   def retrieve_schedule
