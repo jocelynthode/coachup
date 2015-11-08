@@ -75,11 +75,11 @@ class Course < ActiveRecord::Base
   end
 
   def starts_at=(new_starts_at)
-    write_attribute(:starts_at, DateTime.strptime(new_starts_at, '%d-%m-%y %H:%M'))
+    write_attribute(:starts_at, DateTime.strptime(new_starts_at, '%d-%m-%Y %H:%M:%S'))
   end
 
   def ends_at=(new_ends_at)
-    write_attribute(:starts_at, DateTime.strptime(new_ends_at, '%d-%m-%y %H:%M'))
+    write_attribute(:starts_at, DateTime.strptime(new_ends_at, '%d-%m-%Y %H:%M:%S'))
   end
 
   def retrieve_schedule
