@@ -105,8 +105,5 @@ class Course < ActiveRecord::Base
       end
       schedule
     end
-    #schedule = IceCube::Schedule.new(start_time: self.starts_at, end_time: self.ends_at)
-    #schedule.add_recurrence_rule(IceCube::Schedule.from_yaml(self.schedule))
-    #schedule
   end
 end
