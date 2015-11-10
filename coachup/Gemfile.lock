@@ -45,6 +45,8 @@ GEM
     bootstrap-sass (3.3.5.1)
       autoprefixer-rails (>= 5.0.0.1)
       sass (>= 3.3.0)
+    bootstrap3-datetimepicker-rails (4.17.37)
+      momentjs-rails (>= 2.8.1)
     builder (3.2.2)
     byebug (6.0.2)
     coffee-rails (4.1.0)
@@ -68,6 +70,7 @@ GEM
     http-cookie (1.0.2)
       domain_name (~> 0.5)
     i18n (0.7.0)
+    ice_cube (0.13.0)
     jbuilder (2.3.2)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
@@ -83,6 +86,8 @@ GEM
     mime-types (2.6.2)
     mini_portile (0.6.2)
     minitest (5.8.1)
+    momentjs-rails (2.10.6)
+      railties (>= 3.1)
     multi_json (1.11.2)
     netrc (0.10.3)
     nokogiri (1.6.6.2)
@@ -117,6 +122,12 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rake (10.4.2)
     rdoc (4.2.0)
+    recurring_select (2.0.0)
+      coffee-rails (>= 3.1)
+      ice_cube (>= 0.11)
+      jquery-rails (>= 3.0)
+      rails (>= 3.2)
+      sass-rails (>= 4.0)
     rest-client (1.8.0)
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
@@ -141,6 +152,7 @@ GEM
     thor (0.19.1)
     thread_safe (0.3.5)
     tilt (2.0.1)
+    timeliness (0.3.7)
     turbolinks (2.5.3)
       coffee-rails
     twitter-bootstrap-rails (3.2.0)
@@ -156,6 +168,8 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.1)
+    validates_timeliness (3.0.14)
+      timeliness (~> 0.3.6)
     web-console (2.2.1)
       activemodel (>= 4.0)
       binding_of_caller (>= 0.7.2)
@@ -167,15 +181,19 @@ PLATFORMS
 
 DEPENDENCIES
   bootstrap-sass (~> 3.3.5)
+  bootstrap3-datetimepicker-rails (~> 4.17.37)
   byebug
   coffee-rails (~> 4.1.0)
   font-awesome-rails
   geocoder
   gmaps4rails
+  ice_cube
   jbuilder (~> 2.0)
   jquery-rails
+  momentjs-rails (>= 2.9.0)
   pg
   rails (= 4.2.4)
+  recurring_select
   rest-client
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
@@ -183,6 +201,7 @@ DEPENDENCIES
   turbolinks
   twitter-bootstrap-rails (~> 3.2.0)
   uglifier (>= 1.3.0)
+  validates_timeliness (~> 3.0)
   web-console (~> 2.0)
 
 BUNDLED WITH
