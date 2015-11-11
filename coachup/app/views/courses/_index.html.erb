@@ -7,15 +7,16 @@
       <!-- /.panel-heading -->
       <div class="panel-body">
         <div class="table-responsive">
-          <table class="table">
-            <thead>
-            <tr>
-              <th>Title</th>
-              <th>Coach</th>
-            </tr>
-            </thead>
-            <tbody>
             <% if @courses.present? %>
+              <h2>Courses</h2>
+              <table class="table">
+                <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Coach</th>
+                </tr>
+                </thead>
+                <tbody>
               <% @courses.each do |course| %>
                   <tr>
                     <td><%= course.title %></td>
@@ -29,9 +30,34 @@
                     <% end %>
                   </tr>
               <% end %>
+                </tbody>
+              </table>
+            <% elsif type == :subscriptions %>
+              <h2>You have no subscriptions yet</h2>
+            <% elsif type == :coaches %>
+              <h2>You have no coaches yet</h2>
+            <% else %>
+              <h2>No courses found with search terms : <%= params[:q][:title_or_description_cont] %></h2>
             <% end %>
-            </tbody>
-          </table>
+<!--            <%# if @users.present? %>
+                <h2>Users</h2>
+                <table class="table">
+                  <thead>
+                  <tr>
+                    <th>Username</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                <%# @users.each do |user| %>
+                    <tr>
+                      <td><%#= user.title %></td>
+                      <td><%#= link_to 'Show', profile_path(user) %></td>
+                    </tr>
+                <%#end %>
+                </tbody>
+                </table>
+            <%# end %>-->
+
           <%= link_to 'Create Course', new_course_path %>
         </div>
         <!-- /.table-responsive -->

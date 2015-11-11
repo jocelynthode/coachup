@@ -75,7 +75,8 @@
           <li class="sidebar-search">
             <%= form_tag courses_path, method: "get" do %>
                 <div class="input-group">
-                  <%= search_field_tag 'q[title_or_description_cont]', nil, class: "form-control", placeholder: "Search courses..." %>
+                  <%= search_field_tag 'q[title_or_description_cont]', nil, class: "form-control", placeholder: "Search courses...",
+                                       value: params[:q] && params[:q][:title_or_description_cont]|| ""%>
                   <span class="input-group-btn">
                 <%= submit_tag 'Search', class: "btn btn-default" %>
               </span>

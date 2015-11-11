@@ -2,11 +2,12 @@ class CoursesController < ApplicationController
   skip_before_action :require_login, only: [:index, :show]
 
   def index
-    @search = Course.search(params[:q])
     if params[:q] == nil then
       @courses = Course.all
     else
-      @courses = @search.result
+      @courses = Course.search(params[:q]).result
+      #Do we want to check for users too ? if so we'll have to move the search result to a different page
+      #@users = User.search(username_or_name_or_last_name_cont: params[:q]).result
     end
   end
 
