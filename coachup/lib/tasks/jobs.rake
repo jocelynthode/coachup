@@ -4,7 +4,10 @@ namespace :jobs do
 
   desc "Send test mail"
   task :sometest => :environment do
-    CourseMailer.user_application(nil, ENV['MAIL']).deliver_now
-    puts 'mail sent'
+    c = Course.first
+    m = CourseMailer.user_application(c, c.subscriptions.first.user)
+    puts m
+    m.deliver_now
   end
+
 end

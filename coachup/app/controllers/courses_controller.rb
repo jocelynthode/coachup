@@ -97,7 +97,11 @@ class CoursesController < ApplicationController
     @course = Course.find(params[:course_id])
     @msg, @channel = @course.apply(current_user)
 
-    url = Course.url + 'users/' + current_user.username + '/' +@course.sport
+    # TODO: Check if request went well before applying the user in the DB and sending a mail
+    # Notify coach
+    CourseMailer.user_application(@course, current_user).deliver_now
+
+    url = 'users/' + current_user.username + '/' +@course.sport
     payload = { publicvisible: "2" }
     payload_xml = payload.to_xml(root: :subscription, skip_instruct: true)
     begin
@@ -118,6 +122,8 @@ class CoursesController < ApplicationController
   def leave
     @course = Course.find(params[:course_id])
     @msg, @channel = @course.leave(current_user)
+    @course.reload
+    CourseMailer.user_application(@course, current_user, has_left=true).deliver_now
     flash[@channel] = @msg
     redirect_to course_path(@course)
   end
