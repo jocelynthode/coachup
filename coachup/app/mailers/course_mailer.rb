@@ -20,4 +20,13 @@ class CourseMailer < ApplicationMailer
     mail(to: @user.email,
          subject: 'CoachUP! - Reminder for your training session')
   end
+
+  def details_update(course)
+    @course = course
+    recipients = course.subscriptions.map do |sub|
+      sub.user.email
+    end
+    mail(to: recipients,
+         subject: 'CoachUP! - One of your courses has been updated')
+  end
 end

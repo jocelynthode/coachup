@@ -43,7 +43,7 @@ class CoursesController < ApplicationController
                                  {publicvisible: 2})
 
     if @course.update(course_params) && !bad_request?(response)
-
+      CourseMailer.details_update(@course).deliver_now
       flash[:notice] = "Successfully updated Course"
       redirect_to @course
     else
