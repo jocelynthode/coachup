@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
   validates_presence_of :new_password_confirmation, if: :new_password_present?, on: :update
   validates_confirmation_of :new_password, if: :new_password_present?, on: :update
 
+  mount_uploader :avatar, AvatarUploader
+
   has_many :taught_courses, class_name: "Course"
   has_many :subscriptions
   has_many :courses, through: :subscriptions
@@ -37,6 +39,30 @@ class User < ActiveRecord::Base
       false
     end
   end
+
+  def get_next_sessions
+    date_course = Struct.new(:date, :course)
+    all_dates = Set.new
+    self.subscriptions.each do |sub|
+      schedule = sub.course.retrieve_schedule
+      occ = schedule.occurrences(Date.today + 1.year)
+      occ.each do |date|
+        element = date_course.new
+        element.date = date.to_date
+        element.course = sub.course
+        all_dates.add(element)
+      end
+    end
+
+    all_dates = all_dates.sort_by { |date| date.date}
+
+    if all_dates.count > 10
+      all_dates = all_dates.take(10)
+    elsif (all_dates.count == 0)
+      false
+    end
+  end
+
 
   private
   def new_password_present?

@@ -1,0 +1,19 @@
+---
+development:
+  cloud_name: coachup
+  api_key: '163595966588973'
+  api_secret: 6ktN-hUHdccGwq4zuSRVlN9N8nE
+  enhance_image_tag: true
+  static_image_support: false
+production:
+  cloud_name: coachup
+  api_key: '163595966588973'
+  api_secret: 6ktN-hUHdccGwq4zuSRVlN9N8nE
+  enhance_image_tag: true
+  static_image_support: true
+test:
+  cloud_name: coachup
+  api_key: '163595966588973'
+  api_secret: 6ktN-hUHdccGwq4zuSRVlN9N8nE
+  enhance_image_tag: true
+  static_image_support: false
