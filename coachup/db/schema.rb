@@ -26,6 +26,9 @@ ActiveRecord::Schema.define(version: 20151109212307) do
     t.string   "sport"
     t.integer  "max_participants", default: 1
     t.integer  "location_id",                  null: false
+    t.string   "schedule"
+    t.datetime "starts_at",                    null: false
+    t.datetime "ends_at"
   end
 
   add_index "courses", ["coach_id"], name: "index_courses_on_coach_id", using: :btree
@@ -53,11 +56,10 @@ ActiveRecord::Schema.define(version: 20151109212307) do
     t.string   "description"
     t.datetime "starts_at"
     t.datetime "ends_at"
-    t.float    "lat"
-    t.float    "lng"
     t.integer  "course_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.string   "schedule"
   end
 
   add_index "training_sessions", ["course_id"], name: "index_training_sessions_on_course_id", using: :btree
