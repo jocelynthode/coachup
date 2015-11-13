@@ -8,10 +8,10 @@ class Course < ActiveRecord::Base
   serialize :schedule, Hash
 
   validates_datetime :starts_at, on_or_after: lambda {DateTime.now}
-  #TODO check for when ends_at doesn't exist
   validates_datetime :ends_at, after: :starts_at
 
   validates :starts_at, presence: true
+  validates :ends_at, presence: true
   validates :title, presence: true
   validates :description, presence: true
   validates :coach_id, presence: true
