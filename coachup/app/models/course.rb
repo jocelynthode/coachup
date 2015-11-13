@@ -3,8 +3,6 @@ class Course < ActiveRecord::Base
   delegate :username, :to => :coach
   has_many :subscriptions
   has_many :users, through: :subscriptions
-  has_many :training_session
-  accepts_nested_attributes_for :training_session
   belongs_to :location
   accepts_nested_attributes_for :location
   serialize :schedule, Hash
@@ -71,12 +69,8 @@ class Course < ActiveRecord::Base
     end
   end
 
-  def training_sessions=(new_training_sessions)
-    @training_session = training_session_attributes
-  end
-
   def schedule=(new_schedule)
-    if new_schedule == nil
+    if new_schedule.nil?
       new_schedule = IceCube::Schedule.new( self.starts_at )
     end
     write_attribute(:schedule, RecurringSelect.dirty_hash_to_rule(new_schedule).to_hash)
@@ -97,9 +91,9 @@ class Course < ActiveRecord::Base
   end
 
   def retrieve_schedule
-    if !self.read_attribute(:schedule).empty?
-      schedule = IceCube::Schedule.new( start_time: self.starts_at, end_time: self.ends_at)
-      the_rule = RecurringSelect.dirty_hash_to_rule( self.read_attribute(:schedule) )
+    if !self.schedule.empty?
+      schedule = IceCube::Schedule.new(self.starts_at, end_time: self.ends_at)
+      the_rule = RecurringSelect.dirty_hash_to_rule( self.schedule )
       if RecurringSelect.is_valid_rule?(the_rule)
         schedule.add_recurrence_rule( the_rule)
       end
