@@ -8,10 +8,10 @@ class Course < ActiveRecord::Base
   serialize :schedule, Hash
 
   validates_datetime :starts_at, on_or_after: lambda {DateTime.now}
-  #TODO check for when ends_at doesn't exist
   validates_datetime :ends_at, after: :starts_at
 
   validates :starts_at, presence: true
+  validates :ends_at, presence: true
   validates :title, presence: true
   validates :description, presence: true
   validates :coach_id, presence: true
@@ -42,23 +42,24 @@ class Course < ActiveRecord::Base
 
   def apply(current_user)
     if self.coach.id == current_user.id
-      ["You are the owner of this course!", :alert]
-    elsif self.max_participants <= self.subscriptions.count
-      ["Sorry! Maximum number of participants is already reached!", :alert]
-    elsif self.subscriptions.present?
+      return ["You are the owner of this course!", :alert]
+    end
+
+    if self.max_participants <= self.subscriptions.count
+      return ["Sorry! Maximum number of participants is already reached!", :alert]
+    end
+
+    if self.subscriptions.present?
       self.subscriptions.each do |sub|
         if sub.user == current_user
           #for some reason, the following line of code only works with a return
           return ["You are already subscribed!", :alert]
-        else
-          self.subscriptions << Subscription.create(course: self, user: current_user)
-          return ["You are now subscribed to the course!", :notice]
         end
       end
-    else
-      self.subscriptions << Subscription.create(course: self, user: current_user)
-      ["You are now subscribed to the course!", :notice]
     end
+
+    self.subscriptions << Subscription.create(course: self, user: current_user)
+    ["You are now subscribed to the course!", :notice]
   end
 
   def leave(current_user)
