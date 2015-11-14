@@ -30,4 +30,10 @@ class SessionsController < ApplicationController
     session[:password] = nil
     redirect_to root_path, notice: "Successfully logged out"
   end
+
+  def token
+    auth = env['omniauth.auth']
+    session[:token] = auth.credentials.token
+    redirect_to session.delete(:return_to) || root_path
+  end
 end

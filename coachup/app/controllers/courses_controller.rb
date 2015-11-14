@@ -97,7 +97,7 @@ class CoursesController < ApplicationController
     @course = Course.find(params[:course_id])
     @msg, @channel = @course.apply(current_user)
 
-    url = Course.url + 'users/' + current_user.username + '/' +@course.sport
+    url = Course.url + 'users/' + current_user.username + '/' + @course.sport
     payload = { publicvisible: "2" }
     payload_xml = payload.to_xml(root: :subscription, skip_instruct: true)
     begin
@@ -120,6 +120,17 @@ class CoursesController < ApplicationController
     @msg, @channel = @course.leave(current_user)
     flash[@channel] = @msg
     redirect_to course_path(@course)
+  end
+
+  def export
+    if session[:token]
+      course = Course.find(params[:course_id])
+      course.export_schedule(session[:token])
+      redirect_to course_path(course), notice: "Successfully exported to calendar"
+    else
+      session[:return_to] ||= request.original_url
+      redirect_to '/auth/google_oauth2'
+    end
   end
 
   private

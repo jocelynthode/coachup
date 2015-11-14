@@ -16,6 +16,8 @@ class Course < ActiveRecord::Base
   validates :description, presence: true
   validates :coach_id, presence: true
 
+  Calendar = Google::Apis::CalendarV3
+
   def self.url
     'http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/'
   end
@@ -99,5 +101,13 @@ class Course < ActiveRecord::Base
       end
       schedule
     end
+  end
+
+  def export_schedule(token)
+    calendar = Calendar::CalendarService.new
+    # dummy event
+    event = Calendar::Event.new(summary: 'Hi', start: Calendar::EventDateTime.new(date_time: DateTime.current), end: Calendar::EventDateTime.new(date_time: DateTime.current + Rational(1, 24)))
+    event = calendar.insert_event('primary', event, send_notifications: true,
+                                  options: { authorization: token })
   end
 end
