@@ -124,8 +124,9 @@ class CoursesController < ApplicationController
 
   def export
     if session[:token]
+      token = session.delete(:token)
       course = Course.find(params[:course_id])
-      course.export_schedule(session[:token])
+      course.export_schedule(token)
       redirect_to course_path(course), notice: "Successfully exported to calendar"
     else
       session[:return_to] ||= request.original_url
