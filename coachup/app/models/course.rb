@@ -105,9 +105,13 @@ class Course < ActiveRecord::Base
 
   def export_schedule(token)
     calendar = Calendar::CalendarService.new
-    # dummy event
-    event = Calendar::Event.new(summary: 'Hi', start: Calendar::EventDateTime.new(date_time: DateTime.current), end: Calendar::EventDateTime.new(date_time: DateTime.current + Rational(1, 24)))
-    event = calendar.insert_event('primary', event, send_notifications: true,
-                                  options: { authorization: token })
+    schedule = retrieve_schedule
+    schedule.occurrences(ends_at).each do |sess|
+      startTime = Calendar::EventDateTime.new(date_time: sess.start_time.to_datetime)
+      endTime = Calendar::EventDateTime.new(date_time: sess.start_time.to_datetime + 1.hour)
+      event = Calendar::Event.new(summary: title, start: startTime, end: endTime)
+      calendar.insert_event('primary', event, send_notifications: true,
+                            options: { authorization: token })
+    end
   end
 end
