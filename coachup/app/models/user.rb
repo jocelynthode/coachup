@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   validates :new_password, length: {within: 3..50}, if: :new_password_present?, on: :update
   validates_presence_of :new_password_confirmation, if: :new_password_present?, on: :update
   validates_confirmation_of :new_password, if: :new_password_present?, on: :update
+  validates :phone, format: { with: /\A(\d+[\s\d]*)*\z/ }, on: :update
 
   has_many :taught_courses, class_name: "Course"
   has_many :subscriptions

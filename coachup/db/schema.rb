@@ -52,31 +52,29 @@ ActiveRecord::Schema.define(version: 20151113152601) do
   add_index "subscriptions", ["course_id"], name: "index_subscriptions_on_course_id", using: :btree
   add_index "subscriptions", ["user_id"], name: "index_subscriptions_on_user_id", using: :btree
 
+  create_table "training_sessions", force: :cascade do |t|
+    t.string   "description"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.float    "lat"
+    t.float    "lng"
+    t.integer  "course_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "training_sessions", ["course_id"], name: "index_training_sessions_on_course_id", using: :btree
+
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
-    t.string   "reset_password_token"
-    t.datetime "reset_password_sent_at"
-    t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
-    t.datetime "current_sign_in_at"
-    t.datetime "last_sign_in_at"
-    t.string   "current_sign_in_ip"
-    t.string   "last_sign_in_ip"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
-    t.string   "username"
-    t.string   "name"
-    t.string   "last_name"
-    t.string   "address"
-    t.string   "country"
-    t.string   "phone"
-    t.date     "date_of_birth"
-    t.string   "trophies"
-    t.string   "personal_records"
-    t.string   "education"
-    t.string   "bio"
-    t.string   "aboutme"
+    t.string "email",         default: "", null: false
+    t.string "username"
+    t.string "address"
+    t.string "country"
+    t.string "phone"
+    t.date   "date_of_birth"
+    t.string "education"
+    t.text   "bio"
+    t.string "aboutme"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -87,4 +85,5 @@ ActiveRecord::Schema.define(version: 20151113152601) do
   add_foreign_key "courses", "users", column: "coach_id"
   add_foreign_key "subscriptions", "courses"
   add_foreign_key "subscriptions", "users"
+  add_foreign_key "training_sessions", "courses"
 end

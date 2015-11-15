@@ -30,16 +30,12 @@
               <ul class="profile-details">
                 <li>
                   <div><i class="fa fa-user"></i> Full Name </div>
-                    <%= @user.name %>  <%= @user.last_name %>
                 </li>
                 <li>
                   <div><i class="fa fa-briefcase"></i> Education</div>
                     <%= @user.education %>
                 </li>
                 <li>
-                  <div><i class="fa fa-star"></i> Trophies</div>
-                    <%= @user.trophies %>
-                </li>
                 <li>
                   <div><i class="fa fa-birthday-cake"></i> Date Of Birth</div>
                   <%= @user.date_of_birth %>
@@ -88,8 +84,6 @@
 
                   <h2>Bio</h2>
                   <p><%= @user.bio %></p>
-                  <h2>Personal Records</h2>
-                  <p><%= @user.personal_records %></p>
 
                 </div><!--/col-->
 
