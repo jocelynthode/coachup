@@ -8,47 +8,65 @@
     </div>
   </div>
 </div>
+<%= link_to 'Back', my_courses_index_courses_path, :class => "pull-right btn btn-default" %>
 <div class="row">
-  <div class="col-md-12">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <%= @course.title %>
-      </div>
-      <!-- /.panel-heading -->
-      <div class="panel-body">
-        <div class="table-responsive">
-          <table class="table">
-            <thead>
-            <tr>
-              <th>Title </th>
-              <th>Description </th>
-              <th>Price </th>
-              <th>Coach </th>
-              <th>Sport </th>
-              <th>Address </th>
-              <th>Max Participants </th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-              <td><%= @course.title  %>
-              <td><%= @course.description  %>
-              <td><%= @course.price  %>
-              <td><%= @course.coach.username  %>
-              <td><%= @course.sport  %>
-              <td><a  data-toggle="modal" data-target="#mymodal"><%= @course.location.address if @course.location !=nil %></a>
-              <td><%= @course.max_participants  %>
-            </tr>
-            </tbody>
-          </table>
-          <%= link_to 'Apply', course_apply_path(@course), :controller => :courses_controller, data: { confirm: 'Would you like to subscribe to the course?' } %>
-          <%= link_to 'Leave', course_leave_path(@course), :controller => :courses_controller, data: { confirm: 'Would you like to leave the course?' } %>
+  <div class="col-md-8 col-md-offset-2">
+    <div style="word-break: break-all">
+      <% if @course.sport=='Running' %>
+        <%= image_tag("running.png",:class=>"img-rounded center-block")%>
+      <% elsif @course.sport=='Boxing' %>
+          <%= image_tag("boxing.png",:class=>"img-rounded center-block")%>
+      <% elsif @course.sport=='Cycling' %>
+          <%= image_tag("cycling.png",:class=>"img-rounded center-block")%>
+      <% elsif @course.sport=='Soccer' %>
+          <%= image_tag("soccer.png",:class=>"img-rounded center-block")%>
+      <% end %>
+
+      <div class="row">
+       <div class="col-md-10 col-md-offset-2">
+         <dl class="dl-horizontal">
+            <dt>Title</dt>
+            <dd> <%= @course.title %></dd>
+
+            <dt>Description</dt>
+            <dd> <%= @course.description  %></dd>
+
+            <dt>Price</dt>
+            <dd> <%= @course.price  %></dd>
+
+            <dt>Coach</dt>
+            <dd> <%= @course.coach.username  %></dd>
+
+            <dt>Sport</dt>
+            <dd>  <%= @course.sport  %></dd>
+
+            <dt>Address</dt>
+            <dd>
+              <%= @course.location.address if @course.location !=nil %>
+              <%= link_to image_tag("pin.png",:width => 15, :height => 15), "#mymodal", :data => { :toggle =>"modal" } %>
+            </dd>
+
+            <dt>Max Participants</dt>
+            <dd> <%= @course.max_participants  %></dd>
+            <dt>Share</dt>
+            <dd><%= social_share_button_tag(@course.title,:popup => "true") %></dd>
+         </dl>
         </div>
-        <!-- /.table-responsive -->
       </div>
-      <!-- /.panel-body -->
+        <div class="row">
+          <div class="col-md-offset-4">
+          <%= link_to course_apply_path(@course), :controller => :courses_controller, :class => "btn btn-success", data: { confirm: 'Would you like to subscribe to the course?' } do %>
+              <span class="glyphicon glyphicon-ok"></span>
+                  Apply
+          <% end %>
+          <%= link_to course_leave_path(@course), :controller => :courses_controller, :class => "btn btn-danger", data: { confirm: 'Would you like to leave the course?' } do %>
+              <span class="glyphicon glyphicon-remove"></span>
+              Leave
+          <% end %>
+          </div>
+        </div>
+        </div>
     </div>
-    <!-- /.panel -->
   </div>
   <!-- /.col-lg-6 -->
 </div>
