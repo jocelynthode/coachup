@@ -50,6 +50,8 @@
             <dd> <%= @course.max_participants  %></dd>
             <dt>Share</dt>
             <dd><%= social_share_button_tag(@course.title,:popup => "true") %></dd>
+            <dt>Calendar</dt>
+            <dd> <%= link_to 'Export', course_export_path(@course) %></dd>
          </dl>
         </div>
       </div>

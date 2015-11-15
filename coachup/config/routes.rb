@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   resources :users do
   end
 
+  get '/auth/:provider/callback', to: 'sessions#token'
 =begin
   resources :my_partnerships do
   end
@@ -53,6 +54,7 @@ Rails.application.routes.draw do
     end
     get 'apply', :action => :apply
     get 'leave', :action => :leave
+    get 'export', :action => :export
     resources :training_sessions
   end
 

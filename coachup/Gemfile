@@ -43,6 +43,11 @@ gem 'bootstrap3-datetimepicker-rails', '~> 4.17.37'
 gem 'validates_timeliness', '~> 3.0'
 
 gem 'social-share-button', '~> 0.1.6'
+# Google calendar
+gem 'google-api-client', require: 'google/apis/calendar_v3'
+# Google omniauth authentication
+gem 'omniauth-google-oauth2',
+  git: 'https://github.com/zquestz/omniauth-google-oauth2', branch: 'master'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
@@ -56,6 +61,8 @@ gem 'social-share-button', '~> 0.1.6'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  # Set environment variables in .env file
+  gem 'dotenv-rails', '~> 2.0'
 end
 
 group :development do
