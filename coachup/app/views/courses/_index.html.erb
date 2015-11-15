@@ -20,13 +20,21 @@
             <div class="row">
               <div class="col-xs-3">
                 <% if course.sport=='Running' %>
-                    <%= image_tag("running_white.png",:class=>"img-rounded center-block")%>
+                    <%= link_to course_path(course)do %>
+                        <%= image_tag("running_white.png",:class=>"img-rounded center-block")%>
+                    <% end %>
                 <% elsif course.sport=='Boxing' %>
-                    <%= image_tag("boxing_white.png",:class=>"img-rounded center-block")%>
+                    <%= link_to course_path(course)do %>
+                        <%= image_tag("boxing_white.png",:class=>"img-rounded center-block")%>
+                    <% end %>
                 <% elsif course.sport=='Cycling' %>
-                    <%= image_tag("cycling_white.png",:class=>"img-rounded center-block")%>
+                    <%= link_to course_path(course)do %>
+                        <%= image_tag("cycling_white.png",:class=>"img-rounded center-block")%>
+                    <% end %>
                 <% elsif course.sport=='Soccer' %>
-                    <%= image_tag("soccer_white.png",:class=>"img-rounded center-block")%>
+                    <%= link_to course_path(course)do %>
+                        <%= image_tag("soccer_white.png",:class=>"img-rounded center-block")%>
+                    <% end %>
                 <% end %>
               </div>
               <div class="col-xs-9 text-right">
