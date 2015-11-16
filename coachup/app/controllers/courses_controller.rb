@@ -2,7 +2,13 @@ class CoursesController < ApplicationController
   skip_before_action :require_login, only: [:index, :show]
 
   def index
-    @courses = Course.all
+    if params[:q] == nil then
+      @courses = Course.all
+    else
+      @courses = Course.search(params[:q]).result
+      #Do we want to check for users too ? if so we'll have to move the search result to a different page
+      #@users = User.search(username_or_name_or_last_name_cont: params[:q]).result
+    end
   end
 
   def show
@@ -94,7 +100,7 @@ class CoursesController < ApplicationController
     @course = Course.find(params[:course_id])
     @msg, @channel = @course.apply(current_user)
 
-    url = Course.url + 'users/' + current_user.username + '/' +@course.sport
+    url = Course.url + 'users/' + current_user.username + '/' + @course.sport
     payload = { publicvisible: "2" }
     payload_xml = payload.to_xml(root: :subscription, skip_instruct: true)
     begin
@@ -117,6 +123,18 @@ class CoursesController < ApplicationController
     @msg, @channel = @course.leave(current_user)
     flash[@channel] = @msg
     redirect_to course_path(@course)
+  end
+
+  def export
+    if session[:token]
+      token = session.delete(:token)
+      course = Course.find(params[:course_id])
+      course.export_schedule(token)
+      redirect_to course_path(course), notice: "Successfully exported to calendar"
+    else
+      session[:return_to] ||= request.original_url
+      redirect_to '/auth/google_oauth2'
+    end
   end
 
   private

@@ -73,54 +73,62 @@
       <div class="sidebar-nav navbar-collapse">
         <ul class="nav" id="side-menu">
           <li class="sidebar-search">
-            <div class="input-group custom-search-form">
-              <input type="text" class="form-control" placeholder="Search...">
-                                <span class="input-group-btn">
-                                <button class="btn btn-default" type="button">
-                                  <i class="fa fa-search"></i>
-                                </button>
-                            </span>
-            </div>
+            <%= form_tag courses_path, method: "get" do %>
+                <div class="input-group">
+                  <%= search_field_tag 'q[title_or_description_cont]', nil, class: "form-control", placeholder: "Search courses...",
+                                       value: params[:q] && params[:q][:title_or_description_cont]|| ""%>
+                  <span class="input-group-btn">
+                <%= submit_tag 'Search', class: "btn btn-default" %>
+              </span>
+                </div><!-- /input-group -->
+            <% end %>
             <!-- /input-group -->
           </li>
           <li>
-            <%= link_to courses_path do %>
+            <%= link_to courses_path, :class=> (params['controller'] == 'courses' and params['action'] == 'index') ? 'active' : '' do %>
                 <span class="glyphicon glyphicon-home"></span>
                 Courses Overview
             <% end %>
           </li>
           <li>
-            <%= link_to courses_by_my_coaches_index_courses_path do %>
-                <span class="glyphicon glyphicon-tasks"></span>
-                Courses By My Coaches
-            <% end %>
+            <a id="courses_button" href="#"><i class="glyphicon glyphicon-tasks" ></i> Courses<span class="fa arrow"></span></a>
+            <ul class="nav nav-second-level collapse">
+              <li>
+                <%= link_to courses_by_my_coaches_index_courses_path, :class=> params['action'] == 'courses_by_my_coaches_index' ? 'active' : '' do %>
+                    <span class="glyphicon glyphicon-ok"></span>
+                    Courses By My Coaches
+                <% end %>
+              </li>
+              <li>
+                <%= link_to courses_i_am_subscribed_to_index_courses_path, :class=> params['action'] == 'courses_i_am_subscribed_to_index' ? 'active' : '' do %>
+                    <span class="glyphicon glyphicon-ok"></span>
+                    Courses I Am Subscribed To
+                <% end %>
+              </li>
+              <li>
+                <%= link_to my_courses_index_courses_path, :class=> params['action'] == 'my_courses_index' ? 'active' : '' do %>
+                    <span class="glyphicon glyphicon-ok"></span>
+                    My Courses
+                <% end %>
+              </li>
+            </ul>
+            <!-- /.nav-second-level -->
           </li>
+
           <li>
-            <%= link_to courses_i_am_subscribed_to_index_courses_path do %>
-                <span class="glyphicon glyphicon-ok"></span>
-                Courses I Am Subscribed To
-            <% end %>
-          </li>
-          <li>
-            <%= link_to my_courses_index_courses_path do %>
-                <span class="glyphicon glyphicon-user"></span>
-                My Courses
-            <% end %>
-          </li>
-          <li>
-            <%= link_to partnerships_path do %>
-                <span class="glyphicon glyphicon-tasks"></span>
+            <%= link_to partnerships_path, :class=> params['controller'] == 'partnerships' ? 'active' : '' do %>
+                <span class="fa fa-users"></span>
                 My Partnerships
             <% end %>
           </li>
           <li>
-            <%= link_to my_coaches_index_subscriptions_path do %>
-                <span class="glyphicon glyphicon-tasks"></span>
+            <%= link_to my_coaches_index_subscriptions_path, :class=> params['action'] == 'my_coaches_index' ? 'active' : '' do %>
+                <span class="fa fa-user-secret"></span>
                 My Coaches
             <% end %>
           </li>
           <li>
-            <%= link_to profiles_path  do %>
+            <%= link_to profiles_path, :class=> params['controller'] == 'profiles' ? 'active' : ''  do %>
                 <span class="glyphicon glyphicon-star"></span>
                 User Profiles
             <% end %>
@@ -173,6 +181,24 @@
     $(document).ready(loadScript());
 </script>
 <% end %>
+<script type="text/javascript">
+    $(document).ready(function () {
+        <%if ['my_courses_index','courses_i_am_subscribed_to_index','courses_by_my_coaches_index'].include?(params[:action])%>
+        $(".nav-second-level").show();
+        <%end%>
+        $("#courses_button").click(function(event) {
+            if($(".nav-second-level").attr('style') == 'display: block;')
+            {
+                $(".nav-second-level").hide();
+            }
+            else
+            {
+                $(".nav-second-level").show();
+            }
+
+        });
+    });
+</script>
 
 </body>
 </html>

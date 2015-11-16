@@ -21,6 +21,9 @@ gem 'coffee-rails', '~> 4.1.0'
 # Use RestClient for RESTful requests
 gem 'rest-client'
 
+# Use ransack to build search functionality
+gem 'ransack', '~> 1.7.0'
+
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
@@ -41,6 +44,13 @@ gem 'validates_timeliness', '~> 3.0'
 gem 'cloudinary'
 gem 'carrierwave'
 
+gem 'social-share-button', '~> 0.1.6'
+# Google calendar
+gem 'google-api-client', require: 'google/apis/calendar_v3'
+# Google omniauth authentication
+gem 'omniauth-google-oauth2',
+  git: 'https://github.com/zquestz/omniauth-google-oauth2', branch: 'master'
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
@@ -53,6 +63,8 @@ gem 'carrierwave'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
+  # Set environment variables in .env file
+  gem 'dotenv-rails', '~> 2.0'
 end
 
 group :development do

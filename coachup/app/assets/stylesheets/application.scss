@@ -16,12 +16,14 @@
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "font-awesome";
-@import "vendor/metisMenu";
+/*@import "vendor/metisMenu";*/
 
 @import 'sb-admin-2';
 @import "overview";
 @import "profiles";
 @import "framework_and_overrides";
+@import "social-share-button";
+
 @import 'bootstrap-datetimepicker';
 
 /* Cancel margins due to #page-wrapper */

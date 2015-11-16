@@ -16,6 +16,7 @@
 //= require bootstrap
 //= require underscore
 //= require gmaps/google
+//= require social-share-button
 //= require recurring_select
 //= require moment
 //= require bootstrap-datetimepicker
