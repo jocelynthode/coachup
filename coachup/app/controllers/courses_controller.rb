@@ -101,8 +101,6 @@ class CoursesController < ApplicationController
     payload_xml = payload.to_xml(root: :subscription, skip_instruct: true)
     begin
       response = rest_put(url, payload_xml, accept: :json, content_type: :xml)
-    rescue RestClient::Exception => exception
-      exception
     end
 
     if bad_request?(response)
