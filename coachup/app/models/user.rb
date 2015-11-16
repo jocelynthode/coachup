@@ -46,7 +46,7 @@ class User < ActiveRecord::Base
     all_dates = Set.new
     self.subscriptions.each do |sub|
       schedule = sub.course.retrieve_schedule
-      occ = schedule.occurrences(Date.today + 1.year)
+      occ = schedule.occurrences(sub.course.ends_at)
       occ.each do |date|
         element = date_course.new
         element.date = date.to_date
@@ -55,13 +55,12 @@ class User < ActiveRecord::Base
       end
     end
 
-    all_dates = all_dates.sort_by { |date| date.date}
-
-    if all_dates.count > 10
-      all_dates = all_dates.take(10)
-    elsif (all_dates.count == 0)
+    if (all_dates.count == 0)
       false
     end
+
+    all_dates = all_dates.sort_by { |date| date.date}
+    all_dates.take(10)
   end
 
 
