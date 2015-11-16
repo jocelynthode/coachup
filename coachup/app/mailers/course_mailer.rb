@@ -9,7 +9,7 @@ class CourseMailer < ApplicationMailer
     @verb = has_left ? 'left' : 'joined'
 
     mail(to: course.coach.email,
-         subject: 'CoachUP! - Someone has applied to one of your courses')
+         subject: "CoachUP! - Someone has #{@verb} one of your courses")
   end
 
   def session_reminder(sub)
