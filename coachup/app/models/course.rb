@@ -48,7 +48,8 @@ class Course < ActiveRecord::Base
     elsif self.subscriptions.present?
       self.subscriptions.each do |sub|
         if sub.user == current_user
-          ["You are already subscribed!", :alert]
+          #for some reason, the following line of code only works with a return
+          return ["You are already subscribed!", :alert]
         end
       end
     elsif self.max_participants <= self.subscriptions.count

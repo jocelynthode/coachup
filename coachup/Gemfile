@@ -48,6 +48,8 @@ gem 'google-api-client', require: 'google/apis/calendar_v3'
 # Google omniauth authentication
 gem 'omniauth-google-oauth2',
   git: 'https://github.com/zquestz/omniauth-google-oauth2', branch: 'master'
+gem 'cloudinary'
+gem 'carrierwave'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

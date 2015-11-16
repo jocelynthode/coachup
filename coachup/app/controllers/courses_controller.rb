@@ -107,9 +107,7 @@ class CoursesController < ApplicationController
     payload = { publicvisible: "2" }
     payload_xml = payload.to_xml(root: :subscription, skip_instruct: true)
     begin
-      response = authenticated_put(url, payload_xml, accept: :json, content_type: :xml)
-    rescue RestClient::Exception => exception
-      exception
+      response = rest_put(url, payload_xml, accept: :json, content_type: :xml)
     end
 
     if bad_request?(response)
@@ -148,7 +146,10 @@ class CoursesController < ApplicationController
   def rest_put(url, payload, **args)
     begin
       response = RestClient::Request.execute(method: :put, url: url,
-                                             payload: payload, headers: args)
+                                             payload: payload,
+                                             user: session[:username],
+                                             password: session[:password],
+                                             headers: args)
       JSON.parse(response, symbolize_names: true)
     rescue RestClient::Exception => exception
       exception

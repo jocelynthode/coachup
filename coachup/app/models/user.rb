@@ -15,6 +15,8 @@ class User < ActiveRecord::Base
   validates_confirmation_of :new_password, if: :new_password_present?, on: :update
   validates :phone, format: { with: /\A(\d+[\s\d]*)*\z/ }, on: :update
 
+  mount_uploader :avatar, AvatarUploader
+
   has_many :taught_courses, class_name: "Course"
   has_many :subscriptions
   has_many :courses, through: :subscriptions
