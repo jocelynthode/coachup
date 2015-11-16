@@ -15,8 +15,9 @@ class CourseMailer < ApplicationMailer
   def session_reminder(sub)
     @course = sub.course
     @user = sub.user
-    @time = @course.starts_at.to_s :time
-    @date = @course.starts_at.strftime '%a, %d %b %Y'
+    next_session = @course.retrieve_schedule.next_occurrence 1.day.from_now
+    @time = next_session.time.to_s :time
+    @date = next_session.time.strftime '%a, %d %b %Y'
     mail(to: @user.email,
          subject: 'CoachUP! - Reminder for your training session')
   end
