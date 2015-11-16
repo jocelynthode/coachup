@@ -27,7 +27,11 @@
                   <% else %>
                       <td><%= partner[:user] %></td>
                   <% end %>
-                  <td><%= partner[:created_at] %></td>
+                  <td>
+                    <%= partner[:created_at] %>
+                    <%= link_to 'Unfollow', partnership_path(partner[:user]), method: :delete,
+                                class: 'btn btn-primary pull-right', role: 'button' %>
+                  </td>
                 </tr>
             <% end %>
             </tbody>

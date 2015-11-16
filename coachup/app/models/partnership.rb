@@ -66,7 +66,7 @@ class Partnership
     response.code
   end
 
-  def delete(username)
+  def destroy(username)
     response = RestClient.delete partnership_url(username)
     response.code
   end

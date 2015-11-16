@@ -29,6 +29,8 @@ Rails.application.routes.draw do
 
 
   get '/partnerships/', to: 'my_partnerships#index' , as: 'partnerships'
+  post '/partnerships/:username', to: 'my_partnerships#create', as: 'partnership'
+  delete '/partnerships/:username', to: 'my_partnerships#destroy'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
