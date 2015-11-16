@@ -132,7 +132,6 @@
             <h3> Upcoming Sessions: </h3>
             <ul>
             <% @sessions = current_user.get_next_sessions %>
-              <% puts @sessions.nil? %>
               <% if @sessions == false %>
                   <%= link_to 'Apply for a course!' , courses_path %>
               <% elsif !@sessions.nil? %>
