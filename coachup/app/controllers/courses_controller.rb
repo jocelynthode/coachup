@@ -66,9 +66,9 @@ class CoursesController < ApplicationController
   def courses_by_my_coaches_index
     partnerships = current_user_partnerships.find()
     @partnerships = partnerships.map do |ps|
-      @user = User.find_by(username: ps[:user])
+      user = User.find_by(username: ps[:user])
       if @user.present?
-        ps.merge :user_id => @user.id
+        ps.merge :user_id => user.id
       end
     end
 
@@ -76,10 +76,8 @@ class CoursesController < ApplicationController
 
     @partnerships.each do |partnership|
       Course.find_each do |course|
-        if partnership.present?
-          if course.coach_id == partnership[:user_id]
-            my_courses << course
-          end
+        if course.coach_id == partnership[:user_id]
+          my_courses << course
         end
       end
     end
