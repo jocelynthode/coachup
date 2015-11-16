@@ -135,6 +135,24 @@
           </li>
         </ul>
       </div>
+      <div class="sidebar-nav navbar-collapse">
+        <% if user_signed_in? %>
+            <h3> Upcoming Sessions: </h3>
+            <ul>
+            <% @sessions = current_user.get_next_sessions %>
+              <% if @sessions == false %>
+                  <%= link_to 'Apply for a course!' , courses_path %>
+              <% elsif !@sessions.nil? %>
+                <% @sessions.each do |session| %>
+                  <li><%= session.date.strftime("%a, %B %d") %> -
+                  <%= link_to session.course.title , course_path(session.course) %></li>
+                <% end %>
+              <% else %>
+                  <%= 'You have no sessions within a year!' %>
+              <% end %>
+            </ul>
+        <% end %>
+      </div>
       <!-- /.sidebar-collapse -->
     </div>
     <!-- /.navbar-static-side -->

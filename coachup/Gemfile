@@ -41,6 +41,8 @@ gem 'recurring_select'
 gem 'momentjs-rails', '>= 2.9.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.37'
 gem 'validates_timeliness', '~> 3.0'
+gem 'cloudinary'
+gem 'carrierwave'
 
 gem 'social-share-button', '~> 0.1.6'
 # Google calendar
