@@ -7,10 +7,9 @@ namespace :jobs do
     tomorrow = 1.day.from_now
     Course.where('ends_at > ?', 2.day.ago).each do |course|
       if course.retrieve_schedule.occurs_on? tomorrow then
+        byebug
         course.subscriptions.each do |sub|
-          m = CourseMailer.session_reminder(sub)
-          puts m
-          m.deliver_now
+          CourseMailer.session_reminder(sub).deliver_now
         end
       end
     end
@@ -19,9 +18,7 @@ namespace :jobs do
   desc "Send test mail"
   task :sometest => :environment do
     c = Course.first
-    m = CourseMailer.user_application(c, c.subscriptions.first.user)
-    puts m
-    m.deliver_now
+    CourseMailer.user_application(c, c.subscriptions.first.user).deliver_now
   end
 
 end
