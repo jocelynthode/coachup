@@ -70,26 +70,21 @@ class CoursesController < ApplicationController
   end
 
   def courses_by_my_coaches_index
-    begin
-      my_courses = []
-      response = RestClient::Request.execute(method: :get,
-                                             url: Course.url+'partnerships/',
-                                             headers: { accept: :json })
-      if response.code == 200
-        answer = JSON.parse(response, symbolize_names: true)
-        answer[:partnerships].each do |partnership|
-          if partnership.include? current_user.username
-            Course.find_each do |course|
-              if partnership.include? course.coach.username
-                unless course.coach_id == current_user.id
-                  my_courses. << course
-                end
-              end
-            end
-          end
+    partnerships = current_user_partnerships.find()
+    @partnerships = partnerships.map do |ps|
+      user = User.find_by(username: ps[:user])
+      if @user.present?
+        ps.merge :user_id => user.id
+      end
+    end
+
+    my_courses = []
+
+    @partnerships.each do |partnership|
+      Course.find_each do |course|
+        if course.coach_id == partnership[:user_id]
+          my_courses << course
         end
-      else
-        nil
       end
     end
     @courses = my_courses
