@@ -49,16 +49,11 @@ class Course < ActiveRecord::Base
       return ["Sorry! Maximum number of participants is already reached!", :alert]
     end
 
-    if self.subscriptions.present?
-      self.subscriptions.each do |sub|
-        if sub.user == current_user
-          #for some reason, the following line of code only works with a return
-          return ["You are already subscribed!", :alert]
-        end
-      end
+    if self.subscriptions.exists?(user: current_user)
+       return ["You are already subscribed!", :alert]
     end
 
-    self.subscriptions << Subscription.create(course: self, user: current_user)
+    self.subscriptions.create(user: current_user)
     ["You are now subscribed to the course!", :notice]
   end
 
