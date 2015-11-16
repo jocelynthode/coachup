@@ -7,7 +7,6 @@ namespace :jobs do
     tomorrow = 1.day.from_now
     Course.where('ends_at > ?', 2.day.ago).each do |course|
       if course.retrieve_schedule.occurs_on? tomorrow then
-        byebug
         course.subscriptions.each do |sub|
           CourseMailer.session_reminder(sub).deliver_now
         end
