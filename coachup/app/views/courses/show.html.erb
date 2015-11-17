@@ -46,8 +46,8 @@
               <%= link_to image_tag("pin.png",:width => 15, :height => 15), "#mymodal", :data => { :toggle =>"modal" } %>
             </dd>
 
-            <dt>Max Participants</dt>
-            <dd> <%= @course.max_participants  %></dd>
+            <dt>Participants</dt>
+            <dd> <%= @course.subscriptions.count  %> / <%= @course.max_participants  %></dd>
             <dt>Share</dt>
             <dd><%= social_share_button_tag(@course.title,:popup => "true") %></dd>
             <dt>Calendar</dt>
