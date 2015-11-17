@@ -71,12 +71,12 @@ class CoursesController < ApplicationController
 
   def courses_by_my_coaches_index
     partnerships = current_user_partnerships.find()
-    @partnerships = partnerships.map do |ps|
+    @partnerships = partnerships.map { |ps|
       user = User.find_by(username: ps[:user])
       if @user.present?
         ps.merge :user_id => user.id
       end
-    end
+    }.compact
 
     my_courses = []
 
