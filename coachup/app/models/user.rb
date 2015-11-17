@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  acts_as_votable
+  acts_as_voter
   # Virtual attribute for authenticating with either username or email
   attr_accessor :login, :realname, :publicvisible, :password,
     :password_confirmation, :new_password, :new_password_confirmation, :avatar, :avatar_cache, :delete_avatar
@@ -77,6 +79,11 @@ class User < ActiveRecord::Base
     rescue
       false
     end
+  end
+
+  def approval_rate
+    return 100 if self.votes_for.size == 0
+    (self.get_upvotes.size / self.votes_for.size) * 100
   end
 
   private

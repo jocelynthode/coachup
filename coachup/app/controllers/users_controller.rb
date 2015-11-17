@@ -109,6 +109,18 @@ class UsersController < ApplicationController
     redirect_to user_path(current_user)
   end
 
+  def upvote
+    @user = User.find(params[:id])
+    @user.upvote_by current_user
+    redirect_to user_profile_path(@user)
+  end
+
+  def downvote
+    @user = User.find(params[:id])
+    @user.downvote_by current_user
+    redirect_to user_profile_path(@user)
+  end
+
   private
   def set_user
     @username = session[:username]

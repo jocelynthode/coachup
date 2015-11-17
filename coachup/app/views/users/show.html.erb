@@ -23,7 +23,7 @@
             </div>
             <div class="col-xs-5 col-sm-12">
 
-              <% if not current_user == @user %>
+              <% if current_user != @user %>
                 <% if @is_following %>
                     <%= link_to 'Unfollow', partnership_path(@user.username), method: :delete,
                                 class: 'btn btn-primary button-follow', role: 'button' %>
@@ -31,6 +31,25 @@
                     <%= link_to 'Follow', partnership_path(@user.username), method: :post,
                                 class: 'btn btn-primary button-follow', role: 'button' %>
                 <% end %>
+
+                <% case current_user.voted_as_when_voted_for @user %>
+                <% when true %>
+                      <%= button_tag 'Liked', class: 'btn btn-success button-follow',
+                                              disabled: true%>
+                      <%= link_to 'Dislike', dislike_user_path(@user), method: :put,
+                                  class: 'btn btn-danger button-follow', role: 'button' %>
+                <% when false %>
+                      <%= link_to 'Like', like_user_path(@user), method: :put,
+                                  class: 'btn btn-success button-follow', role: 'button' %>
+                      <%= button_tag 'Disliked', class: 'btn btn-danger button-follow',
+                                     disabled: true%>
+                <% when nil %>
+                  <%= link_to 'Like', like_user_path(@user), method: :put,
+                              class: 'btn btn-success button-follow', role: 'button' %>
+                  <%= link_to 'Dislike', dislike_user_path(@user), method: :put,
+                              class: 'btn btn-danger button-follow', role: 'button' %>
+                <% end %>
+                <%= @user.approval_rate %> % (<%= @user.votes_for.size %> votes)
               <% end %>
 
               <h3>General Information</h3>

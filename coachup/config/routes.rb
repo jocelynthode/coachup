@@ -10,6 +10,10 @@ Rails.application.routes.draw do
 
   resources :users do
     get 'delete_avatar', :action => :delete_avatar
+    member do
+      put 'like', to: 'users#upvote'
+      put 'dislike', to: 'users#downvote'
+    end
   end
 
   get '/auth/facebook/callback', to: 'users#link_facebook'
