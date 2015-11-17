@@ -63,6 +63,21 @@ class User < ActiveRecord::Base
     all_dates.take(10)
   end
 
+  def self.get_full_name(username)
+    begin
+      response = RestClient::Request.execute(method: :get,
+                                             url: self.url+'users/'+username,
+                                             headers: { accept: :json })
+      if response.code == 200
+        answer = JSON.parse(response, symbolize_names: true)
+        answer[:realname]
+      else
+        false
+      end
+    rescue
+      false
+    end
+  end
 
   private
   def new_password_present?
