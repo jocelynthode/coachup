@@ -62,7 +62,7 @@ GEM
     bootstrap3-datetimepicker-rails (4.17.37)
       momentjs-rails (>= 2.8.1)
     builder (3.2.2)
-    byebug (6.0.2)
+    byebug (8.2.0)
     carrierwave (0.10.0)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
@@ -71,6 +71,7 @@ GEM
     cloudinary (1.1.0)
       aws_cf_signer
       rest-client
+    coderay (1.1.0)
     coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
       railties (>= 4.0.0, < 5.0)
@@ -138,6 +139,7 @@ GEM
     mail (2.6.3)
       mime-types (>= 1.16, < 3)
     memoist (0.12.0)
+    method_source (0.8.2)
     mime-types (2.6.2)
     mini_portile (0.6.2)
     minitest (5.8.1)
@@ -164,6 +166,13 @@ GEM
     pg (0.18.3)
     polyamorous (1.2.0)
       activerecord (>= 3.0)
+    pry (0.10.3)
+      coderay (~> 1.1.0)
+      method_source (~> 0.8.1)
+      slop (~> 3.4)
+    pry-byebug (3.3.0)
+      byebug (~> 8.0)
+      pry (~> 0.10)
     rack (1.6.4)
     rack-test (0.6.3)
       rack (>= 1.0)
@@ -228,6 +237,7 @@ GEM
       faraday (~> 0.9)
       jwt (~> 1.5)
       multi_json (~> 1.10)
+    slop (3.6.0)
     social-share-button (0.1.10)
       coffee-rails
       sass-rails
@@ -272,7 +282,6 @@ PLATFORMS
 DEPENDENCIES
   bootstrap-sass (~> 3.3.5)
   bootstrap3-datetimepicker-rails (~> 4.17.37)
-  byebug
   carrierwave
   cloudinary
   coffee-rails (~> 4.1.0)
@@ -287,6 +296,7 @@ DEPENDENCIES
   momentjs-rails (>= 2.9.0)
   omniauth-google-oauth2!
   pg
+  pry-byebug
   rails (= 4.2.4)
   ransack (~> 1.7.0)
   recurring_select
