@@ -291,6 +291,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  acts_as_votable!
   bootstrap-sass (~> 3.3.5)
   bootstrap-timepicker-rails!
   bootstrap3-datetimepicker-rails (~> 4.17.37)
