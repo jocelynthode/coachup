@@ -19,14 +19,15 @@
             </div>
             <div class="col-xs-5 col-sm-12">
 
-              <% if @is_following %>
-                  <%= link_to 'Unfollow', partnership_path(@user.username), method: :delete,
-                              class: 'btn btn-primary button-follow', role: 'button' %>
-              <% else %>
-                  <%= link_to 'Follow', partnership_path(@user.username), method: :post,
-                              class: 'btn btn-primary button-follow', role: 'button' %>
+              <% if not current_user == @user %>
+                <% if @is_following %>
+                    <%= link_to 'Unfollow', partnership_path(@user.username), method: :delete,
+                                class: 'btn btn-primary button-follow', role: 'button' %>
+                <% else %>
+                    <%= link_to 'Follow', partnership_path(@user.username), method: :post,
+                                class: 'btn btn-primary button-follow', role: 'button' %>
+                <% end %>
               <% end %>
-              </a>
 
               <h3>General Information</h3>
               <ul class="profile-details">
