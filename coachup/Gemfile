@@ -48,6 +48,8 @@ gem 'cloudinary'
 gem 'carrierwave'
 
 gem 'social-share-button', '~> 0.1.6'
+gem "bootstrap-switch-rails"
+
 # Google calendar
 gem 'google-api-client', '0.9.pre3', require: 'google/apis/calendar_v3'
 # Google omniauth authentication

@@ -133,25 +133,50 @@
                 User Profiles
             <% end %>
           </li>
-        </ul>
-      </div>
-      <div class="sidebar-nav navbar-collapse">
+
+
         <% if user_signed_in? %>
-            <h3> Upcoming Sessions: </h3>
-            <ul>
+            <li>
+              <a><i class="glyphicon glyphicon-calendar" ></i> Upcoming Sessions
+                <input type="checkbox" data-size="mini" name="my-checkbox"checked>
+              </a>
+            </li><br>
+            <div class="container" id="session">
+              <ul class="event-list">
             <% @sessions = current_user.get_next_sessions %>
               <% if @sessions == false %>
                   <%= link_to 'Apply for a course!' , courses_path %>
               <% elsif !@sessions.nil? %>
                 <% @sessions.each do |session| %>
-                  <li><%= session.date.strftime("%a, %B %d") %> -
-                  <%= link_to session.course.title , course_path(session.course) %></li>
+                  <li>
+                    <time datetime="2014-07-20">
+                      <span class="day"><%= session.date.strftime("%d") %> </span>
+                      <span class="month"><%= session.date.strftime("%b") %></span>
+                    </time>
+                    <div class="info">
+                      <h2 class="title"> <%= session.course.title %>
+                       </h2>
+
+                    </div>
+
+                    <div class="social">
+                      <ul>
+                        <li><%= link_to course_path(session.course) do%>
+                              <span class="glyphicon glyphicon-chevron-right "></span>
+                          <% end %>
+                              </li>
+                      </ul>
+                    </div>
+
+                  </li>
                 <% end %>
               <% else %>
                   <%= 'You have no sessions within a year!' %>
               <% end %>
-            </ul>
+              </ul>
+            </div>
         <% end %>
+        </ul>
       </div>
       <!-- /.sidebar-collapse -->
     </div>
@@ -199,6 +224,24 @@
         });
     });
 </script>
+<script type="text/javascript">
 
+$("[name='my-checkbox']").bootstrapSwitch();
+$(document).ready(function()
+{
+    $("[name='my-checkbox']").on('switchChange.bootstrapSwitch', function (e, data)
+    {
+        var state=$(this).bootstrapSwitch('state');//returns true or false
+        if(state)
+        {
+            $("#session").show();
+        }
+        else
+        {
+            $("#session").hide();
+        }
+    });
+});
+</script>
 </body>
 </html>
