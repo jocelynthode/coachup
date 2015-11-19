@@ -47,6 +47,7 @@ class UsersController < ApplicationController
               else
                 "Something went wrong"
               end
+        Cloudinary::Api.delete_resources(@user.avatar.file.public_id)
         redirect_to register_path, alert: msg
       else
         session[:username] = @user.username
