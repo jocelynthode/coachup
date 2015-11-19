@@ -13,11 +13,11 @@ class UsersController < ApplicationController
   def show
     response = rest_request(:get, User.url + 'users/' + params[:id],
                             accept: :json)
-   if bad_request?(response)
-     redirect_to action: :index
-     return
-   end
-   @user = response.reject { |k, v| k == :uri || v == '*' }
+    if bad_request?(response)
+      redirect_to action: :index
+      return
+    end
+    @user = response.reject { |k, v| k == :uri || v == '*' }
   end
 
   def new
@@ -73,13 +73,22 @@ class UsersController < ApplicationController
         flash[:notice] = "Successfully updated profile"
         session[:password] = @user.new_password if @user.new_password.present?
       end
-      redirect_to edit_profile_path
+      redirect_to user_profile_path(current_user.id)
     else
       render 'edit'
     end
   end
 
   def destroy
+  end
+
+  def delete_avatar
+    @user = current_user
+    @user.remove_avatar = true
+    @user.save
+    @user.reload
+
+    redirect_to edit_profile_path
   end
 
   private
@@ -92,7 +101,7 @@ class UsersController < ApplicationController
     params.require(:user).permit(:username, :password, :realname, :email,
                                  :publicvisible, :password_confirmation,
                                  :address, :country, :phone, :date_of_birth, :education, :bio, :aboutme,
-                                 :new_password, :new_password_confirmation, :avatar)
+                                 :new_password, :new_password_confirmation, :avatar, :avatar_cache)
   end
 
   def rest_put(url, payload, **args)

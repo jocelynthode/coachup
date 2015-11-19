@@ -12,6 +12,7 @@ Rails.application.routes.draw do
   get 'overview/index'
 
   resources :users do
+    get 'delete_avatar', :action => :delete_avatar
   end
 
   get '/auth/:provider/callback', to: 'sessions#token'
