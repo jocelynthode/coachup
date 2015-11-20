@@ -111,13 +111,17 @@ class UsersController < ApplicationController
 
   def upvote
     @user = User.find(params[:id])
-    @user.upvote_by current_user
+    if @user != current_user
+      @user.upvote_by current_user
+    end
     redirect_to user_profile_path(@user)
   end
 
   def downvote
     @user = User.find(params[:id])
-    @user.downvote_by current_user
+    if @user != current_user
+      @user.downvote_by current_user
+    end
     redirect_to user_profile_path(@user)
   end
 
