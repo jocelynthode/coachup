@@ -20,4 +20,5 @@
 //= require recurring_select
 //= require moment
 //= require bootstrap-datetimepicker
+//= require bootstrap-timepicker
 //= require_tree .

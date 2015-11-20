@@ -40,13 +40,16 @@ gem 'ice_cube'
 gem 'recurring_select'
 gem 'momentjs-rails', '>= 2.9.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.37'
+gem 'bootstrap-timepicker-rails', require: 'bootstrap-timepicker-rails',
+    git: 'git://github.com/tispratik/bootstrap-timepicker-rails.git',
+    ref: 'eb489926214bc2ffb9f61ac0638d758e7a950826'
 gem 'validates_timeliness', '~> 3.0'
 gem 'cloudinary'
 gem 'carrierwave'
 
 gem 'social-share-button', '~> 0.1.6'
 # Google calendar
-gem 'google-api-client', require: 'google/apis/calendar_v3'
+gem 'google-api-client', '0.9.pre3', require: 'google/apis/calendar_v3'
 # Google omniauth authentication
 gem 'omniauth-google-oauth2',
   git: 'https://github.com/zquestz/omniauth-google-oauth2', branch: 'master'

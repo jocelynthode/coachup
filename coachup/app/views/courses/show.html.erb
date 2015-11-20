@@ -31,6 +31,9 @@
             <dt>Description</dt>
             <dd> <%= @course.description  %></dd>
 
+            <dt>Duration</dt>
+            <dd><%= @course.duration.strftime('%Hh%M') %></dd>
+
             <dt>Price</dt>
             <dd> <%= @course.price  %></dd>
 
