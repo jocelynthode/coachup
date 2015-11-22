@@ -15,7 +15,11 @@
 
           <div class="row">
             <div class="col-xs-7 col-sm-12">
+              <% if @user.avatar_url.present? %>
               <%= image_tag @user.avatar_url(:display, :class=>"profile-image") %>
+              <% else %>
+              <%= cl_image_tag('default', :width => 200, :height => 200) %>
+              <% end %>
             </div>
             <div class="col-xs-5 col-sm-12">
 

@@ -86,7 +86,7 @@ class UsersController < ApplicationController
   def delete_avatar
     @user = current_user
     @user.remove_avatar = true
-    @user.save
+    @user.update_attribute(:avatar, nil)
     @user.reload
 
     redirect_to edit_profile_path
@@ -102,7 +102,7 @@ class UsersController < ApplicationController
     params.require(:user).permit(:username, :password, :realname, :email,
                                  :publicvisible, :password_confirmation,
                                  :address, :country, :phone, :date_of_birth, :education, :bio, :aboutme,
-                                 :new_password, :new_password_confirmation, :avatar, :avatar_cache)
+                                 :new_password, :new_password_confirmation, :avatar, :avatar_cache, :remove_avatar)
   end
 
   def rest_put(url, payload, **args)
