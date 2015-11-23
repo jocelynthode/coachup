@@ -122,10 +122,11 @@
 }
 
 @media (min-width: 768px) {
+
   .event-list > li {
     position: relative;
     display: block;
-    width: 20%;
+    width: 100%;
     height: 25px;
     padding: 0px;
   }
