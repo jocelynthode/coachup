@@ -88,6 +88,17 @@
       </div>
 
     <% end %>
+<% else %>
+  <% case type %>
+  <% when :coaches %>
+      <h4>You have no coaches yet...</h4>
+  <% when :subscriptions %>
+      <h4>You not subscribed to any course yet...</h4>
+  <% when :index %>
+      <h4>There are no courses available yet...</h4>
+  <% when :courses_given %>
+      <h4>You are not giving any course right now...</h4>
+  <% end %>
 <% end %>
 </div>
 <!-- /.row -->
