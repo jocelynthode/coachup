@@ -125,8 +125,9 @@ class Course < ActiveRecord::Base
       begin
         calendar.insert_event('primary', event, send_notifications: true,
                               options: { authorization: token })
-      rescue
-        next
+      rescue => error
+        next if error.message == "duplicate"
+        raise error
       end
     end
   end
