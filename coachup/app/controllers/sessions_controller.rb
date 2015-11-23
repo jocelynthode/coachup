@@ -16,6 +16,7 @@ class SessionsController < ApplicationController
         new_user = User.new(username: username)
         response = authenticated_request(:get, "users/#{username}")
         new_user.email = response[:email]
+        new_user.password = password
         new_user.save(validate: false)
       end
       redirect_to root_path, notice: "Successfully logged in as #{username}"
