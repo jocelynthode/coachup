@@ -115,11 +115,13 @@ class Course < ActiveRecord::Base
     schedule.occurrences(ends_at).each do |sess|
       startTime = Calendar::EventDateTime.new(date_time: sess.start_time.to_datetime)
       endTime = Calendar::EventDateTime.new(date_time: sess.start_time.to_datetime + 1.hour)
-      id = title + description + sess.start_time.strftime("%Y-%m-%dT%l:%M:%S%z")
+      location_string = "#{location.latitude.to_s},#{location.longitude.to_s}"
+      id = title + description + location_string + sess.start_time.strftime("%Y-%m-%dT%l:%M:%S%z")
       base32_id = id.each_byte.map { |b| b.to_s(32) }.join
       event = Calendar::Event.new(id: base32_id, summary: title,
-                                  description: description, start: startTime,
-                                  end: endTime)
+                                  description: description,
+                                  location: location_string,
+                                  start: startTime, end: endTime)
       begin
         calendar.insert_event('primary', event, send_notifications: true,
                               options: { authorization: token })
