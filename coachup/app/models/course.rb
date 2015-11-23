@@ -115,9 +115,15 @@ class Course < ActiveRecord::Base
     schedule.occurrences(ends_at).each do |sess|
       startTime = Calendar::EventDateTime.new(date_time: sess.start_time.to_datetime)
       endTime = Calendar::EventDateTime.new(date_time: sess.start_time.to_datetime + 1.hour)
-      event = Calendar::Event.new(summary: title, start: startTime, end: endTime)
-      calendar.insert_event('primary', event, send_notifications: true,
-                            options: { authorization: token })
+      id = title + sess.start_time.strftime("%Y-%m-%dT%l:%M:%S%z")
+      base32_id = id.each_byte.map { |b| b.to_s(32) }.join
+      event = Calendar::Event.new(id: base32_id, summary: title, start: startTime, end: endTime)
+      begin
+        calendar.insert_event('primary', event, send_notifications: true,
+                              options: { authorization: token })
+      rescue
+        next
+      end
     end
   end
 end
