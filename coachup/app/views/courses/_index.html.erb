@@ -95,7 +95,11 @@
   <% when :subscriptions %>
       <h4>You not subscribed to any course yet...</h4>
   <% when :index %>
-      <h4>There are no courses available yet...</h4>
+    <% if params[:q] %>
+         <h4> We didn't find anything with the following search terms : <%= params[:q][:title_or_description_cont] %></h4>
+    <% else %>
+         <h4>There are no courses available yet...</h4>
+    <% end %>
   <% when :courses_given %>
       <h4>You are not giving any course right now...</h4>
   <% end %>
