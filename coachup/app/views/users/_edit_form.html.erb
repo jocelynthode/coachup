@@ -30,7 +30,13 @@
 
       <div class="form-group">
         <%= f.label :date_of_birth %>
-        <%= f.date_field :date_of_birth, class: 'form-control' %>
+        <div class="input-group date" id="datepicker">
+          <%= f.text_field :date_of_birth, class: 'form-control' %>
+          <span class="input-group-addon">
+            <i class="glyphicon glyphicon-calendar"></i>
+          </span>
+          <%#= f.date_field :date_of_birth, class: 'form-control' %>
+        </div>
       </div>
 
       <div class="form-group">
@@ -77,3 +83,16 @@
     <% end %>
   </div>
 </div>
+
+<script type="text/javascript">
+  $(function() {
+    $('#datepicker').datetimepicker({
+        format: 'DD-MM-YYYY',
+        defaultDate: '01/01/2000',
+        viewMode: 'years',
+        minDate: '01/01/1890',
+        maxDate: Date.now()
+    });
+  });
+</script>
+
