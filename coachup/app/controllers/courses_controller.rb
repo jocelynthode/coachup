@@ -122,7 +122,7 @@ class CoursesController < ApplicationController
     @course = Course.find(params[:course_id])
     @msg, @channel = @course.leave(current_user)
     @course.reload
-    CourseMailer.user_application(@course, current_user, has_left=true).deliver_now
+    CourseMailer.user_application(@course, current_user, true).deliver_now
     flash[@channel] = @msg
     redirect_to course_path(@course)
   end
