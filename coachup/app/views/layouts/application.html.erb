@@ -70,7 +70,7 @@
     <!-- /.navbar-top-links -->
 
     <div class="navbar-default sidebar" role="navigation">
-      <div class="sidebar-nav navbar-collapse">
+      <div class="sidebar-nav navbar-collapse <%=['courses_by_my_coaches_index','courses_i_am_subscribed_to_index','my_courses_index'].include?(params[:action]) ? "toggled" : "" %>">
         <ul class="nav" id="side-menu">
           <li class="sidebar-search">
             <%= form_tag courses_path, method: "get" do %>
@@ -92,7 +92,7 @@
           </li>
           <li>
             <a id="courses_button" href="#"><i class="glyphicon glyphicon-tasks" ></i> Courses<span class="fa arrow"></span></a>
-            <ul class="nav nav-second-level collapse">
+            <ul class="nav nav-second-level collapse" id="courses_submenu">
               <li>
                 <%= link_to courses_by_my_coaches_index_courses_path, :class=> params['action'] == 'courses_by_my_coaches_index' ? 'active' : '' do %>
                     <span class="glyphicon glyphicon-ok"></span>
@@ -242,6 +242,16 @@ $(document).ready(function()
         }
     });
 });
+
+$("#courses_button").click(function(e) {
+    $(".sidebar-nav").toggleClass("toggled");
+});
+
+$("#courses_submenu li").click(function(e) {
+    $(".sidebar-nav").addClass("toggled");
+});
+
+
 </script>
 </body>
 </html>

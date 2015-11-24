@@ -33,6 +33,8 @@
   padding-left: 30px;
   padding-right: 30px;
 }
+/* change arrow in metismenu */
+.sidebar-nav.toggled #courses_button span:before {content:"\f107";}
 
 .event-list {
   list-style: none;
