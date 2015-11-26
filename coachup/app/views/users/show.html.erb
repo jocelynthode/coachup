@@ -32,22 +32,24 @@
                                 class: 'btn btn-primary button-follow', role: 'button' %>
                 <% end %>
                 </br>
-                <% case current_user.voted_as_when_voted_for @user %>
-                <% when true %>
-                      <%= button_tag 'Liked', class: 'btn-sm btn-success button-appreciation',
-                                              disabled: true%>
-                      <%= link_to 'Dislike', dislike_user_path(@user), method: :put,
-                                  class: 'btn-sm btn-danger button-appreciation', role: 'button' %>
-                <% when false %>
-                      <%= link_to 'Like', like_user_path(@user), method: :put,
-                                  class: 'btn-sm btn-success button-appreciation', role: 'button' %>
-                      <%= button_tag 'Disliked', class: 'btn-sm btn-danger button-appreciation',
-                                     disabled: true%>
-                <% when nil %>
-                  <%= link_to 'Like', like_user_path(@user), method: :put,
-                              class: 'btn-sm btn-success button-appreciation', role: 'button' %>
-                  <%= link_to 'Dislike', dislike_user_path(@user), method: :put,
-                              class: 'btn-sm btn-danger button-appreciation', role: 'button' %>
+                <% if current_user.subscribed_to_course_from? @user %>
+                  <% case current_user.voted_as_when_voted_for @user %>
+                  <% when true %>
+                        <%= button_tag 'Liked', class: 'btn-sm btn-success button-appreciation',
+                                                disabled: true%>
+                        <%= link_to 'Dislike', dislike_user_path(@user), method: :put,
+                                    class: 'btn-sm btn-danger button-appreciation', role: 'button' %>
+                  <% when false %>
+                        <%= link_to 'Like', like_user_path(@user), method: :put,
+                                    class: 'btn-sm btn-success button-appreciation', role: 'button' %>
+                        <%= button_tag 'Disliked', class: 'btn-sm btn-danger button-appreciation',
+                                       disabled: true%>
+                  <% when nil %>
+                    <%= link_to 'Like', like_user_path(@user), method: :put,
+                                class: 'btn-sm btn-success button-appreciation', role: 'button' %>
+                    <%= link_to 'Dislike', dislike_user_path(@user), method: :put,
+                                class: 'btn-sm btn-danger button-appreciation', role: 'button' %>
+                  <% end %>
                 <% end %>
                 <p class="approval"><%= @user.approval_rate %> % (<%= @user.votes_for.size %> votes)</p>
               <% end %>

@@ -86,6 +86,15 @@ class User < ActiveRecord::Base
     (self.get_upvotes.size / self.votes_for.size) * 100
   end
 
+  def subscribed_to_course_from?(user)
+    subs = self.subscriptions
+    return false if subs.nil?
+    subs.each do |sub|
+      return true if sub.course.coach == user
+    end
+    false
+  end
+
   private
   def new_password_present?
     new_password.present?
