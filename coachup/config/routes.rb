@@ -16,12 +16,7 @@ Rails.application.routes.draw do
   end
 
   get '/auth/:provider/callback', to: 'sessions#token'
-=begin
-  resources :my_partnerships do
-  end
-=end
 
-  #resources :profiles, only: [:edit]
   get 'profiles/:id' => 'profiles#show', as: "user_profile"
   get 'profiles/' => 'profiles#index', as: "profiles"
 
