@@ -43,20 +43,25 @@ class Course < ActiveRecord::Base
   end
 
   def apply(current_user)
-    if self.coach.id == current_user.id
-      return ["You are the owner of this course!", :alert]
-    end
+    # Use a transaction because the database allow multiple subscriptions
+    # for the same user/course !
+    #TODO: fix this in the DB schema instead ?
+    Subscription.transaction do
+      if self.coach.id == current_user.id
+        return ["You are the owner of this course!", :alert]
+      end
 
-    if self.max_participants <= self.subscriptions.count
-      return ["Sorry! Maximum number of participants is already reached!", :alert]
-    end
+      if self.max_participants <= self.subscriptions.count
+        return ["Sorry! Maximum number of participants is already reached!", :alert]
+      end
 
-    if self.subscriptions.exists?(user: current_user)
-       return ["You are already subscribed!", :alert]
-    end
+      if self.subscriptions.exists?(user: current_user)
+         return ["You are already subscribed!", :alert]
+      end
 
-    self.subscriptions.create(user: current_user)
-    ["You are now subscribed to the course!", :notice]
+      self.subscriptions.create(user: current_user)
+      ["You are now subscribed to the course!", :notice]
+    end
   end
 
   def leave(current_user)

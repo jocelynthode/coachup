@@ -25,49 +25,58 @@ class UsersController < ApplicationController
   end
 
   def create
-    @user = User.new(user_params)
-    if @user.save
-      payload = { email: @user.email, password: @user.password,
-                  realname: @user.realname, publicvisible: "2" }
-      payload_xml = payload.to_xml(root: :user, skip_instruct: true)
-      url = User.url + 'users/' + @user.username
-      response = rest_put(url, payload_xml, accept: :json, content_type: :xml)
-      if bad_request?(response)
-        msg = if exception_code(response) == 401
-                "User #{@user.username} already exists"
-              else
-                "Something went wrong"
-              end
-        Cloudinary::Api.delete_resources(@user.avatar.file.public_id)
-        redirect_to register_path, alert: msg
+    # Note: This transaction may have a big impact on performance
+    User.transaction do
+      @user = User.new(user_params)
+      if @user.save
+        payload = { email: @user.email, password: @user.password,
+                    realname: @user.realname, publicvisible: "2" }
+        payload_xml = payload.to_xml(root: :user, skip_instruct: true)
+        url = User.url + 'users/' + @user.username
+        response = rest_put(url, payload_xml, accept: :json, content_type: :xml)
+        if bad_request?(response)
+          msg = if exception_code(response) == 401
+                  "User #{@user.username} already exists"
+                else
+                  "Something went wrong"
+                end
+          Cloudinary::Api.delete_resources(@user.avatar.file.public_id)
+          redirect_to register_path, alert: msg
+          raise ActiveRecord::Rollback
+        else
+          session[:username] = @user.username
+          session[:password] = @user.password
+          redirect_to root_path, notice: "Successfully created user #{@user.username}"
+        end
       else
-        session[:username] = @user.username
-        session[:password] = @user.password
-        redirect_to root_path, notice: "Successfully created user #{@user.username}"
+        render 'new'
       end
-    else
-      render 'new'
     end
   end
 
   def update
+    # Note: This transaction may have a big impact on performance
     @user = current_user
-    @user.username = session[:username]
-    if @user.update(user_params)
-      payload = { email: @user.email, realname: @user.realname }
-      payload[:password] = @user.new_password if @user.new_password.present?
-      payload_xml = payload.to_xml(root: :user, skip_instruct: true)
-      response = authenticated_put("users/#{@user.username}", payload_xml,
-                                   content_type: :xml)
-      if bad_request?(response)
-        flash[:alert] = "Could not save changes"
+    User.transaction do
+      @user.username = session[:username]
+      if @user.update(user_params)
+        payload = { email: @user.email, realname: @user.realname }
+        payload[:password] = @user.new_password if @user.new_password.present?
+        payload_xml = payload.to_xml(root: :user, skip_instruct: true)
+        response = authenticated_put("users/#{@user.username}", payload_xml,
+                                     content_type: :xml)
+        if bad_request?(response)
+          flash[:alert] = "Could not save changes"
+          render 'edit'
+          raise ActiveRecord::Rollback
+        else
+          flash[:notice] = "Successfully updated profile"
+          session[:password] = @user.new_password if @user.new_password.present?
+          redirect_to edit_profile_path
+        end
       else
-        flash[:notice] = "Successfully updated profile"
-        session[:password] = @user.new_password if @user.new_password.present?
+        render 'edit'
       end
-      redirect_to edit_user_path
-    else
-      render 'edit'
     end
   end
 
