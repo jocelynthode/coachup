@@ -48,6 +48,17 @@
                   <div><i class="fa fa-birthday-cake"></i> Date Of Birth</div>
                   <%= @user.date_of_birth %>
                 </li>
+                <li>
+                  <div><i class="fa fa-facebook"></i> Facebook Profile</div>
+                  <% if @facebook_url %>
+                    <%= link_to 'Verified', @facebook_url %>
+                  <% elsif current_user == @user %>
+                    <%= link_to 'Verify your account with Facebook',
+                                '/auth/facebook' %>
+                  <% else %>
+                    <i>Not verified</i>
+                  <% end %>
+                </li>
               </ul>
 
               <h3>Contact Information</h3>

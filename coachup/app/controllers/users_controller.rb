@@ -83,6 +83,14 @@ class UsersController < ApplicationController
     redirect_to edit_profile_path
   end
 
+  def link_facebook
+    # TODO: require_login (fix skip_before_action)
+    auth = env['omniauth.auth']
+    current_user.update_column :facebook_uid, auth.uid
+    flash[:notice] = "Your profile is now linked to your facebook account"
+    redirect_to user_profile_path(current_user)
+  end
+
   private
   def set_user
     @username = session[:username]

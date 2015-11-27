@@ -12,7 +12,19 @@ Rails.application.routes.draw do
     get 'delete_avatar', :action => :delete_avatar
   end
 
-  resources :locations
+  get '/auth/facebook/callback', to: 'users#link_facebook'
+  get '/auth/:provider/callback', to: 'sessions#token'
+=begin
+  resources :my_partnerships do
+  end
+=end
+
+  #resources :profiles, only: [:edit]
+  get 'profiles/:id' => 'profiles#show', as: "user_profile"
+  get 'profiles/' => 'profiles#index', as: "profiles"
+
+  resources :locations do
+  end
 
   get '/auth/:provider/callback', to: 'sessions#token'
 
