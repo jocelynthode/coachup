@@ -55,6 +55,8 @@ gem 'google-api-client', '0.9.pre3', require: 'google/apis/calendar_v3'
 # Google omniauth authentication
 gem 'omniauth-google-oauth2',
   git: 'https://github.com/zquestz/omniauth-google-oauth2', branch: 'master'
+# Facebook omniauth for profile-linking
+gem 'omniauth-facebook', '~> 3.0'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
