@@ -65,7 +65,7 @@ class UsersController < ApplicationController
         flash[:notice] = "Successfully updated profile"
         session[:password] = @user.new_password if @user.new_password.present?
       end
-      redirect_to user_profile_path(current_user.id)
+      redirect_to edit_user_path
     else
       render 'edit'
     end

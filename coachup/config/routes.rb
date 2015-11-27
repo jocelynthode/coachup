@@ -4,9 +4,6 @@ Rails.application.routes.draw do
   post 'login' => 'sessions#create'
   get 'logout' => 'sessions#destroy', as: 'logout'
   get 'register' => 'users#new', as: 'register'
-  get 'edit_profile' => 'users#edit', as: 'edit_profile'
-  post 'update_profile' => 'users#update'
-  patch 'update_profile' => 'users#update'
 
   get 'overview/welcome'
   get 'overview/index'
@@ -15,11 +12,9 @@ Rails.application.routes.draw do
     get 'delete_avatar', :action => :delete_avatar
   end
 
+  resources :locations
+
   get '/auth/:provider/callback', to: 'sessions#token'
-
-  resources :locations do
-  end
-
 
   get '/partnerships/', to: 'my_partnerships#index' , as: 'partnerships'
   post '/partnerships/:username', to: 'my_partnerships#create', as: 'partnership'
