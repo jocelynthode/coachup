@@ -24,7 +24,7 @@
                   <% @partnerships.each do |partner| %>
                       <tr>
                         <% if partner[:user_id] %>
-                            <td><%= link_to partner[:user], user_profile_path(partner[:user_id]) %></td>
+                            <td><%= link_to partner[:user], user_path(partner[:user_id]) %></td>
                         <% else %>
                             <td><%= partner[:user] %></td>
                         <% end %>

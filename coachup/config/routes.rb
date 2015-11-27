@@ -17,9 +17,6 @@ Rails.application.routes.draw do
 
   get '/auth/:provider/callback', to: 'sessions#token'
 
-  get 'profiles/:id' => 'users#show', as: "user_profile"
-  get 'profiles/' => 'users#index', as: "profiles"
-
   resources :locations do
   end
 

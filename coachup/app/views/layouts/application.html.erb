@@ -2,7 +2,7 @@
 <html>
 <head>
   <title>Coachup</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
 </head>
@@ -41,7 +41,7 @@
         <ul class="dropdown-menu dropdown-user">
           <% if user_signed_in? %>
             <li>
-              <%= link_to user_profile_path(current_user) do %>
+              <%= link_to user_path(current_user) do %>
                 <span class="glyphicon glyphicon-user"></span>
                 Profile
               <% end %>
@@ -128,7 +128,7 @@
             <% end %>
           </li>
           <li>
-            <%= link_to profiles_path, :class=> params['controller'] == 'profiles' ? 'active' : ''  do %>
+            <%= link_to users_path, :class=> params['controller'] == 'users' ? 'active' : ''  do %>
                 <span class="glyphicon glyphicon-star"></span>
                 User Profiles
             <% end %>

@@ -1,5 +1,5 @@
 <h2> User Profiles </h2><br>
 <% @users = User.all %>
 <% @users.each do |user| %>
-    <%= link_to user.username, user_profile_path(user.id) %>
+    <%= link_to user.username, user_path(user.id) %>
 <% end %>
