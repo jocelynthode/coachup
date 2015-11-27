@@ -2,6 +2,15 @@ class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy]
   skip_before_action :require_login
 
+  def index
+    @users = User.all
+  end
+
+  def show
+    @user = User.find(params[:id])
+    @is_following = !current_user_partnerships.find(@user[:username]).empty?
+  end
+
   def new
     @user = User.new
   end
