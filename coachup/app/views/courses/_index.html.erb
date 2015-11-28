@@ -73,13 +73,24 @@
                       </li>
                   <% end %>
                 </li>
+                <% if course.subscriptions.exists?(user: current_user) || course.subscriptions.count == course.max_participants %>
                 <li role="separator" class="divider"></li>
                 <li>
-                  <%= link_to course_apply_path(course), :controller => :courses_controller, data: { confirm: 'Would you like to subscribe to the course?' } do %>
-                      <i class="glyphicon glyphicon-ok"></i>
-                      Apply
+                  <%= link_to course_leave_path(course), :controller => :courses_controller, data: { confirm: 'Would you like to leave the course?' } do %>
+                      <span class="glyphicon glyphicon-remove"></span>
+                      Leave
                   <% end %>
                 </li>
+                <% elsif user_signed_in? and current_user.id == course.coach_id %>
+                <% else %>
+                    <li role="separator" class="divider"></li>
+                    <li>
+                      <%= link_to course_apply_path(course), :controller => :courses_controller, data: { confirm: 'Would you like to subscribe to the course?' } do %>
+                          <i class="glyphicon glyphicon-ok"></i>
+                          Apply
+                      <% end %>
+                    </li>
+                <% end %>
               </ul>
               <div class="clearfix"></div>
             </div>
