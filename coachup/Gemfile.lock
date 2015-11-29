@@ -7,6 +7,13 @@ GIT
       railties (>= 3.0)
 
 GIT
+  remote: git@github.com:ryanto/acts_as_votable.git
+  revision: 9ded371ec0720d07fa7a169109da05c835a2cb51
+  ref: 9ded371ec0720d07fa7a169109da05c835a2cb51
+  specs:
+    acts_as_votable (0.10.0)
+
+GIT
   remote: https://github.com/zquestz/omniauth-google-oauth2
   revision: e505783c33d51c0b0db1c8e595539b4fde30d6d6
   branch: master
@@ -293,6 +300,7 @@ PLATFORMS
 DEPENDENCIES
   acts_as_votable!
   bootstrap-sass (~> 3.3.5)
+  bootstrap-switch-rails
   bootstrap-timepicker-rails!
   bootstrap3-datetimepicker-rails (~> 4.17.37)
   carrierwave
