@@ -2,6 +2,7 @@
   <div class="col-lg-12">
     <h3 class="page-header"> My Coaches </h3>
   </div>
+  <% if @my_coaches.present? %>
   <div class="col-md-12">
     <div class="panel panel-default">
       <div class="panel-body">
@@ -39,4 +40,7 @@
     <!-- /.panel -->
   </div>
   <!-- /.col-lg-6 -->
+  <% else %>
+      <h4>You have no coaches yet...</h4>
+  <% end %>
 </div>

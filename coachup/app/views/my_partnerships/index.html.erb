@@ -3,46 +3,50 @@
     <h3 class="page-header"> My Partnerships </h3>
   </div>
 </div>
-<div class="row">
-  <div class="col-md-12">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        Partnerships
-      </div>
-      <!-- /.panel-heading -->
-      <div class="panel-body">
-        <div class="table-responsive">
-          <table class="table">
-            <thead>
-            <tr>
-              <th>Coach</th>
-              <th>Created at</th>
-            </tr>
-            </thead>
-            <tbody>
-            <% @partnerships.each do |partner| %>
-                <tr>
-                  <% if partner[:user_id] %>
-                      <td><%= link_to partner[:user], user_profile_path(partner[:user_id]) %></td>
-                  <% else %>
-                      <td><%= partner[:user] %></td>
+<% if @partnerships.present? %>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              Partnerships
+            </div>
+            <!-- /.panel-heading -->
+            <div class="panel-body">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead>
+                  <tr>
+                    <th>Coach</th>
+                    <th>Created at</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <% @partnerships.each do |partner| %>
+                      <tr>
+                        <% if partner[:user_id] %>
+                            <td><%= link_to partner[:user], user_profile_path(partner[:user_id]) %></td>
+                        <% else %>
+                            <td><%= partner[:user] %></td>
+                        <% end %>
+                        <td>
+                          <%= partner[:created_at] %>
+                          <%= link_to 'Unfollow', partnership_path(partner[:user]), method: :delete,
+                                      class: 'btn btn-primary pull-right', role: 'button' %>
+                        </td>
+                      </tr>
                   <% end %>
-                  <td>
-                    <%= partner[:created_at] %>
-                    <%= link_to 'Unfollow', partnership_path(partner[:user]), method: :delete,
-                                class: 'btn btn-primary pull-right', role: 'button' %>
-                  </td>
-                </tr>
-            <% end %>
-            </tbody>
-          </table>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.table-responsive -->
+            </div>
+            <!-- /.panel-body -->
+          </div>
+          <!-- /.panel -->
         </div>
-        <!-- /.table-responsive -->
-      </div>
-      <!-- /.panel-body -->
-    </div>
-    <!-- /.panel -->
-  </div>
-  <!-- /.col-lg-6 -->
+        <!-- /.col-lg-6 -->
+  <% else %>
+    <h4>You have no partnerships yet...</h4>
+  <% end %>
 </div>
 <!-- /.row -->
