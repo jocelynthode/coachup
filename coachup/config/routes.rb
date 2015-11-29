@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get '/auth/facebook/callback', to: 'users#link_facebook'
   delete '/auth/facebook', to: 'users#unlink_facebook'
   get '/auth/:provider/callback', to: 'sessions#token'
+  get '/auth/failure', to: 'sessions#omniauth_failure'
 =begin
   resources :my_partnerships do
   end
