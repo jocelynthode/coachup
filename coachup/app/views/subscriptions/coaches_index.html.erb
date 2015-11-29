@@ -1,39 +1,39 @@
-<div class="row">
-  <div class="col-lg-12">
-    <h3 class="page-header"> Coaches of <%= @user.username %> </h3>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <h3 class="page-header">
+        Coaches of <%= @user.username %>
+      </h3>
+    </div>
   </div>
   <% if @coaches.present? %>
-  <div class="col-md-12">
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <div class="table-responsive">
-          <table class="table">
-            <thead>
-            <tr>
-              <th>Coach</th>
-              <th>Email</th>
-            </tr>
-            </thead>
-            <tbody>
+      <% @coaches.each do |coach| %>
+          <div class="col-xs-12 col-sm-2">
+            <div class="box-info text-center user-profile-2">
+              <div class="header-cover"></div>
+              <div class="user-profile-inner" style="word-wrap: break-word;">
+                <h5 class="white">
+                  <%= coach.username %>
+                </h5>
+                <% if coach.avatar_url.present? %>
+                    <%= image_tag user.avatar_url(:display, :class=>"img-circle profile-avatar") %>
+                <% else %>
+                    <%= cl_image_tag('default', :class=>"img-circle profile-avatar") %>
+                <% end %>
 
-            <% @coaches.each do |coach| %>
-                <tr>
-                  <td><%= coach.username %></td>
-                  <td><%= coach.email %></td>
-                  <td><%= link_to 'Show', user_path(coach) %></td>
-                </tr>
-            <% end %>
-
-            </tbody>
-          </table>
-        </div>
-        <!-- /.table-responsive -->
-      </div>
-      <!-- /.panel-body -->
-    </div>
-    <!-- /.panel -->
-  </div>
-  <!-- /.col-lg-6 -->
+                <h5><small><em><%= coach.email %></em></small></h5>
+                <div class="row">
+                  <div class="col-xs-12 col-sm-12">
+                    <%= link_to  user_path(coach), :class => "btn btn-primary btn-sm btn-block" do %>
+                        <span class="glyphicon glyphicon-user"></span>
+                        View Profile
+                    <% end %>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+      <% end %>
   <% else %>
       <div class="col-md-12">
         <h4><%= @user.username %> doesn't have any coaches yet...</h4>
