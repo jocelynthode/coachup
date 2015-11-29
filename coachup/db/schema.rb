@@ -52,7 +52,7 @@ ActiveRecord::Schema.define(version: 20151123224619) do
 
   add_index "subscriptions", ["course_id"], name: "index_subscriptions_on_course_id", using: :btree
   add_index "subscriptions", ["user_id"], name: "index_subscriptions_on_user_id", using: :btree
-  
+
   create_table "users", force: :cascade do |t|
     t.string   "email",         default: "", null: false
     t.string   "username"
