@@ -70,7 +70,7 @@
     <div class="form-group">
       <%= f.label :duration, "Duration of the lesson" %><br>
       <div class="input-group bootstrap-timepicker timepicker">
-        <%= f.text_field :duration, class: "form-control", id: 'timepicker', value: @course.duration.try(:strftime,'%H:%M') %>
+        <%= f.text_field :duration, class: "form-control", value: @course.duration.try(:strftime,'%H:%M') %>
         <span class="input-group-addon">
             <i class="glyphicon glyphicon-time"></i>
         </span>
@@ -146,7 +146,7 @@
   });
 
     $(function() {
-      $('#timepicker').timepicker({
+      $('#course_duration').timepicker({
         minuteStep: 15,
         showMeridian: false,
         defaultTime: '1:00',
