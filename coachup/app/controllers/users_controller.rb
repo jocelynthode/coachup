@@ -92,7 +92,7 @@ class UsersController < ApplicationController
     @user.update_attribute(:avatar, nil)
     @user.reload
 
-    redirect_to edit_profile_path
+    redirect_to edit_user_path @user
   end
 
   def link_facebook
@@ -100,13 +100,13 @@ class UsersController < ApplicationController
     auth = env['omniauth.auth']
     current_user.update_column :facebook_uid, auth.uid
     flash[:notice] = "Your profile is now linked to your facebook account"
-    redirect_to user_profile_path(current_user)
+    redirect_to user_path(current_user)
   end
 
   def unlink_facebook
     current_user.update_column :facebook_uid, nil
     flash[:notice] = "Your profile isn't link to any facebook account anymore"
-    redirect_to user_profile_path(current_user)
+    redirect_to user_path(current_user)
   end
 
   private
