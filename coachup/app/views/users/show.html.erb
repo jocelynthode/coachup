@@ -35,20 +35,24 @@
                 <% if current_user.subscribed_to_course_from? @user %>
                   <% case current_user.voted_as_when_voted_for @user %>
                   <% when true %>
-                        <%= button_tag 'Liked', class: 'btn-sm btn-success button-appreciation',
-                                                disabled: true%>
-                        <%= link_to 'Dislike', dislike_user_path(@user), method: :put,
-                                    class: 'btn-sm btn-danger button-appreciation', role: 'button' %>
+                    <%= link_to fa_icon('thumbs-up lg', text: 'Liked'), '#', role: 'button',
+                          class: 'btn btn-sm btn-success button-appreciation disabled' %>
+                    <%= link_to fa_icon('thumbs-down lg', text: 'Dislike'),
+                          dislike_user_path(@user), method: :put, role: 'button',
+                          class: 'btn btn-sm btn-danger button-appreciation' %>
                   <% when false %>
-                        <%= link_to 'Like', like_user_path(@user), method: :put,
-                                    class: 'btn-sm btn-success button-appreciation', role: 'button' %>
-                        <%= button_tag 'Disliked', class: 'btn-sm btn-danger button-appreciation',
-                                       disabled: true%>
+                    <%= link_to fa_icon('thumbs-up lg', text: 'Like'),
+                          like_user_path(@user), method: :put, role: 'button',
+                          class: 'btn btn-sm btn-danger button-appreciation' %>
+                    <%= link_to fa_icon('thumbs-down lg', text: 'Disliked'), '#', role: 'button',
+                          class: 'btn btn-sm btn-success button-appreciation disabled' %>
                   <% when nil %>
-                    <%= link_to 'Like', like_user_path(@user), method: :put,
-                                class: 'btn-sm btn-success button-appreciation', role: 'button' %>
-                    <%= link_to 'Dislike', dislike_user_path(@user), method: :put,
-                                class: 'btn-sm btn-danger button-appreciation', role: 'button' %>
+                    <%= link_to fa_icon('thumbs-up lg', text: 'Like'),
+                          like_user_path(@user), method: :put, role: 'button',
+                          class: 'btn btn-sm btn-success button-appreciation' %>
+                    <%= link_to fa_icon('thumbs-down lg', text: 'Dislike'),
+                          dislike_user_path(@user), method: :put, role: 'button',
+                          class: 'btn btn-sm btn-danger button-appreciation' %>
                   <% end %>
                 <% end %>
                 <p class="approval"><%= @user.approval_rate %> % (<%= @user.votes_for.size %> votes)</p>
