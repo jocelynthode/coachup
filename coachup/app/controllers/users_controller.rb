@@ -60,6 +60,9 @@ class UsersController < ApplicationController
     User.transaction do
       @user.username = session[:username]
       if @user.update(user_params)
+        # Ugly fix
+        @user.update_column :password, @user.new_password if @user.new_password.present?
+
         payload = { email: @user.email, realname: @user.realname }
         payload[:password] = @user.new_password if @user.new_password.present?
         payload_xml = payload.to_xml(root: :user, skip_instruct: true)
@@ -72,7 +75,7 @@ class UsersController < ApplicationController
         else
           flash[:notice] = "Successfully updated profile"
           session[:password] = @user.new_password if @user.new_password.present?
-          redirect_to edit_profile_path
+          redirect_to user_path(current_user)
         end
       else
         render 'edit'
