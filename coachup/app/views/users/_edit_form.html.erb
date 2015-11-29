@@ -31,11 +31,10 @@
       <div class="form-group">
         <%= f.label :date_of_birth %>
         <div class="input-group date" id="datepicker">
-          <%= f.text_field :date_of_birth, class: 'form-control' %>
+          <%= f.text_field :date_of_birth, class: 'form-control', value: @user.date_of_birth.try(:strftime,'%d-%m-%Y') %>
           <span class="input-group-addon">
             <i class="glyphicon glyphicon-calendar"></i>
           </span>
-          <%#= f.date_field :date_of_birth, class: 'form-control' %>
         </div>
       </div>
 
