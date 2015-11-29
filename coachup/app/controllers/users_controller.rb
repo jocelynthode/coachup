@@ -100,6 +100,12 @@ class UsersController < ApplicationController
     redirect_to user_profile_path(current_user)
   end
 
+  def unlink_facebook
+    current_user.update_column :facebook_uid, nil
+    flash[:notice] = "Your profile isn't link to any facebook account anymore"
+    redirect_to user_profile_path(current_user)
+  end
+
   private
   def set_user
     @username = session[:username]

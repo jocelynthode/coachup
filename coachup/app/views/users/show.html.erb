@@ -52,9 +52,14 @@
                   <div><i class="fa fa-facebook"></i> Facebook Profile</div>
                   <% if @facebook_url %>
                     <%= link_to 'Verified', @facebook_url %>
+                    <% if current_user == @user %>
+                      <br/>
+                      <%= link_to 'Unlink your account', auth_facebook_path,
+                                  method: :delete %>
+                    <% end %>
                   <% elsif current_user == @user %>
                     <%= link_to 'Verify your account with Facebook',
-                                '/auth/facebook' %>
+                                auth_facebook_path %>
                   <% else %>
                     <i>Not verified</i>
                   <% end %>
