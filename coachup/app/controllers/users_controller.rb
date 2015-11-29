@@ -114,7 +114,7 @@ class UsersController < ApplicationController
     if @user != current_user
       @user.upvote_by current_user
     end
-    redirect_to user_profile_path(@user)
+    redirect_to user_path(@user)
   end
 
   def downvote
@@ -122,7 +122,7 @@ class UsersController < ApplicationController
     if @user != current_user
       @user.downvote_by current_user
     end
-    redirect_to user_profile_path(@user)
+    redirect_to user_path(@user)
   end
 
   private
