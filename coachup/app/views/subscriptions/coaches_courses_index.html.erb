@@ -1,8 +1,11 @@
-<div class="container">
-  <div class="row">
-    <div class="col-lg-12">
-      <h3 class="page-header"> Courses given by coaches of <%= @user.username %> </h3>
-    </div>
-  </div>
-  <%= render 'courses/index', type: :coaches %>
-</div>
+<% if current_user == @user %>
+  <%= render partial: 'courses/index', locals: {
+      title: 'Courses given by your coaches',
+      empty_text: 'None of your coaches gives any courses right now...'
+  } %>
+<% else %>
+  <%= render partial: 'courses/index', locals: {
+      title: "Courses given by coaches of #{@user.username}",
+      empty_text: "None of the coaches of #{@user.username} gives any courses right now..."
+  } %>
+<% end %>

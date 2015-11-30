@@ -1,20 +1,24 @@
-<div class="container">
-  <div class="row">
-    <div class="col-lg-12">
-      <h3 class="page-header">
-        <% if @user %>
-            Courses given by <%= @user.username %>
-        <% elsif params[:q] %>
-            Search results for "<%= params[:q][:title_or_description_cont] %>"
-        <% else %>
-            All Courses
-        <% end %>
-      </h3>
-    </div>
-  </div>
-  <% if @user == current_user %>
-    <%= render 'index', type: :courses_given %>
-  <% else %>
-    <%= render 'index', type: :index %>
-  <% end %>
-</div>
+<% if @user %>
+    <% if @user == current_user %>
+        <%= render partial: 'courses/index', locals: {
+            title: 'Courses you are teaching',
+            empty_text: 'You are not giving any course right now...'
+        } %>
+    <% else %>
+        <%= render partial: 'courses/index', locals: {
+            title: "Courses given by #{@user.username}",
+            empty_text: "#{@user.username} doesn't give any courses right now..."
+        } %>
+    <% end %>
+<% elsif params[:q] %>
+    <%= render partial: 'courses/index', locals: {
+        title: %Q( Search results for "#{params[:q][:title_or_description_cont]}" ),
+        empty_text: %Q( We couldn't find anything with the following search terms:
+                    #{params[:q][:title_or_description_cont]} )
+    } %>
+<% else %>
+    <%= render partial: 'courses/index', locals: {
+        title: 'All Courses',
+        empty_text: 'There are no courses available yet...'
+    } %>
+<% end %>

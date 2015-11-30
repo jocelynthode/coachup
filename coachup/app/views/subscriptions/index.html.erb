@@ -1,8 +1,11 @@
-<div class="container">
-  <div class="row">
-    <div class="col-lg-12">
-      <h3 class="page-header"> Courses taken by <%= @user.username %> </h3>
-    </div>
-  </div>
-  <%= render 'courses/index', type: :subscriptions %>
-</div>
+<% if @user == current_user %>
+    <%= render partial: 'courses/index', locals: {
+        title: 'Courses you are taking',
+        empty_text: 'You are not taking any courses yet...'
+    } %>
+<% else %>
+    <%= render partial: 'courses/index', locals: {
+        title: "Courses taken by #{@user.username}",
+        empty_text: "#{@user.username} doesn't take any courses yet..."
+    } %>
+<% end %>
