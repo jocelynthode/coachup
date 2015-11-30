@@ -53,7 +53,6 @@ Rails.application.routes.draw do
     get 'apply', :action => :apply
     get 'leave', :action => :leave
     get 'export', :action => :export
-    resources :training_sessions
   end
 
   resources :subscriptions do
