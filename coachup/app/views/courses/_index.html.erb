@@ -52,56 +52,42 @@
               </a>
               <ul class="dropdown-menu">
                 <li>
-                  <%= link_to course_path(course)do %>
+                  <%= link_to course_path(course) do %>
                       <i class="glyphicon glyphicon-eye-open"></i>
                       Show
                   <% end %>
                 </li>
-                <li>
-                  <% if user_signed_in? and current_user.id == course.coach_id %>
-                      <li><%= link_to edit_course_path(course)  do %>
-                            <i class="glyphicon glyphicon-edit"></i>
-                            Edit
-                        <% end %>
+                <% if user_signed_in? %>
+                  <% if current_user.id == course.coach_id %>
+                      <li><%= link_to edit_course_path(course) do %>
+                            <i class="glyphicon glyphicon-edit"></i> Edit
+                          <% end %>
                       </li>
                       <li><%= link_to course_path(course),
                                       method: :delete,
                                       data: { confirm: 'Are you sure?' } do %>
-                            <i class="glyphicon glyphicon-trash"></i>
-                            Delete
-                        <% end %>
+                            <i class="glyphicon glyphicon-trash"></i> Delete
+                          <% end %>
                       </li>
-                  <% end %>
-                </li>
-                <% if user_signed_in? %>
-                     <% if course.subscriptions.exists?(user: current_user)%>
-                     <% if course.subscriptions.count == course.max_participants %>
-                        <li role="separator" class="divider"></li>
-                        <li>
-                          <%= link_to course_leave_path(course), :controller => :courses_controller, data: { confirm: 'Would you like to leave the course?' } do %>
-                              <span class="glyphicon glyphicon-remove"></span>
-                              Leave
-                          <% end %>
-                        </li>
-                     <%else%>
-                        <li role="separator" class="divider"></li>
-                        <li>
-                          <%= link_to course_leave_path(course), :controller => :courses_controller, data: { confirm: 'Would you like to leave the course?' } do %>
-                              <span class="glyphicon glyphicon-remove"></span>
-                              Leave
-                          <% end %>
-                        </li>
-                    <% end %>
-                <% elsif user_signed_in? and current_user.id == course.coach_id %>
-                <% else %>
-                    <li role="separator" class="divider"></li>
-                    <li>
-                      <%= link_to course_apply_path(course), :controller => :courses_controller, data: { confirm: 'Would you like to subscribe to the course?' } do %>
-                          <i class="glyphicon glyphicon-ok"></i>
-                          Apply
+                  <% else %>
+                      <% if course.subscriptions.exists?(user: current_user) %>
+                          <li role="separator" class="divider"></li>
+                          <li>
+                            <%= link_to course_leave_path(course), method: :post,
+                                data: {confirm: 'Would you like to leave the course?'} do %>
+                                  <i class="glyphicon glyphicon-remove"></i> Leave
+                            <% end %>
+                          </li>
+                      <% elsif course.subscriptions.count < course.max_participants %>
+                          <li role="separator" class="divider"></li>
+                          <li>
+                            <%= link_to course_apply_path(course), method: :post,
+                                data: {confirm: 'Would you like to subscribe to the course?'} do %>
+                                  <i class="glyphicon glyphicon-ok"></i> Apply
+                            <% end %>
+                          </li>
                       <% end %>
-                    </li>
-                <% end %>
+                  <% end %>
                 <% end %>
               </ul>
               <div class="clearfix"></div>

@@ -55,21 +55,21 @@
             <dd><%= social_share_button_tag(@course.title,:popup => "true") %></dd>
             <% if @course.coach == current_user || @course.subscriptions.exists?(user: current_user) %>
               <dt>Calendar</dt>
-              <dd> <%= link_to 'Export', course_export_path(@course) %></dd>
+              <dd> <%= link_to 'Export', course_export_path(@course), method: :post %></dd>
             <% end %>
          </dl>
         </div>
       </div>
         <div class="row">
           <div class="col-md-offset-4">
-          <%unless @course.subscriptions.exists?(user: current_user) || @course.subscriptions.count == @course.max_participants %>
-            <%= link_to course_apply_path(@course), :controller => :courses_controller, :class => "btn btn-success", data: { confirm: 'Would you like to subscribe to the course?' } do %>
+          <% unless @course.subscriptions.exists?(user: current_user) || @course.subscriptions.count == @course.max_participants %>
+            <%= link_to course_apply_path(@course), method: :post, :class => "btn btn-success", data: { confirm: 'Would you like to subscribe to the course?' } do %>
               <span class="glyphicon glyphicon-ok"></span>
                   Apply
             <% end %>
           <% end %>
           <% if @course.subscriptions.exists?(user: current_user) %>
-            <%= link_to course_leave_path(@course), :controller => :courses_controller, :class => "btn btn-danger", data: { confirm: 'Would you like to leave the course?' } do %>
+            <%= link_to course_leave_path(@course), method: :post, :class => "btn btn-danger", data: { confirm: 'Would you like to leave the course?' } do %>
               <span class="glyphicon glyphicon-remove"></span>
               Leave
             <% end %>
