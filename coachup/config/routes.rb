@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   get 'overview/index'
 
   resources :users do
+    resources :courses, only: [:index]
     get 'delete_avatar', :action => :delete_avatar
     member do
       put 'like', to: 'users#upvote'
@@ -46,7 +47,6 @@ Rails.application.routes.draw do
 
   resources :courses do
     collection do
-      get 'my_courses_index'
       get 'courses_by_my_coaches_index'
       get 'courses_i_am_subscribed_to_index'
     end

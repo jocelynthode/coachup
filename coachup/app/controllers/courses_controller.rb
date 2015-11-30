@@ -2,7 +2,10 @@ class CoursesController < ApplicationController
   skip_before_action :require_login, only: [:index, :show]
 
   def index
-    if params[:q] == nil then
+    if params[:user_id]  # /users/:id/courses
+      @user = User.find(params[:user_id])
+      @courses = @user.taught_courses
+    elsif params[:q] == nil
       @courses = Course.all
     else
       @courses = Course.search(params[:q]).result
@@ -63,10 +66,6 @@ class CoursesController < ApplicationController
     @course.destroy
 
     redirect_to courses_path
-  end
-
-  def my_courses_index
-    @courses = Course.where(:coach_id => current_user.id);
   end
 
   def courses_by_my_coaches_index

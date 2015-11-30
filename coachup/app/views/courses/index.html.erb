@@ -1,8 +1,20 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-12">
-      <h3 class="page-header"> All Courses </h3>
+      <h3 class="page-header">
+        <% if @user %>
+            Courses taught by <%= @user.username %>
+        <% elsif params[:q] %>
+            Search results for "<%= params[:q][:title_or_description_cont] %>"
+        <% else %>
+            All Courses
+        <% end %>
+      </h3>
     </div>
   </div>
-  <%= render 'index', type: :index %>
+  <% if @user == current_user %>
+    <%= render 'index', type: :courses_given %>
+  <% else %>
+    <%= render 'index', type: :index %>
+  <% end %>
 </div>

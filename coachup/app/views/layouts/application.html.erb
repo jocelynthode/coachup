@@ -106,9 +106,12 @@
                 <% end %>
               </li>
               <li>
-                <%= link_to my_courses_index_courses_path, :class=> params['action'] == 'my_courses_index' ? 'active' : '' do %>
-                    <span class="glyphicon glyphicon-ok"></span>
-                    My Courses
+                <% if user_signed_in? %>
+                  <%# TODO: hide some menu entries when not signed in %>
+                  <%= link_to user_courses_path(current_user) do %>
+                        <span class="glyphicon glyphicon-ok"></span>
+                        My Courses
+                  <% end %>
                 <% end %>
               </li>
             </ul>
