@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
 
   mount_uploader :avatar, AvatarUploader
 
-  has_many :taught_courses, class_name: "Course", foreign_key: 'coach_id'
+  has_many :taught_courses, class_name: 'Course', foreign_key: 'coach_id'
   has_many :subscriptions
   has_many :courses, through: :subscriptions
 

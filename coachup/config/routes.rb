@@ -10,6 +10,11 @@ Rails.application.routes.draw do
 
   resources :users do
     resources :courses, only: [:index]
+    resources :subscriptions do
+      get 'coaches', action: 'coaches_index', on: :collection
+      get 'coaches/courses', action: 'coaches_courses_index', on: :collection
+    end
+
     get 'delete_avatar', :action => :delete_avatar
     member do
       put 'like', to: 'users#upvote'
@@ -20,6 +25,12 @@ Rails.application.routes.draw do
   resources :locations do
   end
 
+  resources :courses do
+    post 'apply', :action => :apply
+    post 'leave', :action => :leave
+    post 'export', :action => :export
+  end
+
   get '/auth/facebook/callback', to: 'users#link_facebook'
   delete '/auth/facebook', to: 'users#unlink_facebook'
   get '/auth/:provider/callback', to: 'sessions#token'
@@ -28,6 +39,7 @@ Rails.application.routes.draw do
   get '/partnerships/', to: 'my_partnerships#index' , as: 'partnerships'
   post '/partnerships/:username', to: 'my_partnerships#create', as: 'partnership'
   delete '/partnerships/:username', to: 'my_partnerships#destroy'
+  get '/partnerships/courses', to: 'my_partnerships#courses_index', as: 'partnerships_courses'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -44,26 +56,6 @@ Rails.application.routes.draw do
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
-
-  resources :courses do
-    collection do
-      get 'courses_by_my_coaches_index'
-      get 'courses_i_am_subscribed_to_index'
-    end
-    get 'apply', :action => :apply
-    get 'leave', :action => :leave
-    get 'export', :action => :export
-  end
-
-  resources :subscriptions do
-    collection do
-      get 'my_coaches_index'
-    end
-  end
-
-
-
-
 
 
 

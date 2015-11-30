@@ -68,30 +68,6 @@ class CoursesController < ApplicationController
     redirect_to courses_path
   end
 
-  def courses_by_my_coaches_index
-    partnerships = current_user_partnerships.find()
-    @partnerships = partnerships.map { |ps|
-      user = User.find_by(username: ps[:user])
-      if @user.present?
-        ps.merge :user_id => user.id
-      end
-    }.compact
-
-    my_courses = []
-
-    @partnerships.each do |partnership|
-      Course.find_each do |course|
-        if course.coach_id == partnership[:user_id]
-          my_courses << course
-        end
-      end
-    end
-    @courses = my_courses
-  end
-
-  def courses_i_am_subscribed_to_index
-    @courses = Course.joins(:subscriptions).where(subscriptions: { user_id: current_user.id})
-  end
 
   def apply
     @course = Course.find(params[:course_id])

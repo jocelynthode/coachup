@@ -94,15 +94,11 @@
             <a id="courses_button" href="#"><i class="glyphicon glyphicon-tasks" ></i> Courses<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level collapse" id="courses_submenu">
               <li>
-                <%= link_to courses_by_my_coaches_index_courses_path do %>
-                    <span class="glyphicon glyphicon-ok"></span>
-                    Courses By My Coaches
-                <% end %>
-              </li>
-              <li>
-                <%= link_to courses_i_am_subscribed_to_index_courses_path do %>
-                    <span class="glyphicon glyphicon-ok"></span>
-                    Courses I Am Subscribed To
+                <% if user_signed_in? %>
+                  <%= link_to user_subscriptions_path(current_user) do %>
+                      <span class="glyphicon glyphicon-ok"></span>
+                      Courses Taken
+                  <% end %>
                 <% end %>
               </li>
               <li>
@@ -110,8 +106,18 @@
                   <%# TODO: hide some menu entries when not signed in %>
                   <%= link_to user_courses_path(current_user) do %>
                         <span class="glyphicon glyphicon-ok"></span>
-                        My Courses
+                        Courses Given
                   <% end %>
+                <% end %>
+              </li>
+              <li>
+                <%= link_to coaches_courses_user_subscriptions_path(current_user) do %>
+                    <span class="glyphicon glyphicon-ok"></span>
+                    Courses By My Coaches
+                <% end %>
+                <%= link_to partnerships_courses_path do %>
+                    <span class="glyphicon glyphicon-ok"></span>
+                    Courses By My Partners
                 <% end %>
               </li>
             </ul>
@@ -125,7 +131,7 @@
             <% end %>
           </li>
           <li>
-            <%= link_to my_coaches_index_subscriptions_path do %>
+            <%= link_to coaches_user_subscriptions_path(current_user) do %>
                 <span class="fa fa-user-secret"></span>
                 My Coaches
             <% end %>

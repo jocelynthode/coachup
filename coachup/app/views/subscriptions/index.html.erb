@@ -1,1 +1,8 @@
-<h2>All Partnerships</h2>
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <h3 class="page-header"> Courses taken by <%= @user.username %> </h3>
+    </div>
+  </div>
+  <%= render 'courses/index', type: :subscriptions %>
+</div>

@@ -3,7 +3,7 @@
     <div class="col-lg-12">
       <h3 class="page-header">
         <% if @user %>
-            Courses taught by <%= @user.username %>
+            Courses given by <%= @user.username %>
         <% elsif params[:q] %>
             Search results for "<%= params[:q][:title_or_description_cont] %>"
         <% else %>
