@@ -70,7 +70,7 @@
     <!-- /.navbar-top-links -->
 
     <div class="navbar-default sidebar" role="navigation">
-      <div class="sidebar-nav navbar-collapse <%=['courses_by_my_coaches_index','courses_i_am_subscribed_to_index','my_courses_index'].include?(params[:action]) ? "toggled" : "" %>">
+      <div class="sidebar-nav navbar-collapse">
         <ul class="nav" id="side-menu">
           <li class="sidebar-search">
             <%= form_tag courses_path, method: "get" do %>
@@ -85,7 +85,7 @@
             <!-- /input-group -->
           </li>
           <li>
-            <%= link_to courses_path, :class=> (params['controller'] == 'courses' and params['action'] == 'index') ? 'active' : '' do %>
+            <%= link_to courses_path do %>
                 <span class="glyphicon glyphicon-home"></span>
                 Courses Overview
             <% end %>
@@ -94,13 +94,13 @@
             <a id="courses_button" href="#"><i class="glyphicon glyphicon-tasks" ></i> Courses<span class="fa arrow"></span></a>
             <ul class="nav nav-second-level collapse" id="courses_submenu">
               <li>
-                <%= link_to courses_by_my_coaches_index_courses_path, :class=> params['action'] == 'courses_by_my_coaches_index' ? 'active' : '' do %>
+                <%= link_to courses_by_my_coaches_index_courses_path do %>
                     <span class="glyphicon glyphicon-ok"></span>
                     Courses By My Coaches
                 <% end %>
               </li>
               <li>
-                <%= link_to courses_i_am_subscribed_to_index_courses_path, :class=> params['action'] == 'courses_i_am_subscribed_to_index' ? 'active' : '' do %>
+                <%= link_to courses_i_am_subscribed_to_index_courses_path do %>
                     <span class="glyphicon glyphicon-ok"></span>
                     Courses I Am Subscribed To
                 <% end %>
@@ -116,19 +116,19 @@
           </li>
 
           <li>
-            <%= link_to partnerships_path, :class=> params['controller'] == 'partnerships' ? 'active' : '' do %>
+            <%= link_to partnerships_path do %>
                 <span class="fa fa-users"></span>
                 My Partnerships
             <% end %>
           </li>
           <li>
-            <%= link_to my_coaches_index_subscriptions_path, :class=> params['action'] == 'my_coaches_index' ? 'active' : '' do %>
+            <%= link_to my_coaches_index_subscriptions_path do %>
                 <span class="fa fa-user-secret"></span>
                 My Coaches
             <% end %>
           </li>
           <li>
-            <%= link_to users_path, :class=> params['controller'] == 'users' ? 'active' : ''  do %>
+            <%= link_to users_path do %>
                 <span class="glyphicon glyphicon-star"></span>
                 User Profiles
             <% end %>
@@ -137,7 +137,7 @@
 
         <% if user_signed_in? %>
             <li>
-              <a><i class="glyphicon glyphicon-calendar" ></i> Upcoming Sessions
+              <a href="#"><i class="glyphicon glyphicon-calendar" ></i> Upcoming Sessions
                 <input type="checkbox" data-size="mini" name="my-checkbox"checked>
               </a>
             </li><br>
@@ -163,8 +163,8 @@
                       <ul>
                         <li><%= link_to course_path(session.course) do%>
                               <span class="glyphicon glyphicon-chevron-right "></span>
-                          <% end %>
-                              </li>
+                            <% end %>
+                        </li>
                       </ul>
                     </div>
 
@@ -202,30 +202,11 @@
 
 <% if (params[:controller] == 'courses' and params[:action] == "new") or (params[:controller] == 'courses' and params[:action] == "edit")%>
 <script type="text/javascript">
-    //$(document).ready(loadScript());
     $(document).ready(loadScript());
 </script>
 <% end %>
-<script type="text/javascript">
-    $(document).ready(function () {
-        <%if ['my_courses_index','courses_i_am_subscribed_to_index','courses_by_my_coaches_index'].include?(params[:action])%>
-        $(".nav-second-level").show();
-        <%end%>
-        $("#courses_button").click(function(event) {
-            if($(".nav-second-level").attr('style') == 'display: block;')
-            {
-                $(".nav-second-level").hide();
-            }
-            else
-            {
-                $(".nav-second-level").show();
-            }
 
-        });
-    });
-</script>
 <script type="text/javascript">
-
 $("[name='my-checkbox']").bootstrapSwitch();
 $(document).ready(function()
 {
@@ -242,16 +223,6 @@ $(document).ready(function()
         }
     });
 });
-
-$("#courses_button").click(function(e) {
-    $(".sidebar-nav").toggleClass("toggled");
-});
-
-$("#courses_submenu li").click(function(e) {
-    $(".sidebar-nav").addClass("toggled");
-});
-
-
 </script>
 </body>
 </html>
