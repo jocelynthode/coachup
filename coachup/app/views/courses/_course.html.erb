@@ -1,0 +1,90 @@
+<div class="col-lg-3 col-md-6">
+    <% if course.sport=='Running' %>
+    <% name = "primary" %>
+    <% elsif course.sport=='Boxing' %>
+    <% name = "red" %>
+    <% elsif course.sport=='Cycling' %>
+    <% name = "yellow" %>
+    <% elsif course.sport=='Soccer' %>
+    <% name = "green" %>
+    <% end %>
+    <div class = "panel panel-<%= name %>">
+        <div class="panel-heading">
+            <div class="row">
+                <div class="col-xs-3">
+                    <% if course.sport=='Running' %>
+                    <%= link_to course_path(course)do %>
+                    <%= image_tag("running_white.png",:class=>"img-rounded center-block")%>
+                    <% end %>
+                    <% elsif course.sport=='Boxing' %>
+                    <%= link_to course_path(course)do %>
+                    <%= image_tag("boxing_white.png",:class=>"img-rounded center-block")%>
+                    <% end %>
+                    <% elsif course.sport=='Cycling' %>
+                    <%= link_to course_path(course)do %>
+                    <%= image_tag("cycling_white.png",:class=>"img-rounded center-block")%>
+                    <% end %>
+                    <% elsif course.sport=='Soccer' %>
+                    <%= link_to course_path(course)do %>
+                    <%= image_tag("soccer_white.png",:class=>"img-rounded center-block")%>
+                    <% end %>
+                    <% end %>
+                </div>
+                <div class="col-xs-9 text-right">
+                    <h4 ><%= course.title %></h4>
+                    <div><%= course.coach.username %></div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-footer dropdown">
+            <a data-toggle="dropdown" class="dropdown-toggle">
+                  <span class="pull-left ">
+                      View Details
+                  </span>
+                <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+            </a>
+            <ul class="dropdown-menu">
+                <li>
+                    <%= link_to course_path(course) do %>
+                    <i class="glyphicon glyphicon-eye-open"></i>
+                    Show
+                    <% end %>
+                </li>
+                <% if user_signed_in? %>
+                <% if current_user.id == course.coach_id %>
+                <li><%= link_to edit_course_path(course) do %>
+                    <i class="glyphicon glyphicon-edit"></i> Edit
+                    <% end %>
+                </li>
+                <li><%= link_to course_path(course),
+                    method: :delete,
+                    data: { confirm: 'Are you sure?' } do %>
+                    <i class="glyphicon glyphicon-trash"></i> Delete
+                    <% end %>
+                </li>
+                <% else %>
+                <% if course.subscriptions.exists?(user: current_user) %>
+                <li role="separator" class="divider"></li>
+                <li>
+                    <%= link_to course_leave_path(course), method: :post,
+                    data: {confirm: 'Would you like to leave the course?'} do %>
+                    <i class="glyphicon glyphicon-remove"></i> Leave
+                    <% end %>
+                </li>
+                <% elsif course.subscriptions.count < course.max_participants %>
+                <li role="separator" class="divider"></li>
+                <li>
+                    <%= link_to course_apply_path(course), method: :post,
+                    data: {confirm: 'Would you like to subscribe to the course?'} do %>
+                    <i class="glyphicon glyphicon-ok"></i> Apply
+                    <% end %>
+                </li>
+                <% end %>
+                <% end %>
+                <% end %>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+
+    </div>
+</div>
