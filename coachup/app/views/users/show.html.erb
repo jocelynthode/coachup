@@ -43,9 +43,9 @@
                   <% when false %>
                     <%= link_to fa_icon('thumbs-up lg', text: 'Like'),
                           like_user_path(@user), method: :put, role: 'button',
-                          class: 'btn btn-sm btn-danger button-appreciation' %>
+                          class: 'btn btn-sm btn-success button-appreciation' %>
                     <%= link_to fa_icon('thumbs-down lg', text: 'Disliked'), '#', role: 'button',
-                          class: 'btn btn-sm btn-success button-appreciation disabled' %>
+                          class: 'btn btn-sm btn-danger button-appreciation disabled' %>
                   <% when nil %>
                     <%= link_to fa_icon('thumbs-up lg', text: 'Like'),
                           like_user_path(@user), method: :put, role: 'button',

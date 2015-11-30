@@ -83,7 +83,7 @@ class User < ActiveRecord::Base
 
   def approval_rate
     return 100 if self.votes_for.size == 0
-    (self.get_upvotes.size / self.votes_for.size) * 100
+    (self.get_upvotes.size.to_f / self.votes_for.size) * 100
   end
 
   def subscribed_to_course_from?(user)
