@@ -2,8 +2,8 @@ class User < ActiveRecord::Base
   acts_as_votable
   acts_as_voter
   # Virtual attribute for authenticating with either username or email
-  attr_accessor :login, :realname, :publicvisible,
-    :password_confirmation, :new_password, :new_password_confirmation, :avatar, :avatar_cache, :delete_avatar
+  attr_accessor :login, :realname, :publicvisible, :password_confirmation,
+    :new_password, :new_password_confirmation, :avatar, :avatar_cache, :delete_avatar
   validates :realname, presence: true
   validates :email, format: {with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i}
   # creating user

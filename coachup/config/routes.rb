@@ -16,23 +16,13 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :locations do
+  end
+
   get '/auth/facebook/callback', to: 'users#link_facebook'
   delete '/auth/facebook', to: 'users#unlink_facebook'
   get '/auth/:provider/callback', to: 'sessions#token'
   get '/auth/failure', to: 'sessions#omniauth_failure'
-=begin
-  resources :my_partnerships do
-  end
-=end
-
-  #resources :profiles, only: [:edit]
-  get 'profiles/:id' => 'profiles#show', as: "user_profile"
-  get 'profiles/' => 'profiles#index', as: "profiles"
-
-  resources :locations do
-  end
-
-  get '/auth/:provider/callback', to: 'sessions#token'
 
   get '/partnerships/', to: 'my_partnerships#index' , as: 'partnerships'
   post '/partnerships/:username', to: 'my_partnerships#create', as: 'partnership'
