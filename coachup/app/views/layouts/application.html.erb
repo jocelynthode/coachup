@@ -90,52 +90,51 @@
                 Courses Overview
             <% end %>
           </li>
-          <li>
-            <a id="courses_button" href="#"><i class="glyphicon glyphicon-tasks" ></i> Courses<span class="fa arrow"></span></a>
-            <ul class="nav nav-second-level collapse" id="courses_submenu">
-              <li>
-                <% if user_signed_in? %>
+          <% if user_signed_in? %>
+            <li>
+              <a id="courses_button" href="#">
+                <i class="glyphicon glyphicon-tasks" ></i> Courses<span class="fa arrow"></span>
+              </a>
+              <ul class="nav nav-second-level collapse" id="courses_submenu">
+                <li>
                   <%= link_to user_subscriptions_path(current_user) do %>
                       <span class="glyphicon glyphicon-ok"></span>
                       Courses Taken
                   <% end %>
-                <% end %>
-              </li>
-              <li>
-                <% if user_signed_in? %>
-                  <%# TODO: hide some menu entries when not signed in %>
+                </li>
+                <li>
                   <%= link_to user_courses_path(current_user) do %>
                         <span class="glyphicon glyphicon-ok"></span>
                         Courses Given
                   <% end %>
-                <% end %>
-              </li>
-              <li>
-                <%= link_to coaches_courses_user_subscriptions_path(current_user) do %>
-                    <span class="glyphicon glyphicon-ok"></span>
-                    Courses By My Coaches
-                <% end %>
-                <%= link_to partnerships_courses_path do %>
-                    <span class="glyphicon glyphicon-ok"></span>
-                    Courses By My Partners
-                <% end %>
-              </li>
-            </ul>
-            <!-- /.nav-second-level -->
-          </li>
+                </li>
+                <li>
+                  <%= link_to coaches_courses_user_subscriptions_path(current_user) do %>
+                      <span class="glyphicon glyphicon-ok"></span>
+                      Courses By My Coaches
+                  <% end %>
+                  <%= link_to partnerships_courses_path do %>
+                      <span class="glyphicon glyphicon-ok"></span>
+                      Courses By My Partners
+                  <% end %>
+                </li>
+              </ul>
+              <!-- /.nav-second-level -->
+            </li>
 
-          <li>
-            <%= link_to partnerships_path do %>
-                <span class="fa fa-users"></span>
-                My Partnerships
-            <% end %>
-          </li>
-          <li>
-            <%= link_to coaches_user_subscriptions_path(current_user) do %>
-                <span class="fa fa-user-secret"></span>
-                My Coaches
-            <% end %>
-          </li>
+            <li>
+              <%= link_to partnerships_path do %>
+                  <span class="fa fa-users"></span>
+                  My Partnerships
+              <% end %>
+            </li>
+            <li>
+              <%= link_to coaches_user_subscriptions_path(current_user) do %>
+                  <span class="fa fa-user-secret"></span>
+                  My Coaches
+              <% end %>
+            </li>
+          <% end %>
           <li>
             <%= link_to users_path do %>
                 <span class="glyphicon glyphicon-star"></span>
