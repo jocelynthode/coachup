@@ -41,13 +41,13 @@ gem 'recurring_select'
 gem 'momentjs-rails', '>= 2.9.0'
 gem 'bootstrap3-datetimepicker-rails', '~> 4.17.37'
 gem 'bootstrap-timepicker-rails', require: 'bootstrap-timepicker-rails',
-    git: 'git://github.com/tispratik/bootstrap-timepicker-rails.git',
+    git: 'https://github.com/tispratik/bootstrap-timepicker-rails.git',
     ref: 'eb489926214bc2ffb9f61ac0638d758e7a950826'
 gem 'validates_timeliness', '~> 3.0'
 gem 'cloudinary'
 gem 'carrierwave'
 
-gem 'acts_as_votable', git: 'git@github.com:ryanto/acts_as_votable.git', ref: '9ded371ec0720d07fa7a169109da05c835a2cb51'
+gem 'acts_as_votable', git: 'https://github.com/ryanto/acts_as_votable.git', ref: '9ded371ec0720d07fa7a169109da05c835a2cb51'
 
 gem 'social-share-button', '~> 0.1.6'
 gem "bootstrap-switch-rails"
