@@ -17,16 +17,10 @@
             <tbody>
 
             <% @coaches.each do |coach| %>
-
                 <tr>
                   <td><%= coach.username %></td>
                   <td><%= coach.email %></td>
                   <td><%= link_to 'Show', user_path(coach) %></td>
-
-                  <td><%= link_to 'Edit', edit_course_path(coach) %></td>
-                  <td><%= link_to 'Destroy', course_path(coach),
-                                  method: :delete,
-                                  data: { confirm: 'Are you sure?' } %> </td>
                 </tr>
             <% end %>
 
@@ -41,6 +35,8 @@
   </div>
   <!-- /.col-lg-6 -->
   <% else %>
-      <h4><%= @user.username %> doesn't have any coaches yet...</h4>
+      <div class="col-md-12">
+        <h4><%= @user.username %> doesn't have any coaches yet...</h4>
+      </div>
   <% end %>
 </div>
