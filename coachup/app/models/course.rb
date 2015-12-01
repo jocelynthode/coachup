@@ -118,10 +118,11 @@ class Course < ActiveRecord::Base
     calendar = Calendar::CalendarService.new
     schedule = retrieve_schedule
     schedule.occurrences(ends_at).each do |sess|
+      dur = duration.seconds_since_midnight
       startTime = Calendar::EventDateTime.new(date_time: sess.start_time.to_datetime)
-      endTime = Calendar::EventDateTime.new(date_time: sess.start_time.to_datetime + 1.hour)
+      endTime = Calendar::EventDateTime.new(date_time: sess.start_time.to_datetime + dur.seconds)
       location_string = "#{location.latitude.to_s},#{location.longitude.to_s}"
-      id = title + description + location_string + sess.start_time.strftime("%Y-%m-%dT%l:%M:%S%z")
+      id = title + description + location_string + sess.start_time.strftime("%Y-%m-%dT%l:%M:%S%z") + sess.end_time.strftime("%Y-%m-%dT%l:%M:%S%z") + dur.to_s
       base32_id = id.each_byte.map { |b| b.to_s(32) }.join
       event = Calendar::Event.new(id: base32_id, summary: title,
                                   description: description,
