@@ -38,7 +38,7 @@
             <dd> <%= @course.price  %></dd>
 
             <dt>Coach</dt>
-            <dd> <%= @course.coach.username  %></dd>
+            <dd> <%= link_to @course.coach.username, user_path(@course.coach) %></dd>
 
             <dt>Sport</dt>
             <dd>  <%= @course.sport  %></dd>
