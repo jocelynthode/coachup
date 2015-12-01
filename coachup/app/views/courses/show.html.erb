@@ -31,6 +31,22 @@
             <dt>Description</dt>
             <dd> <%= @course.description  %></dd>
 
+            <% @schedule = @course.retrieve_schedule.occurrences(@course.ends_at) %>
+
+            <% if @schedule.count == 1 %>
+               <dt>Date/Time</dt>
+            <% else %>
+               <dt>Dates/Times</dt>
+            <% end %>
+
+            <dd>
+               <% @schedule.each do |occ| %>
+                 <%= occ.to_time.strftime("%d.%m.%Y - %H:%M") %>
+                 <br>
+               <% end %>
+             </ul>
+            </dd>
+
             <dt>Duration</dt>
             <dd><%= @course.duration.strftime('%Hh%M') %></dd>
 
