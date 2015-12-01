@@ -4,7 +4,19 @@
 <div class="container">
   <div class="row">
     <div class="col-lg-12">
-      <h3 class="page-header">  <%= @course.title %> Course </h3>
+      <h3 class="page-header">
+        <%= @course.title %> Course
+        <% if current_user == @course.coach %>
+            <%= link_to edit_course_path(@course), class: "btn btn-default" do %>
+                <i class="glyphicon glyphicon-edit"></i> Edit
+            <% end %>
+            <%= link_to course_path(@course),
+                        method: :delete,
+                        data: {confirm: 'Are you sure?'}, class: "btn btn-default" do %>
+                <i class="glyphicon glyphicon-trash"></i> Delete
+            <% end %>
+        <% end %>
+      </h3>
     </div>
   </div>
 </div>
@@ -13,73 +25,73 @@
   <div class="col-md-8 col-md-offset-2">
     <div style="word-break: break-all">
       <% if @course.sport=='Running' %>
-        <%= image_tag("running.png",:class=>"img-rounded center-block")%>
+          <%= image_tag("running.png", :class => "img-rounded center-block") %>
       <% elsif @course.sport=='Boxing' %>
-          <%= image_tag("boxing.png",:class=>"img-rounded center-block")%>
+          <%= image_tag("boxing.png", :class => "img-rounded center-block") %>
       <% elsif @course.sport=='Cycling' %>
-          <%= image_tag("cycling.png",:class=>"img-rounded center-block")%>
+          <%= image_tag("cycling.png", :class => "img-rounded center-block") %>
       <% elsif @course.sport=='Soccer' %>
-          <%= image_tag("soccer.png",:class=>"img-rounded center-block")%>
+          <%= image_tag("soccer.png", :class => "img-rounded center-block") %>
       <% end %>
 
       <div class="row">
-       <div class="col-md-10 col-md-offset-2">
-         <dl class="dl-horizontal">
+        <div class="col-md-10 col-md-offset-2">
+          <dl class="dl-horizontal">
             <dt>Title</dt>
             <dd> <%= @course.title %></dd>
 
             <dt>Description</dt>
-            <dd> <%= @course.description  %></dd>
+            <dd> <%= @course.description %></dd>
 
             <dt>Duration</dt>
             <dd><%= @course.duration.strftime('%Hh%M') %></dd>
 
             <dt>Price</dt>
-            <dd> <%= @course.price  %></dd>
+            <dd> <%= @course.price %></dd>
 
             <dt>Coach</dt>
             <dd> <%= link_to @course.coach.username, user_path(@course.coach) %></dd>
 
             <dt>Sport</dt>
-            <dd>  <%= @course.sport  %></dd>
+            <dd>  <%= @course.sport %></dd>
 
             <dt>Address</dt>
             <dd>
               <%= @course.location.address if @course.location !=nil %>
-              <%= link_to image_tag("pin.png",:width => 15, :height => 15), "#mymodal", :data => { :toggle =>"modal" } %>
+              <%= link_to image_tag("pin.png", :width => 15, :height => 15), "#mymodal", :data => {:toggle => "modal"} %>
             </dd>
 
             <dt>Participants</dt>
-            <dd> <%= @course.subscriptions.count  %> / <%= @course.max_participants  %></dd>
+            <dd> <%= @course.subscriptions.count %> / <%= @course.max_participants %></dd>
             <dt>Share</dt>
-            <dd><%= social_share_button_tag(@course.title,:popup => "true") %></dd>
+            <dd><%= social_share_button_tag(@course.title, :popup => "true") %></dd>
             <% if @course.coach == current_user || @course.subscriptions.exists?(user: current_user) %>
-              <dt>Calendar</dt>
-              <dd> <%= link_to 'Export', course_export_path(@course), method: :post %></dd>
+                <dt>Calendar</dt>
+                <dd> <%= link_to 'Export', course_export_path(@course), method: :post %></dd>
             <% end %>
-         </dl>
+          </dl>
         </div>
       </div>
-        <div class="row">
-          <div class="col-md-offset-4">
+      <div class="row">
+        <div class="col-md-offset-4">
           <% unless @course.coach == current_user || @course.subscriptions.exists?(user: current_user) || @course.subscriptions.count == @course.max_participants %>
-            <%= link_to course_apply_path(@course), method: :post, :class => "btn btn-success", data: { confirm: 'Would you like to subscribe to the course?' } do %>
-              <span class="glyphicon glyphicon-ok"></span>
+              <%= link_to course_apply_path(@course), method: :post, :class => "btn btn-success", data: {confirm: 'Would you like to subscribe to the course?'} do %>
+                  <span class="glyphicon glyphicon-ok"></span>
                   Apply
-            <% end %>
+              <% end %>
           <% end %>
           <% if @course.subscriptions.exists?(user: current_user) %>
-            <%= link_to course_leave_path(@course), method: :post, :class => "btn btn-danger", data: { confirm: 'Would you like to leave the course?' } do %>
-              <span class="glyphicon glyphicon-remove"></span>
-              Leave
-            <% end %>
+              <%= link_to course_leave_path(@course), method: :post, :class => "btn btn-danger", data: {confirm: 'Would you like to leave the course?'} do %>
+                  <span class="glyphicon glyphicon-remove"></span>
+                  Leave
+              <% end %>
           <% end %>
-          </div>
         </div>
-        </div>
+      </div>
     </div>
   </div>
-  <!-- /.col-lg-6 -->
+</div>
+<!-- /.col-lg-6 -->
 </div>
 
 
@@ -88,16 +100,17 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
         <h4 class="modal-title" id="exampleModalLabel"><b>Location</b></h4>
       </div>
       <div class="modal-body">
         <div id="map-container" style='width: 100%;'>
           <div id="map" style='width: 555px; height: 400px;'></div>
         </div>
-          <div class="modal-footer">
-            <button type="submit" name="submit" class="btn btn-default" data-dismiss="modal">Close</button>
-          </div>
+        <div class="modal-footer">
+          <button type="submit" name="submit" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
         </form>
       </div>
     </div>
@@ -105,13 +118,13 @@
 </div>
 
 <script type="text/javascript">
-    $('#mymodal').on('shown.bs.modal', function (e) {
-        handler = Gmaps.build('Google');
-        handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
-            markers = handler.addMarkers(<%=raw @hash.to_json %>);
-            handler.bounds.extendWith(markers);
-            handler.fitMapToBounds();
-            handler.getMap().setZoom(12);
-        });
+  $('#mymodal').on('shown.bs.modal', function (e) {
+    handler = Gmaps.build('Google');
+    handler.buildMap({provider: {}, internal: {id: 'map'}}, function () {
+      markers = handler.addMarkers(<%=raw @hash.to_json %>);
+      handler.bounds.extendWith(markers);
+      handler.fitMapToBounds();
+      handler.getMap().setZoom(12);
     });
+  });
 </script>
