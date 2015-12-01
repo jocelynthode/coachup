@@ -53,7 +53,7 @@ class CoursesController < ApplicationController
 
     if @course.update(course_params) && !bad_request?(response)
       CourseMailer.details_update(@course).deliver_now
-      flash[:notice] = "Successfully updated Course"
+      flash[:notice] = "Successfully updated course"
       redirect_to @course
     else
       flash[:alert] = "Could not save changes"
@@ -63,9 +63,15 @@ class CoursesController < ApplicationController
 
   def destroy
     @course = Course.find(params[:id])
-    @course.destroy
-
-    redirect_to courses_path
+    subscriptions = @course.subscriptions
+    if @course.destroy
+      CourseMailer.course_deleted(@course, subscriptions).deliver_now
+      flash[:notice] = "Successfully deleted course"
+      redirect_to courses_path
+    else
+      flash[:alert] = "Could not delete course"
+      redirect_to @course
+    end
   end
 
 
