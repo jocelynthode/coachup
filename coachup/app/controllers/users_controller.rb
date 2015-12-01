@@ -43,7 +43,9 @@ class UsersController < ApplicationController
                 else
                   "Something went wrong"
                 end
-          Cloudinary::Api.delete_resources(@user.avatar.file.public_id)
+          unless @user.avatar.nil?
+            Cloudinary::Api.delete_resources(@user.avatar.file.public_id)
+          end
           redirect_to register_path, alert: msg
           raise ActiveRecord::Rollback
         else
