@@ -2,7 +2,13 @@
 <div class="container view-profile">
   <div class="row">
     <div class="col-lg-12">
-      <h2 class="page-header"> Profile Page </h2>
+      <h2 class="page-header"> Profile
+        <ul class="nav nav-tabs" id="myTab">
+          <% if current_user == @user  %>
+              <%= button_to "Edit Profile", edit_user_path, :class => "btn btn-primary pull-right", :method => :get  %>
+          <% end %>
+        </ul>
+      </h2>
     </div>
 
   </div>
@@ -114,17 +120,7 @@
 
         <div class="col-sm-9">
 
-          <ul class="nav nav-tabs" id="myTab">
-            <% if current_user == @user  %>
-                <%= button_to "Edit Profile", edit_user_path, :class => "btn btn-primary pull-right", :method => :get  %>
-            <% end %>
-            <li class="active"><a href="page-profile.html#skills">Skills</a></li>
-            <li><a href="">Friends</a></li>
-            <li><a href="">Photos</a></li>
-          </ul>
-
           <div class="tab-content">
-            <div class="tab-pane active" id="skills">
 
               <div class="row">
                 <div class="col-sm-8">
@@ -137,17 +133,6 @@
                 </div><!--/col-->
 
               </div><!--/row-->
-
-            </div>
-            <div class="tab-pane" id="friends">
-
-
-            </div>
-            <div class="tab-pane" id="photos">
-
-
-            </div>
-          </div>
 
         </div><!--/col-->
 
