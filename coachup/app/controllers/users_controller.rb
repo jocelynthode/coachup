@@ -63,6 +63,9 @@ class UsersController < ApplicationController
     # Note: This transaction may have a big impact on performance
     @user = current_user
     User.transaction do
+      if user_params[:avatar].present? && @user.avatar.present?
+        Cloudinary::Api.delete_resources(@user.avatar.file.public_id)
+      end
       @user.username = session[:username]
       if @user.update(user_params)
         # Ugly fix
