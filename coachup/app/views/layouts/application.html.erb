@@ -4,6 +4,9 @@
   <title>Coachup</title>
   <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <!-- Google Maps external scripts -->
+  <%= javascript_include_tag '//maps.google.com/maps/api/js?v=3.13&sensor=false&libraries=geometry' %>
+  <%= javascript_include_tag '//google-maps-utility-library-v3.googlecode.com/svn/tags/markerclustererplus/2.0.14/src/markerclusterer_packed.js' %>
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -206,13 +209,6 @@
 
 </div>
 <!-- /#wrapper -->
-
-
-<% if (params[:controller] == 'courses' and params[:action] == "new") or (params[:controller] == 'courses' and params[:action] == "edit")%>
-<script type="text/javascript">
-    $(document).ready(loadScript());
-</script>
-<% end %>
 
 <script type="text/javascript">
 $("[name='my-checkbox']").bootstrapSwitch();

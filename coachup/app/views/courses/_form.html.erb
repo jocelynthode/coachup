@@ -145,13 +145,16 @@
     });
   });
 
-    $(function() {
-      $('#course_duration').timepicker({
-        minuteStep: 15,
-        showMeridian: false,
-        defaultTime: '1:00',
-        showInputs: true
-      });
+  $(function() {
+    $('#course_duration').timepicker({
+      minuteStep: 15,
+      showMeridian: false,
+      defaultTime: '1:00',
+      showInputs: true
     });
+  });
+
+  // Set google map widget
+  $(document).ready(gmap_initialize);
 </script>
 
