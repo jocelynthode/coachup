@@ -4,7 +4,7 @@ class Course < ActiveRecord::Base
   has_many :subscriptions
   has_many :users, through: :subscriptions
   belongs_to :location
-  accepts_nested_attributes_for :location
+  accepts_nested_attributes_for :location, reject_if: :no_location
   serialize :schedule, Hash
 
   validates_datetime :starts_at, on_or_after: lambda {DateTime.now}
@@ -15,7 +15,7 @@ class Course < ActiveRecord::Base
   validates :title, presence: true
   validates :description, presence: true
   validates :coach_id, presence: true
-  validates :location_id, presence: true
+  validates :location, presence: true
 
   Calendar = Google::Apis::CalendarV3
 
@@ -137,5 +137,9 @@ class Course < ActiveRecord::Base
         raise error
       end
     end
+  end
+
+  def no_location(attributes)
+    attributes[:address].blank? ? true : false
   end
 end
