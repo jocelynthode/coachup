@@ -47,7 +47,7 @@
             <dd><%= @course.duration.strftime('%Hh%M') %></dd>
 
             <dt>Price</dt>
-            <dd> <%= @course.price %></dd>
+            <dd> <%= @course.price %>.- CHF</dd>
 
             <dt>Coach</dt>
             <dd> <%= link_to @course.coach.username, user_path(@course.coach) %></dd>
