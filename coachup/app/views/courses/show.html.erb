@@ -41,7 +41,7 @@
             <dd> <%= @course.title %></dd>
 
             <dt>Description</dt>
-            <dd> <%= @course.description %></dd>
+            <dd> <%= simple_format @course.description %></dd>
 
             <dt>Duration</dt>
             <dd><%= @course.duration.strftime('%Hh%M') %></dd>
