@@ -62,7 +62,7 @@
       </div>
         <div class="row">
           <div class="col-md-offset-4">
-          <% unless @course.subscriptions.exists?(user: current_user) || @course.subscriptions.count == @course.max_participants %>
+          <% unless @course.coach == current_user || @course.subscriptions.exists?(user: current_user) || @course.subscriptions.count == @course.max_participants %>
             <%= link_to course_apply_path(@course), method: :post, :class => "btn btn-success", data: { confirm: 'Would you like to subscribe to the course?' } do %>
               <span class="glyphicon glyphicon-ok"></span>
                   Apply
