@@ -1,7 +1,7 @@
 class Course < ActiveRecord::Base
   belongs_to :coach, class_name: "User"
   delegate :username, :to => :coach
-  has_many :subscriptions
+  has_many :subscriptions, dependent: :delete_all
   has_many :users, through: :subscriptions
   belongs_to :location
   accepts_nested_attributes_for :location
