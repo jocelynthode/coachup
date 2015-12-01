@@ -119,8 +119,9 @@
                 <%= button_to "Edit Profile", edit_user_path, :class => "btn btn-primary pull-right", :method => :get  %>
             <% end %>
             <li class="active"><a href="page-profile.html#skills">Skills</a></li>
-            <li><a href="">Friends</a></li>
-            <li><a href="">Photos</a></li>
+            <li>
+              <%= link_to 'Taught Courses', user_courses_path(@user.id) %>
+            </li>
           </ul>
 
           <div class="tab-content">
