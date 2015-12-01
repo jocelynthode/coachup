@@ -1,5 +1,6 @@
 class CoursesController < ApplicationController
   skip_before_action :require_login, only: [:index, :show]
+  before_action :require_authorization, only: [:edit, :update, :destroy]
 
   def index
     if params[:user_id]  # /users/:id/courses
@@ -119,6 +120,11 @@ class CoursesController < ApplicationController
     params.require(:course).permit(:title, :description, :price, :coach_id, :sport, :max_participants, :schedule,
                                    :starts_at, :ends_at, :duration,
                                    location_attributes: [:address, :latitude, :longitude])
+  end
+
+  def require_authorization
+    course = Course.find(params[:id])
+    redirect_to course_path unless course && current_user == course.coach
   end
 
   def rest_put(url, payload, **args)

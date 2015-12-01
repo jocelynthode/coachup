@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update, :destroy, :upvote, :downvote]
+  before_action :require_authorization, only: [:edit, :update, :destroy, :upvote, :downvote]
   skip_before_action :require_login
 
   def index
@@ -7,7 +8,6 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
     if @user.facebook_uid
       @facebook_url = 'https://www.facebook.com/' + @user.facebook_uid
     end
@@ -113,25 +113,25 @@ class UsersController < ApplicationController
   end
 
   def upvote
-    @user = User.find(params[:id])
-    if @user != current_user
-      @user.upvote_by current_user
-    end
+    @user.upvote_by current_user
     redirect_to user_path(@user)
   end
 
   def downvote
-    @user = User.find(params[:id])
-    if @user != current_user
-      @user.downvote_by current_user
-    end
+    @user.downvote_by current_user
     redirect_to user_path(@user)
   end
 
   private
   def set_user
+    @user = User.find(params[:id])
     @username = session[:username]
     @password = session[:password]
+  end
+
+  def require_authorization
+    user = User.find(params[:id])
+    redirect_to user_path unless user && current_user == user
   end
 
   def user_params
