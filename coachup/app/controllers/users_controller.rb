@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :edit, :update, :destroy, :upvote, :downvote]
   before_action :require_authorization, only: [:edit, :update, :destroy, :upvote, :downvote]
-  skip_before_action :require_login
+  skip_before_action :require_login, except: [:edit, :update, :destroy, :upvote, :downvote, :delete_avatar,
+                                              :link_facebook, :unlink_facebook]
 
   def index
     @users = User.all
