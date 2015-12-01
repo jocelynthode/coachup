@@ -23,3 +23,5 @@
 //= require bootstrap-switch
 //= require bootstrap-timepicker
 //= require_tree .
+
+Turbolinks.enableProgressBar();
