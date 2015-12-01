@@ -93,6 +93,7 @@ class UsersController < ApplicationController
 
   def delete_avatar
     @user = current_user
+    Cloudinary::Api.delete_resources(@user.avatar.file.public_id)
     @user.remove_avatar = true
     @user.update_attribute(:avatar, nil)
     @user.reload
@@ -140,7 +141,7 @@ class UsersController < ApplicationController
     params.require(:user).permit(:username, :password, :realname, :email,
                                  :publicvisible, :password_confirmation,
                                  :address, :country, :phone, :date_of_birth, :education, :bio, :aboutme,
-                                 :new_password, :new_password_confirmation, :avatar, :avatar_cache, :remove_avatar)
+                                 :new_password, :new_password_confirmation, :avatar, :avatar_cache, :delete_avatar)
   end
 
   def rest_put(url, payload, **args)
