@@ -11,7 +11,7 @@
     exports.gmap_initialize = function() {
 
         var mapOptions = {
-            center: new google.maps.LatLng(30.055487, 31.279766),
+            center: new google.maps.LatLng(30.055487, 31.279766),  // default center
             zoom: 8,
             mapTypeId: google.maps.MapTypeId.NORMAL,
             panControl: true,
@@ -21,6 +21,18 @@
         };
         // initializing map
         map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
+
+        // set location data from model if it is already set
+        var lat = parseFloat($('#course_latitude').val());
+        var long = parseFloat($('#course_longitude').val());
+        if ($.isNumeric(lat) && $.isNumeric(long)) {
+            var location = new google.maps.LatLng(lat, long);
+            map.setCenter(location)
+            var marker = new google.maps.Marker({
+                map: map,
+                position: location
+            });
+        }
 
         // geocoding
         var geocoding = new google.maps.Geocoder();
