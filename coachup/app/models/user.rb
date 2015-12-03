@@ -51,9 +51,11 @@ class User < ActiveRecord::Base
       occ = schedule.occurrences(sub.course.ends_at)
       occ.each do |date|
         element = date_course.new
-        element.date = date.to_date
+        element.date = date
         element.course = sub.course
-        all_dates.add(element)
+        if element.date.to_i >= Time.now.to_i
+          all_dates.add(element)
+        end
       end
     end
 
