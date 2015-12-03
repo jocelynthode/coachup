@@ -156,6 +156,7 @@
                   <%= link_to 'Apply for a course!' , courses_path %>
               <% elsif !@sessions.nil? %>
                 <% @sessions.each do |session| %>
+                    <% if session.date >= DateTime.now %>
                   <li>
                     <time datetime="2014-07-20">
                       <span class="day"><%= session.date.strftime("%d") %> </span>
@@ -177,6 +178,7 @@
                     </div>
 
                   </li>
+                    <% end %>
                 <% end %>
               <% else %>
                   <%= 'You have no sessions within a year!' %>
