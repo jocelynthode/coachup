@@ -35,7 +35,9 @@ class SubscriptionsController < ApplicationController
     def get_coaches(user)
       coaches = Array.new
       user.subscriptions.find_each do |subscription|
-        coaches << subscription.course.coach
+        unless coaches.include?(subscription.course.coach)
+          coaches << subscription.course.coach
+        end
       end
       return coaches
     end
