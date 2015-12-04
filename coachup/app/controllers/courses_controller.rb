@@ -57,7 +57,7 @@ class CoursesController < ApplicationController
       redirect_to @course
     else
       flash[:alert] = "Could not save changes"
-      redirect_to edit_course_path
+      render 'edit'
     end
   end
 
