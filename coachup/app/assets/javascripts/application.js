@@ -22,6 +22,7 @@
 //= require bootstrap-datetimepicker
 //= require bootstrap-switch
 //= require bootstrap-timepicker
+//= require js.cookie
 //= require_tree .
 
 Turbolinks.enableProgressBar();
