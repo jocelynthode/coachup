@@ -3,7 +3,7 @@
       <h1>Welcome to CoachUP!</h1>
       <p>CoachUP! is a service designed to give people wanting to improve their skill in a sport the opportunity to find the coach they need.</p>
       <p>
-        <%= link_to 'Sign up', new_user_path,
+        <%= link_to 'Sign up', register_path,
                     class:'btn btn-primary btn-lg', role: 'button'%>
       </p>
 
@@ -15,7 +15,8 @@
         You want to start training in a sport but you feel overwhelmed by all the possibilities?
         Here you only have to choose between 4 old-time classics.
     )%>
-    <%= render 'description', heading: 'Ratings', content: %q(
+    <%= render 'description', heading: 'Ratings',
+        details_link: ['See courses', courses_path], content: %q(
         Get the coach you deserve! You can easily judge of the quality of your next
         coach by looking at the ratings left by the last trainees.
     )%>

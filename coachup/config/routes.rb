@@ -6,7 +6,6 @@ Rails.application.routes.draw do
   get 'register' => 'users#new', as: 'register'
 
   get 'overview/welcome'
-  get 'overview/index'
 
   resources :users do
     resources :courses, only: [:index]
