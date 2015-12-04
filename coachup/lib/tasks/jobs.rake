@@ -14,11 +14,11 @@ namespace :jobs do
         entrydate: entrydate,
         comment: course.title,
         entrylocation: course.location.address,
+        entryduration: course.duration.seconds_since_midnight.to_int,
         publicvisible: '2'
       }
       entryroot = 'entry' + course.sport.downcase
       payload_xml = entry.to_xml(root: entryroot, skip_instruct: true)
-
       course.subscriptions.each do |sub|
         url = "users/#{sub.user.username}/#{course.sport}"
         response = rest_request(:post, url,
