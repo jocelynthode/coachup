@@ -51,17 +51,15 @@ class User < ActiveRecord::Base
       occ = schedule.occurrences(sub.course.ends_at)
       occ.each do |date|
         element = date_course.new
-        element.date = date.to_date
+        element.date = date
         element.course = sub.course
-        all_dates.add(element)
+        if element.date.start_time >= Time.current
+          all_dates.add(element)
+        end
       end
     end
 
-    if (all_dates.count == 0)
-      false
-    end
-
-    all_dates = all_dates.sort_by { |date| date.date}
+    all_dates = all_dates.sort_by { |date| date.date }
     all_dates.take(10)
   end
 
