@@ -11,7 +11,7 @@ class UsersController < ApplicationController
     if @user.facebook_uid
       @facebook_url = 'https://www.facebook.com/' + @user.facebook_uid
     end
-    @is_following = !current_user_partnerships.find(@user[:username]).empty?
+    @is_following = current_user_partnerships.find(coach_client).any?
   end
 
   def new

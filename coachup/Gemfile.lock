@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/jungomi/coach_client
-  revision: aa2a12ab7dc6d974dabcbc5b0acbb21282444f70
+  revision: ee044ccc5087c7fa42f900811bc521303de34375
   branch: stable
   specs:
     coach_client (0.1.0)

@@ -4,49 +4,52 @@
   </div>
 </div>
 <% if @partnerships.present? %>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              Partnerships
-            </div>
-            <!-- /.panel-heading -->
-            <div class="panel-body">
-              <div class="table-responsive">
-                <table class="table">
-                  <thead>
-                  <tr>
-                    <th>Coach</th>
-                    <th>Created at</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <% @partnerships.each do |partner| %>
-                      <tr>
-                        <% if partner[:user_id] %>
-                            <td><%= link_to partner[:user], user_path(partner[:user_id]) %></td>
-                        <% else %>
-                            <td><%= partner[:user] %></td>
-                        <% end %>
-                        <td>
-                          <%= partner[:created_at] %>
-                          <%= link_to 'Unfollow', partnership_path(partner[:user]), method: :delete,
-                                      class: 'btn btn-primary pull-right', role: 'button' %>
-                        </td>
-                      </tr>
-                  <% end %>
-                  </tbody>
-                </table>
-              </div>
-              <!-- /.table-responsive -->
-            </div>
-            <!-- /.panel-body -->
-          </div>
-          <!-- /.panel -->
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Partnerships
         </div>
-        <!-- /.col-lg-6 -->
+        <!-- /.panel-heading -->
+        <div class="panel-body">
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Coach</th>
+                  <th>Created at</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @partnerships.each do |entry| %>
+                  <% user = entry[:partnership].user2 %>
+                  <tr>
+                    <td>
+                      <% if entry[:user_id] %>
+                        <%= link_to user.username, user_path(entry[:user_id]) %>
+                      <% else %>
+                        <%= user.username %>
+                      <% end %>
+                    </td>
+                    <td>
+                      <%= Time.at(entry[:partnership].datecreated/1000.0) %>
+                      <%= link_to 'Unfollow', partnership_path(user), method: :delete,
+                        class: 'btn btn-primary pull-right', role: 'button' %>
+                  </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+          <!-- /.table-responsive -->
+        </div>
+        <!-- /.panel-body -->
+      </div>
+      <!-- /.panel -->
+    </div>
+    <!-- /.col-lg-6 -->
   <% else %>
     <h4>You have no partnerships yet...</h4>
   <% end %>
-</div>
-<!-- /.row -->
+  </div>
+  <!-- /.row -->

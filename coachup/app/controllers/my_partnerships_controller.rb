@@ -1,9 +1,12 @@
 class MyPartnershipsController < ApplicationController
 
   def index
-    partnerships = current_user_partnerships.find()
-    @partnerships = partnerships.map do |ps|
-      ps.merge :user_id => User.find_by(username: ps[:user])
+    partnerships = current_user_partnerships.find(coach_client)
+    partnerships.select! { |p| p.user1_confirmed }
+    @partnerships = []
+    partnerships.each do |p|
+      @partnerships.unshift({ user_id: User.find_by(username: p.user2.username),
+                              partnership: p })
     end
   end
 
@@ -17,7 +20,7 @@ class MyPartnershipsController < ApplicationController
 
   def courses_index
     # TODO: show partnerships of everyone, not just current_user
-    partnerships = current_user_partnerships.find()
+    partnerships = current_user_partnerships.find(coach_client)
     @partnerships = partnerships.map { |ps|
       user = User.find_by(username: ps[:user])
       if user.present?
@@ -42,7 +45,7 @@ class MyPartnershipsController < ApplicationController
     def partnership_action(action, username)
       message = {}
       begin
-        current_user_partnerships.method(action).call username
+        current_user_partnerships.method(action).call(coach_client, username)
       rescue RestClient::ExceptionWithResponse => e
         message[:alert] = e.response.body
       end
@@ -55,3 +58,4 @@ class MyPartnershipsController < ApplicationController
     end
 
 end
+
