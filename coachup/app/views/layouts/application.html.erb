@@ -26,7 +26,7 @@
 
     <ul class="nav navbar-top-links navbar-right">
       <% if user_signed_in? %>
-        <%= current_user.username %>
+        <%= link_to current_user.username, user_path(current_user) %>
       <% else %>
         <%= link_to 'Sign Up', register_path %>
         <%= link_to login_path do %>
@@ -41,9 +41,9 @@
         <ul class="dropdown-menu dropdown-user">
           <% if user_signed_in? %>
             <li>
-              <%= link_to user_path(current_user) do %>
+              <%= link_to edit_user_path(current_user) do %>
                 <span class="glyphicon glyphicon-user"></span>
-                Profile
+                Edit profile
               <% end %>
             </li>
             <li class="divider"></li>
