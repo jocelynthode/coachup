@@ -55,7 +55,7 @@
             <dd><%= social_share_button_tag(@course.title,:popup => "true") %></dd>
             <% if @course.coach == current_user || @course.subscriptions.exists?(user: current_user) %>
               <dt>Calendar</dt>
-              <dd> <%= link_to 'Export', course_export_path(@course), method: :post %></dd>
+              <dd> <%= link_to 'Export', course_export_path(@course) %></dd>
             <% end %>
          </dl>
         </div>
