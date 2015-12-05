@@ -30,6 +30,11 @@ class ApplicationController < ActionController::Base
     session[:username].present?
   end
 
+  def coach_client
+    CoachClient::Client.new('http://diufvm31.unifr.ch:8090',
+                            '/CyberCoachServer/resources/')
+  end
+
   def authenticated_request(method, path, **args)
     raise "Error: not signed in" unless user_signed_in?
     url = User.url + path

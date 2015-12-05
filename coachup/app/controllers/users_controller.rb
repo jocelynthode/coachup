@@ -19,12 +19,12 @@ class UsersController < ApplicationController
   end
 
   def edit
-    response = authenticated_request(:get, "users/#{session[:username]}")
-    unless bad_request?(response)
-      @user = current_user
-      @user.realname = response[:realname]
-      @user.publicvisible = response[:publicvisible]
-    end
+    coach_user = CoachClient::User.new(coach_client, session[:username],
+                                       password: session[:password])
+    coach_user.update
+    @user = current_user
+    @user.realname = coach_user.realname
+    @user.publicvisible = coach_user.publicvisible
   end
 
   def create
@@ -32,27 +32,28 @@ class UsersController < ApplicationController
     User.transaction do
       @user = User.new(user_params)
       if @user.save
-        payload = { email: @user.email, password: @user.password,
-                    realname: @user.realname, publicvisible: "2" }
-        payload_xml = payload.to_xml(root: :user, skip_instruct: true)
-        url = User.url + 'users/' + @user.username
-        response = rest_put(url, payload_xml, accept: :json, content_type: :xml)
-        if bad_request?(response)
-          msg = if exception_code(response) == 401
-                  "User #{@user.username} already exists"
-                else
-                  "Something went wrong"
-                end
-          unless @user.avatar.nil?
+        coach_user = CoachClient::User.new(coach_client, @user.username,
+                                           password: @user.password,
+                                           email: @user.email,
+                                           realname: @user.realname,
+                                           publicvisible: 2)
+        begin
+          coach_user.save
+        rescue CoachClient::Exception => e
+          unless @user.avatar.present?
             Cloudinary::Api.delete_resources(@user.avatar.file.public_id)
           end
+          msg = if e.is_a?(CoachClient::Unauthorized)
+                  "User #{@user.username} already exists"
+                else
+                  "Could not create new user"
+                end
           redirect_to register_path, alert: msg
           raise ActiveRecord::Rollback
-        else
-          session[:username] = @user.username
-          session[:password] = @user.password
-          redirect_to root_path, notice: "Successfully created user #{@user.username}"
         end
+        session[:username] = @user.username
+        session[:password] = @user.password
+        redirect_to root_path, notice: "Successfully created user #{@user.username}"
       else
         render 'new'
       end
@@ -63,25 +64,27 @@ class UsersController < ApplicationController
     # Note: This transaction may have a big impact on performance
     @user = current_user
     User.transaction do
-      @user.username = session[:username]
       if @user.update(user_params)
-        # Ugly fix
-        @user.update_column :password, @user.new_password if @user.new_password.present?
+        coach_user = CoachClient::User.new(coach_client, session[:username],
+                                           password: session[:password],
+                                           email: @user.email,
+                                           realname: @user.realname)
+        if @user.new_password.present?
+          coach_user.newpassword = @user.new_password
+          # Ugly fix
+          @user.update_column :password, @user.new_password
+        end
 
-        payload = { email: @user.email, realname: @user.realname }
-        payload[:password] = @user.new_password if @user.new_password.present?
-        payload_xml = payload.to_xml(root: :user, skip_instruct: true)
-        response = authenticated_put("users/#{@user.username}", payload_xml,
-                                     content_type: :xml)
-        if bad_request?(response)
+        begin
+          coach_user.save
+        rescue CoachClient::Exception
           flash[:alert] = "Could not save changes"
           render 'edit'
           raise ActiveRecord::Rollback
-        else
-          flash[:notice] = "Successfully updated profile"
-          session[:password] = @user.new_password if @user.new_password.present?
-          redirect_to user_path(current_user)
         end
+        flash[:notice] = "Successfully updated profile"
+        session[:password] = @user.new_password if @user.new_password.present?
+        redirect_to user_path(current_user)
       else
         render 'edit'
       end
@@ -142,36 +145,5 @@ class UsersController < ApplicationController
                                  :address, :country, :phone, :date_of_birth, :education, :bio, :aboutme,
                                  :new_password, :new_password_confirmation, :avatar, :avatar_cache, :remove_avatar)
   end
-
-  def rest_put(url, payload, **args)
-    begin
-      response = RestClient::Request.execute(method: :put, url: url,
-                                             payload: payload, headers: args)
-      JSON.parse(response, symbolize_names: true)
-    rescue RestClient::Exception => exception
-      exception
-    end
-  end
-
-  def rest_request(method, url, **args)
-    begin
-      response = RestClient::Request.execute(method: method, url: url,
-                                             headers: args)
-      JSON.parse(response, symbolize_names: true)
-    rescue RestClient::Exception => exception
-      exception
-    end
-  end
-
-  def bad_request?(response)
-    if response.is_a?(RestClient::Exception)
-      true
-    else
-      false
-    end
-  end
-
-  def exception_code(exception)
-    exception.response.code
-  end
 end
+
