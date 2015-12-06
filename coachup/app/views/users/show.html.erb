@@ -124,7 +124,7 @@
             <% if current_user == @user  %>
                 <%= button_to "Edit Profile", edit_user_path, :class => "btn btn-primary pull-right", :method => :get  %>
             <% end %>
-            <li class="active"><a href="page-profile.html#skills">Skills</a></li>
+            <li class="active"><%= link_to 'Skills', user_path(@user.id) %></li>
             <li>
               <%= link_to 'Taught Courses', user_courses_path(@user.id) %>
             </li>
@@ -144,14 +144,6 @@
                 </div><!--/col-->
 
               </div><!--/row-->
-
-            </div>
-            <div class="tab-pane" id="friends">
-
-
-            </div>
-            <div class="tab-pane" id="photos">
-
 
             </div>
           </div>

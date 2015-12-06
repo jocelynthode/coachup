@@ -10,13 +10,16 @@
 * You can buy this theme on WrapBootstrap: https://wrapbootstrap.com/theme/genius-bootstrap-admin-template-WB0JM6RMD
 * You can find our other themes on: https://bootstrapmaster.com
 */
-.tab-content{background:white;border:1px solid #dbdee0;padding:10px;margin-top:10px}
-.nav-tabs{border:0;float:right}
+.nav-tabs li a{border-color:#dbdee0;-webkit-border-radius:0;-moz-border-radius:0;border-radius:0;background:#e9ebec;margin:6px -1px -6px 0;line-height:1}
+.nav-tabs li a:hover{border-color:#dbdee0;background:#dbdee0}
+.nav-tabs li.active>a{line-height:1.428571429;margin:0 -1px 0 0}
+.tab-content{background:white;border:1px solid #dbdee0;border-top:0;padding:10px}.box-header
+                                                                                 .nav-tabs{border:0;float:right}
 
 #content{overflow:hidden}
 #content .breadcrumb{margin:-4px -5px 30px -5px}#sidebar-left{min-height:0;padding:0!important}.sidebar-nav{border-bottom:1px solid #dbdee0}.sidebar-nav>ul{margin:0;background:#f3f3f3}.message-view{margin:0}.price-table-overlay{width:100%!important;overflow-x:scroll}.price-table.five{width:1000px}.price-table.four{width:800px}.price-table.three{width:900px}.price-table.five ul{width:200px}.price-table.four ul{width:200px}.price-table.three ul{width:300px}
 #content{padding:5px}@media only screen and (max-width:479px){body{padding:0}.col-xxs-12{width:100%}
-#content{padding:5px}.quick-button,.quick-button-small{margin-bottom:20px}.discussions ul li .date{display:none}}
+    #content{padding:5px}.quick-button,.quick-button-small{margin-bottom:20px}.discussions ul li .date{display:none}}
 #content{padding:20px;position:relative;background:#F8F8F8 ;z-index:1}#content:before{position:absolute;content:'';height:100%;width:1px;border-left:1px solid #dbdee0;z-index:1;top:0;left:-1px}
 #content.sidebar-minified{width:100%!important;border-left:40px solid #e9ebec;margin-right:1px!important}
 #content.full{width:100%!important;margin-left:0!important;margin-right:0!important;border:none!important}.well{border:1px solid #ddd;background-color:#f6f6f6;-webkit-box-shadow:none;-moz-box-shadow:none;box-shadow:none;-webkit-border-radius:2px;-moz-border-radius:2px;border-radius:2px}
