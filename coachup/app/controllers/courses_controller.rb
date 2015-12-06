@@ -125,7 +125,7 @@ class CoursesController < ApplicationController
   def course_params
     params.require(:course).permit(:title, :description, :price, :coach_id, :sport, :max_participants, :schedule,
                                    :starts_at, :ends_at, :duration,
-                                   location_attributes: [:address, :latitude, :longitude])
+                                   location_attributes: [:id, :address, :latitude, :longitude])
   end
 
   def require_authorization
