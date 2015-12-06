@@ -25,18 +25,21 @@
       <div class="row">
        <div class="col-md-10 col-md-offset-2">
          <dl class="dl-horizontal">
+           <% @schedule = @course.retrieve_schedule.next_occurrences(10, Time.now) %>
+
+           <% if @schedule.count == 0 %>
+               <div class="col-md-10 col-md-offset-2 course-over">Course is over! </div>
+           <% end %>
+
             <dt>Title</dt>
             <dd> <%= @course.title %></dd>
 
             <dt>Description</dt>
             <dd> <%= @course.description  %></dd>
 
-            <% @schedule = @course.retrieve_schedule.next_occurrences(10, Time.now) %>
-
             <% if @schedule.count == 1 %>
                <dt>Session</dt>
             <% elsif @schedule.count == 0 %>
-               <dt>Course is over!</dt>
             <% else%>
                <dt>Next 10 Sessions</dt>
             <% end %>
