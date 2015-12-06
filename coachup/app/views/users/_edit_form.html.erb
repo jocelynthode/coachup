@@ -67,7 +67,7 @@
         <% if @user.avatar? %>
         <%= f.label :avatar, 'Profile Picture' %><br>
         <%= image_tag @user.avatar_url(:display, :class=>"profile-image") %><br>
-        <%= link_to 'Remove Picture', user_delete_avatar_path(@user), :controller => :users %>
+        <%= link_to 'Remove Picture', user_delete_avatar_path(@user), :controller => :users, data: {confirm: 'Would you like to delete your avatar?'} %>
         <% end %>
       </div>
       <div class="form-group">
