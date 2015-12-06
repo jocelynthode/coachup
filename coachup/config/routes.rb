@@ -22,9 +22,6 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :locations do
-  end
-
   resources :courses do
     post 'apply', :action => :apply
     post 'leave', :action => :leave
