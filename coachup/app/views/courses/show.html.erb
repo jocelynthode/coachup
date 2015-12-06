@@ -35,7 +35,9 @@
 
             <% if @schedule.count == 1 %>
                <dt>Session</dt>
-            <% else %>
+            <% elsif @schedule.count == 0 %>
+               <dt>Course is over!</dt>
+            <% else%>
                <dt>Next 10 Sessions</dt>
             <% end %>
 
