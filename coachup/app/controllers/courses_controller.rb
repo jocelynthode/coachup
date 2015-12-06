@@ -48,16 +48,24 @@ class CoursesController < ApplicationController
   def update
     @course = Course.find(params[:id])
 
-    response = authenticated_put("users/#{current_user.username}/#{course_params[:sport]}",
-                                 {publicvisible: 2})
-
-    if @course.update(course_params) && !bad_request?(response)
+    if @course.update(course_params)
+      begin
+        user = CoachClient::User.new(coach_client, session[:username],
+                                     password: session[:password])
+        subscription = CoachClient::UserSubscription.new(coach_client, user,
+                                                         course_params[:sport],
+                                                         publicvisible: 2)
+        subscription.save
+      rescue CoachClient::Exception
+        flash[:alert] = "Could not save changes"
+        redirect_to edit_course_path(@course)
+      end
       CourseMailer.details_update(@course).deliver_now
       flash[:notice] = "Successfully updated Course"
       redirect_to @course
     else
       flash[:alert] = "Could not save changes"
-      redirect_to edit_course_path
+      redirect_to edit_course_path(@course)
     end
   end
 
