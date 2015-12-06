@@ -31,12 +31,12 @@
             <dt>Description</dt>
             <dd> <%= @course.description  %></dd>
 
-            <% @schedule = @course.retrieve_schedule.occurrences(@course.ends_at) %>
+            <% @schedule = @course.retrieve_schedule.next_occurrences(10, Time.now) %>
 
             <% if @schedule.count == 1 %>
-               <dt>Date/Time</dt>
+               <dt>Session</dt>
             <% else %>
-               <dt>Dates/Times</dt>
+               <dt>Next 10 Sessions</dt>
             <% end %>
 
             <dd>
