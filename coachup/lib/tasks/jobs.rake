@@ -7,27 +7,25 @@ namespace :jobs do
     yesterday = 1.day.ago
     Course.where('ends_at > ?', yesterday - 1.day).each do |course|
       schedule = course.retrieve_schedule
-      next if not schedule.occurs_on? yesterday
+      next unless schedule.occurs_on?(yesterday)
 
-      entrydate = schedule.next_occurrence yesterday
+      entrydate = schedule.next_occurrence(yesterday)
       entry = {
         entrydate: entrydate,
         comment: course.title,
         entrylocation: course.location.address,
-        publicvisible: '2'
+        publicvisible: 2
       }
-      entryroot = 'entry' + course.sport.downcase
-      payload_xml = entry.to_xml(root: entryroot, skip_instruct: true)
-
       course.subscriptions.each do |sub|
-        url = "users/#{sub.user.username}/#{course.sport}"
-        response = rest_request(:post, url,
-                                payload: payload_xml,
-                                user: sub.user.username,
-                                password: sub.user.password,
-                                headers: {content_type: :xml})
-        if bad_request?(response)
-          puts "Error while adding entry on CyberCoach: #{response}"
+        coach_sub = CoachClient::UserSubscription.new(coach_client,
+                                                     sub.user.username,
+                                                     course.sport)
+        coach_sub.user.password = sub.user.password
+        coach_entry = CoachClient::Entry.new(coach_client, coach_sub, entry)
+        begin
+          coach_entry.create
+        rescue CoachClient::Exception
+          puts "Error while adding entry on CyberCoach"
         end
       end
     end
@@ -52,23 +50,9 @@ namespace :jobs do
   end
 
   private
-    def rest_request(method, url, **args)
-      begin
-        url = 'http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/' + url
-        args[:headers] ||= {}
-        args[:headers].merge!({accept: 'json'})
-        response = RestClient::Request.execute(method: method, url: url, **args)
-        JSON.parse(response, symbolize_names: true)
-      rescue RestClient::Exception => exception
-        exception
-      end
-    end
 
-    def bad_request?(response)
-      if response.is_a?(RestClient::Exception)
-        true
-      else
-        false
-      end
-    end
+  def coach_client
+    CoachClient::Client.new('http://diufvm31.unifr.ch:8090',
+                            '/CyberCoachServer/resources/')
+  end
 end
