@@ -18,30 +18,6 @@ class Course < ActiveRecord::Base
 
   Calendar = Google::Apis::CalendarV3
 
-  def self.url
-    'http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/'
-  end
-  # TODO rework th rescue part
-  def self.get_all_sports
-    begin
-      response = RestClient::Request.execute(method: :get,
-                                             url: self.url+'sports/',
-                                             headers: { accept: :json })
-      if response.code == 200
-        answer = JSON.parse(response, symbolize_names: true)
-        sports = []
-        answer[:sports].each do |sport|
-          sports << sport[:name]
-        end
-        sports
-      else
-        nil
-      end
-    rescue
-      nil
-    end
-  end
-
   def apply(current_user)
     # Use a transaction because the database allow multiple subscriptions
     # for the same user/course !

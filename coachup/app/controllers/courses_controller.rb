@@ -77,19 +77,17 @@ class CoursesController < ApplicationController
     # Notify coach
     CourseMailer.user_application(@course, current_user).deliver_now
 
-    url = Course.url + 'users/' + current_user.username + '/' + @course.sport
-    payload = { publicvisible: "2" }
-    payload_xml = payload.to_xml(root: :subscription, skip_instruct: true)
+    user = CoachClient::User.new(coach_client, session[:username],
+                                 password: session[:password])
+    subscription = CoachClient::UserSubscription.new(coach_client, user,
+                                                     @course.sport,
+                                                     publicvisible: 2)
     begin
-      response = rest_put(url, payload_xml, accept: :json, content_type: :xml)
+      subscription.save
+    rescue CoachClient::Exception
+      flash[:alert] = "Could not create subscriptions"
     end
 
-    if bad_request?(response)
-      @channel = :alert
-      @msg = "Something went wrong"
-    end
-
-    flash[@channel] = @msg
     redirect_to course_path(@course)
   end
 
@@ -120,39 +118,5 @@ class CoursesController < ApplicationController
                                    :starts_at, :ends_at, :duration,
                                    location_attributes: [:address, :latitude, :longitude])
   end
-
-  def rest_put(url, payload, **args)
-    begin
-      response = RestClient::Request.execute(method: :put, url: url,
-                                             payload: payload,
-                                             user: session[:username],
-                                             password: session[:password],
-                                             headers: args)
-      JSON.parse(response, symbolize_names: true)
-    rescue RestClient::Exception => exception
-      exception
-    end
-  end
-
-  def rest_request(method, url, **args)
-    begin
-      response = RestClient::Request.execute(method: method, url: url,
-                                             headers: args)
-      JSON.parse(response, symbolize_names: true)
-    rescue RestClient::Exception => exception
-      exception
-    end
-  end
-
-  def bad_request?(response)
-    if response.is_a?(RestClient::Exception)
-      true
-    else
-      false
-    end
-  end
-
-  def exception_code(exception)
-    exception.response.code
-  end
 end
+
