@@ -120,7 +120,18 @@
 
         <div class="col-sm-9">
 
+          <ul class="nav nav-tabs" id="myTab">
+            <% if current_user == @user  %>
+                <%= button_to "Edit Profile", edit_user_path, :class => "btn btn-primary pull-right", :method => :get  %>
+            <% end %>
+            <li class="active"><a href="page-profile.html#skills">Skills</a></li>
+            <li>
+              <%= link_to 'Taught Courses', user_courses_path(@user.id) %>
+            </li>
+          </ul>
+
           <div class="tab-content">
+            <div class="tab-pane active" id="skills">
 
               <div class="row">
                 <div class="col-sm-8">
@@ -133,6 +144,17 @@
                 </div><!--/col-->
 
               </div><!--/row-->
+
+            </div>
+            <div class="tab-pane" id="friends">
+
+
+            </div>
+            <div class="tab-pane" id="photos">
+
+
+            </div>
+          </div>
 
         </div><!--/col-->
 

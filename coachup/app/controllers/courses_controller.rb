@@ -1,5 +1,6 @@
 class CoursesController < ApplicationController
   skip_before_action :require_login, only: [:index, :show]
+  before_action :require_authorization, only: [:edit, :update, :destroy]
 
   def index
     if params[:user_id]  # /users/:id/courses
@@ -53,7 +54,7 @@ class CoursesController < ApplicationController
 
     if @course.update(course_params) && !bad_request?(response)
       CourseMailer.details_update(@course).deliver_now
-      flash[:notice] = "Successfully updated Course"
+      flash[:notice] = "Successfully updated course"
       redirect_to @course
     else
       flash[:alert] = "Could not save changes"
@@ -63,9 +64,15 @@ class CoursesController < ApplicationController
 
   def destroy
     @course = Course.find(params[:id])
-    @course.destroy
-
-    redirect_to courses_path
+    subscriptions = @course.subscriptions
+    if @course.destroy
+      CourseMailer.course_deleted(@course, subscriptions).deliver_now
+      flash[:notice] = "Successfully deleted course"
+      redirect_to courses_path
+    else
+      flash[:alert] = "Could not delete course"
+      redirect_to @course
+    end
   end
 
 
@@ -118,7 +125,12 @@ class CoursesController < ApplicationController
   def course_params
     params.require(:course).permit(:title, :description, :price, :coach_id, :sport, :max_participants, :schedule,
                                    :starts_at, :ends_at, :duration,
-                                   location_attributes: [:address, :latitude, :longitude])
+                                   location_attributes: [:id, :address, :latitude, :longitude])
+  end
+
+  def require_authorization
+    course = Course.find(params[:id])
+    redirect_to course_path unless course && current_user == course.coach
   end
 
   def rest_put(url, payload, **args)

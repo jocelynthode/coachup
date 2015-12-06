@@ -30,4 +30,14 @@ class CourseMailer < ApplicationMailer
     mail(to: recipients,
          subject: 'CoachUP! - One of your courses has been updated')
   end
+
+  # we pass subscriptions here as the course is already removed at this stage
+  def course_deleted(removed_course, subscriptions)
+    @course = removed_course
+    recipients = subscriptions.map do |sub|
+      sub.user.email
+    end
+    mail(to: recipients,
+         subject: 'CoachUP! - One of your courses has been deleted')
+  end
 end
