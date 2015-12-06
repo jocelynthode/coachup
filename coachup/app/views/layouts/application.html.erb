@@ -151,32 +151,29 @@
             </li><br>
             <div id="session">
               <ul class="event-list">
-            <% @sessions = current_user.get_next_sessions %>
-              <% if @sessions == false %>
+            <% sessions = current_user.get_next_sessions %>
+              <% if sessions == false %>
                   <%= link_to 'Apply for a course!' , courses_path %>
-              <% elsif !@sessions.nil? %>
-                <% @sessions.each do |session| %>
-                  <li>
-                    <time datetime="2014-07-20">
-                      <span class="day"><%= session.date.strftime("%d") %> </span>
-                      <span class="month"><%= session.date.strftime("%b") %></span>
-                    </time>
-                    <div class="info">
-                      <h2 class="title"> <%= session.course.title %>
-                       </h2>
-
-                    </div>
-
-                    <div class="social">
-                      <ul>
-                        <li><%= link_to course_path(session.course) do%>
-                              <span class="glyphicon glyphicon-chevron-right "></span>
-                            <% end %>
-                        </li>
-                      </ul>
-                    </div>
-
-                  </li>
+              <% elsif !sessions.nil? %>
+                <% sessions.each do |session| %>
+                  <%= link_to course_path(session.course) do%>
+                    <li>
+                      <time datetime="2014-07-20">
+                        <span class="day"><%= session.date.strftime("%d") %> </span>
+                        <span class="month"><%= session.date.strftime("%b") %></span>
+                      </time>
+                      <div class="info">
+                        <h2 class="title"> <%= session.course.title %></h2>
+                      </div>
+                      <div class="social">
+                        <ul>
+                          <li>
+                            <span class="glyphicon glyphicon-chevron-right "></span>
+                          </li>
+                        </ul>
+                      </div>
+                    </li>
+                  <% end %>
                 <% end %>
               <% else %>
                   <%= 'You have no sessions within a year!' %>

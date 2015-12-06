@@ -42,14 +42,20 @@
   margin: 0px;
   padding: 0px;
 }
-.event-list > li {
+.event-list > a {
+  color: inherit;
+}
+.event-list > a:hover {
+  text-decoration: none;
+}
+.event-list > a > li {
   background-color: rgb(255, 255, 255);
   box-shadow: 0px 0px 1px rgb(51, 51, 51);
   box-shadow: 0px 0px 1px rgba(51, 51, 51, 0.7);
   padding: 0px;
   margin: 0px 0px 1px;
 }
-.event-list > li > time {
+.event-list > a > li > time {
   display: inline-block;
   width: 100%;
   background-color:rgb(135,206,250);
@@ -57,43 +63,43 @@
   text-align: center;
   text-transform: uppercase;
 }
-.event-list > li:nth-child(even) > time {
+.event-list > a > li:nth-child(even) > time {
   background-color: rgb(255,255,224)
 }
-.event-list > li > time > span {
+.event-list > a > li > time > span {
   display: none;
 }
-.event-list > li > time > .day {
+.event-list > a > li > time > .day {
   display: block;
   font-size: 9pt;
   font-weight: 100;
   line-height: 1;
 }
-.event-list > li time > .month {
+.event-list > a > li time > .month {
   display: block;
   font-size: 7pt;
   font-weight: 700;
   line-height: 1;
 }
-.event-list > li > img {
+.event-list > a > li > img {
   width: 90px;
 }
-.event-list > li > .info {
+.event-list > a > li > .info {
   padding-top: 5px;
   text-align: center;
 }
-.event-list > li > .info > .title {
+.event-list > a > li > .info > .title {
   font-size: 8pt;
   font-weight: 580;
   margin: 0px;
 }
-.event-list > li > .info > .desc {
+.event-list > a > li > .info > .desc {
   font-size: 9pt;
   font-weight: 300;
   margin: 0px;
 }
-.event-list > li > .info > ul,
-.event-list > li > .social > ul {
+.event-list > a > li > .info > ul,
+.event-list > a > li > .social > ul {
   display: table;
   list-style: none;
   margin: 0px 0px 0px;
@@ -102,8 +108,8 @@
   text-align: center;
 }
 
-.event-list > li > .info > ul > li,
-.event-list > li > .social > ul > li {
+.event-list > a > li > .info > ul > li,
+.event-list > a > li > .social > ul > li {
   display: table-cell;
   cursor: pointer;
   color: rgb(30, 30, 30);
@@ -111,64 +117,64 @@
   font-weight: 300;
   padding: 3px 0px;
 }
-.event-list > li > .info > ul > li > a {
+.event-list > a > li > .info > ul > li > a {
   display: block;
   width: 100%;
   color: rgb(30, 30, 30);
   text-decoration: none;
 }
-.event-list > li > .info > ul > li:hover,
-.event-list > li > .social > ul > li:hover {
+.event-list > a > li > .info > ul > li:hover,
+.event-list > a > li > .social > ul > li:hover {
   color: rgb(30, 30, 30);
   background-color: rgb(200, 200, 200);
 }
 
 @media (min-width: 768px) {
 
-  .event-list > li {
+  .event-list > a > li {
     position: relative;
     display: block;
     width: 100%;
     height: 25px;
     padding: 0px;
   }
-  .event-list > li > time,
-  .event-list > li > img  {
+  .event-list > a > li > time,
+  .event-list > a > li > img  {
     display: inline-block;
 
   }
-  .event-list > li > time,
-  .event-list > li > img {
+  .event-list > a > li > time,
+  .event-list > a > li > img {
     width: 120px;
     float: left;
   }
-  .event-list > li > .info {
+  .event-list > a > li > .info {
     background-color: #FFFFFF;
     overflow: hidden;
   }
-  .event-list > li > time,
-  .event-list > li > img {
+  .event-list > a > li > time,
+  .event-list > a > li > img {
     width: 40px;
     height: 25px;
     padding: 0px;
     margin: 0px;
   }
-  .event-list > li > .info {
+  .event-list > a > li > .info {
     position: relative;
     height: 25px;
     text-align: left;
     padding-right: 40px;
   }
-  .event-list > li > .info > .title,
-  .event-list > li > .info > .desc {
+  .event-list > a > li > .info > .title,
+  .event-list > a > li > .info > .desc {
     padding: 0px 10px;
   }
-  .event-list > li > .info > ul {
+  .event-list > a > li > .info > ul {
     position: absolute;
     left: 0px;
     bottom: 0px;
   }
-  .event-list > li > .social {
+  .event-list > a > li > .social {
     position: absolute;
     top: 0px;
     right: 0px;
@@ -176,11 +182,11 @@
     width: 40px;
   }
 
-  .event-list > li > .social > ul > li {
+  .event-list > a > li > .social > ul > li {
     height: 25px;
     padding: 0px;
   }
-  .event-list > li > .social > ul > li > a {
+  .event-list > a > li > .social > ul > li > a {
     height: 25px;
     width: 40px;
     padding: 0px 0px 0px;
