@@ -28,9 +28,12 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    session[:username] = nil
-    session[:password] = nil
-    redirect_to root_path, notice: "Successfully logged out"
+    if user_signed_in?
+      session[:username] = nil
+      session[:password] = nil
+      flash[:notice] = "Successfully logged out"
+    end
+    redirect_to root_path
   end
 
   def token

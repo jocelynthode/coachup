@@ -40,7 +40,7 @@ class UsersController < ApplicationController
         begin
           coach_user.save
         rescue CoachClient::Exception => e
-          unless @user.avatar.present?
+          unless @user.avatar
             Cloudinary::Api.delete_resources(@user.avatar.file.public_id)
           end
           msg = if e.is_a?(CoachClient::Unauthorized)
