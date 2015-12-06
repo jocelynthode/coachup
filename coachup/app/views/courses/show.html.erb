@@ -53,7 +53,7 @@
                <dt>Session</dt>
             <% elsif @schedule.count == 0 %>
             <% else%>
-               <dt>Next 10 Sessions</dt>
+               <dt>Next <%= @schedule.count %> Sessions</dt>
             <% end %>
 
             <dd>
