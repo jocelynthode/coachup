@@ -46,13 +46,13 @@ class MyPartnershipsController < ApplicationController
       message = {}
       begin
         current_user_partnerships.method(action).call(coach_client, username)
-      rescue RestClient::ExceptionWithResponse => e
-        message[:alert] = e.response.body
+      rescue CoachClient::Exception
+        message[:alert] = "Partnership action failed"
       end
 
       begin
         redirect_to :back, flash: message
-      rescue ActionController::RedirectBackError => e
+      rescue ActionController::RedirectBackError
         redirect_to partnerships_path, flash: message
       end
     end
