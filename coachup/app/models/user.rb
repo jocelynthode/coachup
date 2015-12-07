@@ -55,7 +55,7 @@ class User < ActiveRecord::Base
       end
     end
 
-    if (all_dates.count == 0)
+    if (all_dates.size == 0)
       false
     end
 

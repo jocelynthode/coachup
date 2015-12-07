@@ -67,7 +67,7 @@
                               <i class="glyphicon glyphicon-remove"></i> Leave
                           <% end %>
                         </li>
-                    <% elsif course.subscriptions.count < course.max_participants %>
+                    <% elsif course.subscriptions.size < course.max_participants %>
                         <li role="separator" class="divider"></li>
                         <li>
                           <%= link_to course_apply_path(course), method: :post,

@@ -52,7 +52,7 @@ class Course < ActiveRecord::Base
         return ["You are the owner of this course!", :alert]
       end
 
-      if self.max_participants <= self.subscriptions.count
+      if self.max_participants <= self.subscriptions.size
         return ["Sorry! Maximum number of participants is already reached!", :alert]
       end
 
