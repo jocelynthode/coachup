@@ -19,25 +19,23 @@ class MyPartnershipsController < ApplicationController
   end
 
   def courses_index
-    # TODO: show partnerships of everyone, not just current_user
-    partnerships = current_user_partnerships.find(coach_client)
-    @partnerships = partnerships.map { |ps|
-      user = User.find_by(username: ps[:user])
-      if user.present?
-        ps.merge :user_id => user.id
-      end
-    }.compact
+    @courses = []
+    coach_user = CoachClient::User.new(coach_client, current_user.username,
+                                         password: session[:password])
+    begin
+      coach_user.update
+      partnerships = coach_user.partnerships
+    rescue CoachClient::Exception
+      return
+    end
 
-    my_courses = []
-
-    @partnerships.each do |partnership|
+    partnerships.each do |partnership|
+      user = User.find_by(username: partnership.user2.username)
+      user_id = user.id if user
       Course.find_each do |course|
-        if course.coach_id == partnership[:user_id]
-          my_courses << course
-        end
+        @courses << course if course.coach_id == user_id
       end
     end
-    @courses = my_courses
   end
 
   private
