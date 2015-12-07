@@ -53,7 +53,7 @@ class User < ActiveRecord::Base
         element = date_course.new
         element.date = date
         element.course = sub.course
-        if element.date.to_i >= Time.now.to_i
+        if element.date.start_time >= Time.current
           all_dates.add(element)
         end
       end
