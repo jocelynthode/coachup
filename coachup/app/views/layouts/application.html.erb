@@ -149,7 +149,7 @@
                 <input type="checkbox" data-size="mini" name="my-checkbox"checked>
               </a>
             </li><br>
-            <div id="session">
+            <div id="session" style="display: none;">
               <ul class="event-list">
             <% @sessions = current_user.get_next_sessions %>
               <% if @sessions == false %>
@@ -215,21 +215,18 @@
 <% end %>
 
 <script type="text/javascript">
-$("[name='my-checkbox']").bootstrapSwitch();
-$(document).ready(function()
-{
-    $("[name='my-checkbox']").on('switchChange.bootstrapSwitch', function (e, data)
-    {
-        var state=$(this).bootstrapSwitch('state');//returns true or false
-        if(state)
-        {
-            $("#session").show();
-        }
-        else
-        {
-            $("#session").hide();
-        }
-    });
+$(document).ready(function() {
+
+  function process_switch(event, state) {
+    $("#session").toggle(state);
+    Cookies.set('show_upcoming_sessions', state);
+  }
+  $("[name='my-checkbox']").on('switchChange.bootstrapSwitch', process_switch);
+
+  var initial_state = Cookies.getJSON('show_upcoming_sessions');
+  if (initial_state === undefined) initial_state = true;
+  $("[name='my-checkbox']").bootstrapSwitch('state', initial_state, true);
+  process_switch(null, initial_state);
 });
 </script>
 </body>
