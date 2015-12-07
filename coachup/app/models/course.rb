@@ -86,7 +86,12 @@ class Course < ActiveRecord::Base
   end
 
   def starts_at=(new_starts_at)
-    write_attribute(:starts_at, DateTime.strptime(new_starts_at, '%d-%m-%Y %H:%M:%S'))
+    if new_starts_at != ''
+      value = DateTime.strptime(new_starts_at, '%d-%m-%Y %H:%M:%S')
+    else
+      value = nil
+    end
+    write_attribute(:starts_at, value)
   end
 
   def duration=(new_duration)
@@ -94,7 +99,6 @@ class Course < ActiveRecord::Base
   end
 
   def ends_at=(new_ends_at)
-
       if new_ends_at != ""
         value = DateTime.strptime(new_ends_at, '%d-%m-%Y %H:%M:%S')
       else
