@@ -59,11 +59,7 @@ class User < ActiveRecord::Base
       end
     end
 
-    if (all_dates.count == 0)
-      false
-    end
-
-    all_dates = all_dates.sort_by { |date| date.date}
+    all_dates = all_dates.sort_by { |date| date.date }
     all_dates.take(10)
   end
 
