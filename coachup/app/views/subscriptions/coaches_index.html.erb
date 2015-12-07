@@ -7,40 +7,8 @@
     </div>
   </div>
   <% if @coaches.present? %>
-      <% @coaches.each do |coach| %>
-          <div class="col-xs-12 col-sm-2">
-            <div class="box-info text-center user-profile-2">
-              <div class="header-cover"></div>
-              <div class="user-profile-inner" style="word-wrap: break-word;">
-                <h5 class="white">
-                  <% if  User.get_full_name(coach.username).present? %>
-                      <%= User.get_full_name(coach.username) %>
-                  <% else %>
-                      Unknown Name
-                  <% end %>
-                </h5>
-                <% if coach.avatar_url.present? %>
-                    <%= image_tag user.avatar_url(:display, :class=>"img-circle profile-avatar") %>
-                <% else %>
-                    <%= cl_image_tag('default', :class=>"img-circle profile-avatar") %>
-                <% end %>
-
-                <h5><em><%= coach.username %></em></h5>
-                <div class="row">
-                  <div class="col-xs-12 col-sm-12">
-                    <%= link_to  user_path(coach), :class => "btn btn-primary btn-sm btn-block" do %>
-                        <span class="glyphicon glyphicon-user"></span>
-                        View Profile
-                    <% end %>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-      <% end %>
+      <%= render partial: 'users/user', collection: @coaches %>
   <% else %>
-      <div class="col-md-12">
-        <h4><%= @user.username %> doesn't have any coaches yet...</h4>
-      </div>
+      <h4><%= @user.username %> doesn't have any coaches yet...</h4>
   <% end %>
 </div>
