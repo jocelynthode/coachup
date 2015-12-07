@@ -6,7 +6,6 @@ Rails.application.routes.draw do
   get 'register' => 'users#new', as: 'register'
 
   get 'overview/welcome'
-  get 'overview/index'
 
   resources :users do
     resources :courses, only: [:index]
@@ -43,7 +42,7 @@ Rails.application.routes.draw do
 
   # You can have the root of your site routed with "root"
 
-  root 'overview#welcome'
+  root 'overview#root'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
