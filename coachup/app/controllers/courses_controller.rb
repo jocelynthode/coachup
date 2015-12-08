@@ -29,6 +29,7 @@ class CoursesController < ApplicationController
   def new
     @course = Course.new
     @location = @course.build_location
+    @course[:starts_at] = 1.day.from_now
   end
 
   def edit

@@ -1,8 +1,1 @@
 <%= render 'form', title: 'Edit your course' %>
-
-
-<% if current_page?(action: 'edit') %>
-    <script type="text/javascript">
-        $('#course_starts_at').val('<%=@course.starts_at.strftime('%d-%m-%Y %H:%M:%S')%>')
-    </script>
-<% end %>
