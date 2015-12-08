@@ -83,12 +83,10 @@
     </div>
 
     <%= f.fields_for :location do |location_fields| %>
-      <div class="form-group">
-        <%= location_fields.label :address %><br>
-        <%= location_fields.text_field :address, class: "form-control", id: "course_address", readonly: true %>
-        <%= location_fields.hidden_field :latitude, id: "course_latitude" %>
-        <%= location_fields.hidden_field :longitude, id: "course_longitude" %>
-      </div>
+      <%# This fields are hidden because they have to be set from the Google Map widget below %>
+      <%= location_fields.hidden_field :address, class: "form-control", id: "course_address", readonly: true %>
+      <%= location_fields.hidden_field :latitude, id: "course_latitude" %>
+      <%= location_fields.hidden_field :longitude, id: "course_longitude" %>
     <% end %>
   </div>
 
@@ -98,7 +96,8 @@
       <div id="map-container">
         <div id="map-canvas"></div>
         <div id="geocoding_fields">
-          <input name="search" type="text" id="search_box_geocoding" class="search_box" >
+          <!--<input name="search" type="text" id="search_box_geocoding" class="search_box" >-->
+          <%= text_field_tag 'search_box_geocoding', @course.location.address, name: 'search', class: 'search_box' %>
           <button id="submit_button_geocoding"  type="button" class="submit_button">Search</button>
         </div>
       </div>
@@ -145,13 +144,16 @@
     });
   });
 
-    $(function() {
-      $('#course_duration').timepicker({
-        minuteStep: 15,
-        showMeridian: false,
-        defaultTime: '1:00',
-        showInputs: true
-      });
+  $(function() {
+    $('#course_duration').timepicker({
+      minuteStep: 15,
+      showMeridian: false,
+      defaultTime: '1:00',
+      showInputs: true
     });
+  });
+
+  // Set google map widget
+  $(document).ready(gmap_initialize);
 </script>
 
