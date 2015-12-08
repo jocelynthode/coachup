@@ -125,22 +125,28 @@
 </script>
 
 <script type="text/javascript">
-
+  var date_now = Date.now();
   $(function () {
-    $('#datetimepicker').datetimepicker({
-        format: 'DD-MM-YYYY HH:mm:ss',
-        minDate: Date.now()
+    var start_picker = $('#datetimepicker').datetimepicker({
+      format: 'DD-MM-YYYY HH:mm:ss',
     });
-    $('#datetimepicker1').datetimepicker({
+    var end_picker = $('#datetimepicker1').datetimepicker({
       useCurrent: false,
       format: 'DD-MM-YYYY HH:mm:ss',
-      minDate: Date.now()
+      minDate: date_now
     });
-    $("#datetimepicker").on("dp.change", function (e) {
-      $('#datetimepicker1').data("DateTimePicker").minDate(e.date);
+
+    var initial_end_date = end_picker.data("DateTimePicker").date();
+    if (initial_end_date) {
+      start_picker.data("DateTimePicker").maxDate(initial_end_date);
+    }
+
+    start_picker.on("dp.change", function (e) {
+      var min_date = new Date(Math.max(e.date, date_now));
+      end_picker.data("DateTimePicker").minDate(min_date);
     });
-    $("#datetimepicker1").on("dp.change", function (e) {
-      $('#datetimepicker').data("DateTimePicker").maxDate(e.date);
+    end_picker.on("dp.change", function (e) {
+      start_picker.data("DateTimePicker").maxDate(e.date);
     });
   });
 
