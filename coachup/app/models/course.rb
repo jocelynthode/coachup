@@ -107,9 +107,9 @@ class Course < ActiveRecord::Base
   def retrieve_schedule
       schedule = IceCube::Schedule.new(self.starts_at, end_time: self.ends_at)
       if !self.schedule.empty?
-        the_rule = RecurringSelect.dirty_hash_to_rule( self.schedule )
+        the_rule = RecurringSelect.dirty_hash_to_rule(self.schedule)
         if RecurringSelect.is_valid_rule?(the_rule)
-          schedule.add_recurrence_rule( the_rule)
+          schedule.add_recurrence_rule(the_rule.until(self.ends_at))
         end
       end
       schedule
