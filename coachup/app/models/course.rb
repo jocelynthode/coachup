@@ -7,7 +7,7 @@ class Course < ActiveRecord::Base
   accepts_nested_attributes_for :location, reject_if: :no_location
   serialize :schedule, Hash
 
-  validates_datetime :starts_at, on_or_after: lambda {DateTime.now}
+  validates_datetime :starts_at, on_or_after: lambda {DateTime.current}
   validates_datetime :ends_at, after: :starts_at
 
   validates :starts_at, presence: true

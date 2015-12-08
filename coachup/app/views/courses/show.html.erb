@@ -37,7 +37,7 @@
       <div class="row">
        <div class="col-md-10 col-md-offset-2">
          <dl class="dl-horizontal">
-           <% @schedule = @course.retrieve_schedule.next_occurrences(10, Time.now) %>
+           <% @schedule = @course.retrieve_schedule.next_occurrences(10) %>
 
            <% if @schedule.count == 0 %>
                <div class="col-md-10 col-md-offset-2 course-over">Course is over! </div>
