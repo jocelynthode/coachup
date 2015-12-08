@@ -134,7 +134,7 @@ class CoursesController < ApplicationController
     course = Course.find(params[:id])
     if course.retrieve_schedule.next_occurrence.nil?
       flash[:alert] = "Can't edit a course that has already ended"
-      redirect_to :back
+      redirect_to courses_path
       return false
     end
     true
