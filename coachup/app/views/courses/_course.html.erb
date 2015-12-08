@@ -30,6 +30,9 @@
             </div>
           </div>
         </div>
+        <% if course.retrieve_schedule.next_occurrence.nil? %>
+            <div class="panel-footer course-over"> COURSE IS OVER</div>
+        <% else %>
         <div class="panel-footer dropdown">
           <a data-toggle="dropdown" class="dropdown-toggle">
             <span class="pull-left ">
@@ -81,6 +84,7 @@
           </ul>
           <div class="clearfix"></div>
         </div>
+            <% end %>
       </div>
   <% end %>
 </div>

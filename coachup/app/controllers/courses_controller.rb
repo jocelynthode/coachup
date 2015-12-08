@@ -1,6 +1,7 @@
 class CoursesController < ApplicationController
   skip_before_action :require_login, only: [:index, :show]
   before_action :require_authorization, only: [:edit, :update, :destroy]
+  before_action :permit_edit, only: [:edit, :update, :apply]
 
   def index
     if params[:user_id]  # /users/:id/courses
@@ -126,6 +127,17 @@ class CoursesController < ApplicationController
     params.require(:course).permit(:title, :description, :price, :coach_id, :sport, :max_participants, :schedule,
                                    :starts_at, :ends_at, :duration,
                                    location_attributes: [:id, :address, :latitude, :longitude])
+  end
+
+
+  def permit_edit
+    course = Course.find(params[:id])
+    if course.retrieve_schedule.next_occurrence.nil?
+      flash[:alert] = "Can't edit a course that has already ended"
+      redirect_to courses_path
+      return false
+    end
+    true
   end
 
   def require_authorization
