@@ -69,7 +69,7 @@
 
     <div class="form-group">
       <%= f.label :duration, "Duration of the lesson" %><br>
-      <div class="input-group bootstrap-timepicker timepicker">
+      <div class="input-group bootstrap-timepicker timepicker" id="timepicker_duration">
         <%= f.text_field :duration, class: "form-control", value: @course.duration.try(:strftime,'%H:%M') %>
         <span class="input-group-addon">
             <i class="glyphicon glyphicon-time"></i>
@@ -145,12 +145,16 @@
   });
 
   $(function() {
-    $('#course_duration').timepicker({
+    var duration_picker = $('#course_duration').timepicker({
       minuteStep: 15,
       showMeridian: false,
       defaultTime: '1:00',
       showInputs: true
     });
+    // Focus on input (and show picker) when clicking anywhere on the input-group
+    $("#timepicker_duration").click(function() {
+      duration_picker.focus();
+    })
   });
 
   // Set google map widget
