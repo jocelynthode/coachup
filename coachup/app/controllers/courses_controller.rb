@@ -132,7 +132,7 @@ class CoursesController < ApplicationController
 
   def permit_edit
     course = Course.find(params[:id])
-    if course.retrieve_schedule.next_occurrence.nil? && course.starts_at < Time.current || course.ends_at < Time.current
+    if course.retrieve_schedule.next_occurrence.nil?
       flash[:alert] = "Can't edit a course that has already ended"
       redirect_to :back
       return false
