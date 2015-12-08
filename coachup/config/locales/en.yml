@@ -21,3 +21,16 @@
 
 en:
   hello: "Hello world"
+  activerecord:
+    attributes:
+      course:
+        starts_at: "Starting date"
+        ends_at: "Ending date"
+        duration: "Duration of the lesson"
+        schedule: "Recurring sessions"
+    errors:
+      models:
+        course:
+          attributes:
+            starts_at:
+              on_or_after: "must be changed to today or later"
