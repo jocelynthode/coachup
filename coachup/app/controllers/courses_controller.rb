@@ -57,7 +57,10 @@ class CoursesController < ApplicationController
       flash[:notice] = "Successfully updated Course"
       redirect_to @course
     else
-      flash[:alert] = "Could not save changes"
+      if not @course.errors.any?
+        # Only give this error if we don't have anything more specific to say
+        flash[:alert] = "Could not save changes"
+      end
       render 'edit'
     end
   end

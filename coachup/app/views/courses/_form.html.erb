@@ -5,22 +5,21 @@
     </div>
   </div>
 </div>
+<% if @course.errors.any? %>
+    <div class="alert alert-danger">
+      <%= pluralize(@course.errors.count, "error") %> prohibited
+      this course from being saved:
+      <ul>
+        <% @course.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+<% end %>
+
 <%= form_for @course, html: {class: "form"} do |f| %><br>
 <div class="row">
   <div class="col-md-5">
-    <% if @course.errors.any? %>
-        <div id="error_explanation">
-          <h2>
-            <%= pluralize(@course.errors.count, "error") %> prohibited
-            this article from being saved:
-          </h2>
-          <ul>
-            <% @course.errors.full_messages.each do |msg| %>
-                <li><%= msg %></li>
-            <% end %>
-          </ul>
-        </div>
-    <% end %>
 
     <div class="form-group">
       <%= f.label :title %>
