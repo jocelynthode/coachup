@@ -1,10 +1,13 @@
 class MyPartnershipsController < ApplicationController
 
   def index
-    partnerships = current_user_partnerships.find()
-    @partners = partnerships.map{ |ps|
-      User.find_by(username: ps[:user])
-    }.compact
+    partnerships = current_user_partnerships.find(coach_client)
+    partnerships.select! { |p| p.user1_confirmed }
+    @partners = []
+    partnerships.each do |p|
+       user = User.find_by(username: p.user2.username)
+       @partners.unshift(user) unless user.nil?
+    end
   end
 
   def create
@@ -16,25 +19,23 @@ class MyPartnershipsController < ApplicationController
   end
 
   def courses_index
-    # TODO: show partnerships of everyone, not just current_user
-    partnerships = current_user_partnerships.find()
-    @partnerships = partnerships.map { |ps|
-      user = User.find_by(username: ps[:user])
-      if user.present?
-        ps.merge :user_id => user.id
-      end
-    }.compact
+    @courses = []
+    coach_user = CoachClient::User.new(coach_client, current_user.username,
+                                         password: session[:password])
+    begin
+      coach_user.update
+      partnerships = coach_user.partnerships
+    rescue CoachClient::Exception
+      return
+    end
 
-    my_courses = []
-
-    @partnerships.each do |partnership|
+    partnerships.each do |partnership|
+      user = User.find_by(username: partnership.user2.username)
+      user_id = user.id if user
       Course.find_each do |course|
-        if course.coach_id == partnership[:user_id]
-          my_courses << course
-        end
+        @courses << course if course.coach_id == user_id
       end
     end
-    @courses = my_courses
   end
 
   private
@@ -42,16 +43,17 @@ class MyPartnershipsController < ApplicationController
     def partnership_action(action, username)
       message = {}
       begin
-        current_user_partnerships.method(action).call username
-      rescue RestClient::ExceptionWithResponse => e
-        message[:alert] = e.response.body
+        current_user_partnerships.method(action).call(coach_client, username)
+      rescue CoachClient::Exception
+        message[:alert] = "Partnership action failed"
       end
 
       begin
         redirect_to :back, flash: message
-      rescue ActionController::RedirectBackError => e
+      rescue ActionController::RedirectBackError
         redirect_to partnerships_path, flash: message
       end
     end
 
 end
+

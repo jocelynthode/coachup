@@ -8,15 +8,16 @@ class SessionsController < ApplicationController
   def create
     username = params[:session][:username]
     password = params[:session][:password]
-    user = User.authenticate(username, password)
-    if user
+    if coach_client.authenticated?(username, password)
       session[:username] = username
       session[:password] = password
-      unless User.find_by username: username
+      unless User.find_by(username: username)
         new_user = User.new(username: username)
-        response = authenticated_request(:get, "users/#{username}")
-        new_user.email = response[:email]
+        coach_user = CoachClient::User.new(coach_client, username,
+                                           password: password)
+        coach_user.update
         new_user.password = password
+        new_user.email = coach_user.email
         new_user.save(validate: false)
       end
       redirect_to root_path, notice: "Successfully logged in as #{username}"
@@ -27,9 +28,12 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    session[:username] = nil
-    session[:password] = nil
-    redirect_to root_path, notice: "Successfully logged out"
+    if user_signed_in?
+      session[:username] = nil
+      session[:password] = nil
+      flash[:notice] = "Successfully logged out"
+    end
+    redirect_to root_path
   end
 
   def token

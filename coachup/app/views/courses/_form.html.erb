@@ -37,8 +37,8 @@
     </div>
 
     <div class="form-group">
-      <%= f.label :sport %>
-      <%= f.select :sport, Course.get_all_sports.map {|sport| [sport, sport]}, {}, {class: "form-control"} %>
+      <%= f.label :sport %><br>
+      <%= f.select :sport, sports.map { |sport| sport.to_s.capitalize }, {}, {class: "form-control"} %>
     </div>
 
     <div class="form-group">

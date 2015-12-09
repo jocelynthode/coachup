@@ -3,10 +3,11 @@
     <div class="header-cover"></div>
     <div class="user-profile-inner">
       <h5 class="white">
-        <% if User.get_full_name(user.username).present? %>
-            <%= User.get_full_name(user.username) %>
-        <% else %>
+        <% name = full_name(user.username) %>
+        <% if name.nil? %>
             Unknown Name
+        <% else %>
+          <%= name %>
         <% end %>
       </h5>
       <% if user.avatar_url.present? %>

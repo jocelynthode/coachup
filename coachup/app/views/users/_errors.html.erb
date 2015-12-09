@@ -2,9 +2,9 @@
   <div id="error_explanation">
     <ul>
       <% @user.errors.each do |attr, msg| %>
-          <% if @user.errors[attr].first == msg %>
-            <li><%= "#{attr.to_s.capitalize!} #{msg}" %></li>
-          <% end %>
+        <% if @user.errors[attr].first == msg %>
+          <li><%= "#{attr.to_s.gsub('_', ' ').capitalize!} #{msg}" %></li>
+        <% end %>
       <% end %>
     </ul>
   </div>

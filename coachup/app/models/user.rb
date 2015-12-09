@@ -23,26 +23,6 @@ class User < ActiveRecord::Base
   has_many :subscriptions
   has_many :courses, through: :subscriptions
 
-  def self.url
-    'http://diufvm31.unifr.ch:8090/CyberCoachServer/resources/'
-  end
-
-  def self.authenticate(username, password)
-    begin
-      response = RestClient::Request.execute(method: :get,
-                                             url: self.url+'authenticateduser/',
-                                             user: username, password: password,
-                                             headers: { accept: :json })
-      if response.code == 200
-        JSON.parse(response, symbolize_names: true)
-      else
-        false
-      end
-    rescue
-      false
-    end
-  end
-
   def get_next_sessions
     date_course = Struct.new(:date, :course)
     all_dates = Set.new
@@ -61,22 +41,6 @@ class User < ActiveRecord::Base
 
     all_dates = all_dates.sort_by { |date| date.date }
     all_dates.take(10)
-  end
-
-  def self.get_full_name(username)
-    begin
-      response = RestClient::Request.execute(method: :get,
-                                             url: self.url+'users/'+username,
-                                             headers: { accept: :json })
-      if response.code == 200
-        answer = JSON.parse(response, symbolize_names: true)
-        answer[:realname]
-      else
-        false
-      end
-    rescue
-      false
-    end
   end
 
   def approval_rate

@@ -31,7 +31,7 @@
       <div class="form-group">
         <%= f.label :date_of_birth %>
         <div class="input-group date" id="datepicker">
-          <%= f.text_field :date_of_birth, class: 'form-control', value: @user.date_of_birth.try(:strftime,'%d-%m-%Y') %>
+          <%= f.text_field :date_of_birth, class: 'form-control', value: @user.date_of_birth.try(:strftime,'%d-%m-%Y'), placeholder: '01-01-2000' %>
           <span class="input-group-addon">
             <i class="glyphicon glyphicon-calendar"></i>
           </span>
@@ -87,7 +87,6 @@
   $(function() {
     $('#datepicker').datetimepicker({
         format: 'DD-MM-YYYY',
-        defaultDate: '01/01/2000',
         viewMode: 'years',
         minDate: '01/01/1890',
         maxDate: Date.now()
