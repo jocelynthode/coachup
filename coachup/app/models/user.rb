@@ -1,27 +1,25 @@
 class User < ActiveRecord::Base
   acts_as_votable
   acts_as_voter
-  # Virtual attribute for authenticating with either username or email
-  attr_accessor :login, :realname, :publicvisible, :password_confirmation,
-    :new_password, :new_password_confirmation, :avatar, :avatar_cache, :delete_avatar
-  validates :realname, presence: true
-  validates :email, format: {with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i}
-  # creating user
-  validates :username, presence: true, length: {within: 3..50}, uniqueness: true
-  validates :password, length: {within: 3..50}, on: :create
-  validates_presence_of :password_confirmation, on: :create
-  validates_confirmation_of :password, on: :create
-  # editing user
-  validates :new_password, length: {within: 3..50}, if: :new_password_present?, on: :update
-  validates_presence_of :new_password_confirmation, if: :new_password_present?, on: :update
-  validates_confirmation_of :new_password, if: :new_password_present?, on: :update
-  validates :phone, format: { with: /\A(\d+[\s\d]*)*\z/ }, on: :update
-
-  mount_uploader :avatar, AvatarUploader
 
   has_many :taught_courses, class_name: 'Course', foreign_key: 'coach_id'
   has_many :subscriptions
   has_many :courses, through: :subscriptions
+
+  attr_accessor :realname, :publicvisible, :password_confirmation,
+    :new_password, :new_password_confirmation, :avatar, :avatar_cache, :delete_avatar
+
+  validates :realname, presence: true
+  validates :email, email: true
+  # creating user
+  validates :username, presence: true, length: {within: 3..50}, uniqueness: true
+  validates :password, length: {within: 3..50}, confirmation: true, on: :create
+  # editing user
+  validates :new_password, length: {within: 3..50}, confirmation: true, if: :new_password_present?, on: :update
+  validates :phone, phone: true, on: :update
+
+  mount_uploader :avatar, AvatarUploader
+
 
   def get_next_sessions
     date_course = Struct.new(:date, :course)

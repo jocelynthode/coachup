@@ -36,7 +36,7 @@
          <dl class="dl-horizontal">
            <% @schedule = @course.retrieve_schedule.next_occurrences(10) %>
 
-           <% if @schedule.count == 0 %>
+           <% if @schedule.size == 0 %>
                <div class="col-md-10 col-md-offset-2 course-over">Course is over! </div>
            <% end %>
 
@@ -46,11 +46,11 @@
             <dt>Description</dt>
             <dd> <%= simple_format @course.description %></dd>
 
-            <% if @schedule.count == 1 %>
+            <% if @schedule.size == 1 %>
                <dt>Session</dt>
-            <% elsif @schedule.count == 0 %>
+            <% elsif @schedule.size == 0 %>
             <% else%>
-               <dt>Next <%= @schedule.count %> Sessions</dt>
+               <dt>Next <%= @schedule.size %> Sessions</dt>
             <% end %>
 
             <dd>
@@ -80,7 +80,7 @@
             </dd>
 
             <dt>Participants</dt>
-            <dd> <%= @course.subscriptions.count %> / <%= @course.max_participants %></dd>
+            <dd> <%= @course.subscriptions.size %> / <%= @course.max_participants %></dd>
             <dt>Share</dt>
             <dd><%= social_share_button_tag(@course.title, :popup => "true") %></dd>
             <% if @course.coach == current_user || @course.subscriptions.exists?(user: current_user) %>
@@ -92,7 +92,7 @@
       </div>
       <div class="row">
         <div class="col-md-offset-4">
-          <% unless @course.coach == current_user || @course.subscriptions.exists?(user: current_user) || @course.subscriptions.count == @course.max_participants %>
+          <% unless @course.coach == current_user || @course.subscriptions.exists?(user: current_user) || @course.subscriptions.size == @course.max_participants %>
               <%= link_to course_apply_path(@course), method: :post, :class => "btn btn-success", data: {confirm: 'Would you like to subscribe to the course?'} do %>
                   <span class="glyphicon glyphicon-ok"></span>
                   Apply
