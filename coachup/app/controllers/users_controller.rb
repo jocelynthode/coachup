@@ -11,15 +11,17 @@ class UsersController < ApplicationController
     if @user.facebook_uid
       @facebook_url = 'https://www.facebook.com/' + @user.facebook_uid
     end
-    partnership = CoachClient::Partnership.new(coach_client,
-                                               current_user.username,
-                                               @user.username)
-    partnership.user1.password = session[:password]
-    begin
-      partnership.update
-      @is_following = partnership.user1_confirmed
-    rescue CoachClient::Exception
-      @is_following = false
+    if user_signed_in?
+      partnership = CoachClient::Partnership.new(coach_client,
+                                                 current_user.username,
+                                                 @user.username)
+      partnership.user1.password = session[:password]
+      begin
+        partnership.update
+        @is_following = partnership.user1_confirmed
+      rescue CoachClient::Exception
+        @is_following = false
+      end
     end
   end
 
