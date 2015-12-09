@@ -24,7 +24,7 @@ Rails.application.routes.draw do
   resources :courses do
     post 'apply', :action => :apply
     post 'leave', :action => :leave
-    post 'export', :action => :export
+    get 'export', :action => :export
   end
 
   get '/auth/facebook/callback', to: 'users#link_facebook'
