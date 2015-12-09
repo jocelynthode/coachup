@@ -23,7 +23,7 @@
             </div>
             <div class="col-xs-5 col-sm-12">
 
-              <% if current_user != @user %>
+              <% if current_user && current_user != @user %>
                 <% if @is_following %>
                     <%= link_to 'Unfollow', partnership_path(@user.username), method: :delete,
                                 class: 'btn btn-primary button-follow', role: 'button' %>
@@ -55,9 +55,8 @@
                           class: 'btn btn-sm btn-danger button-appreciation' %>
                   <% end %>
                 <% end %>
-                <p class="approval"><%= @user.approval_rate %> % (<%= @user.votes_for.size %> votes)</p>
               <% end %>
-
+              <p class="approval"><%= @user.approval_rate %> % (<%= @user.votes_for.size %> votes)</p>
               <h3>General Information</h3>
               <ul class="profile-details">
                 <li>
