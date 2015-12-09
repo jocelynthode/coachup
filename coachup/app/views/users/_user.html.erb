@@ -1,28 +1,26 @@
-<div class="col-xs-12 col-sm-2">
-  <div class="box-info text-center user-profile-2">
-    <div class="header-cover"></div>
-    <div class="user-profile-inner">
-      <h5 class="white">
-        <% if User.get_full_name(user.username).present? %>
-            <%= User.get_full_name(user.username) %>
-        <% else %>
-            Unknown Name
-        <% end %>
-      </h5>
-      <% if user.avatar_url.present? %>
-          <%= image_tag user.avatar_url(:display), class: 'img-circle profile-avatar' %>
+<div class="box-info text-center user-profile-2">
+  <div class="header-cover"></div>
+  <div class="user-profile-inner">
+    <h5 class="white">
+      <% if User.get_full_name(user.username).present? %>
+          <%= User.get_full_name(user.username) %>
       <% else %>
-          <%= cl_image_tag('default', class: 'img-circle profile-avatar') %>
+          Unknown Name
       <% end %>
+    </h5>
+    <% if user.avatar_url.present? %>
+        <%= image_tag user.avatar_url(:display), class: 'img-circle profile-avatar' %>
+    <% else %>
+        <%= cl_image_tag('default', class: 'img-circle profile-avatar') %>
+    <% end %>
 
-      <h5><em><%= user.username %></em></h5>
-      <div class="row">
-        <div class="col-xs-12 col-sm-12">
-          <%= link_to  user_path(user.id), class: 'btn btn-primary btn-sm btn-block' do %>
-              <span class="glyphicon glyphicon-user"></span>
-              View Profile
-          <% end %>
-        </div>
+    <h5><em><%= user.username %></em></h5>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12">
+        <%= link_to  user_path(user.id), class: 'btn btn-primary btn-sm btn-block' do %>
+            <span class="glyphicon glyphicon-user"></span>
+            View Profile
+        <% end %>
       </div>
     </div>
   </div>
