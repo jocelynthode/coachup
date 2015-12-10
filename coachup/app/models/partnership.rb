@@ -2,29 +2,25 @@ class Partnership
 
   # We assume here that we will only access partnerships owned by the user authenticated, since it
   # makes everything easier and we don't need anything else with our interpretation of partnerships.
-  def initialize(username, password)
-    @username = username
-    @password = password
+  def initialize(coach_user)
+    @coach_user = coach_user
   end
 
-  def find(coach_client)
-    user = CoachClient::User.new(coach_client, @username, password: @password)
-    user.update
+  def find
+    @coach_user.update
     # slow, but required for user_confirmed
-    user.partnerships.each(&:update)
+    @coach_user.partnerships.each(&:update).select{ |p| p.user1_confirmed }
   end
 
-  def create(coach_client, username)
-    user = CoachClient::User.new(coach_client, @username, password: @password)
-    partnership = CoachClient::Partnership.new(coach_client, user, username,
+  def create(username)
+    partnership = CoachClient::Partnership.new(@coach_user.client, @coach_user, username,
                                                publicvisible: 0)
     partnership.propose
   end
 
-  def destroy(coach_client, username)
-    user = CoachClient::User.new(coach_client, @username, password: @password)
-    partnership = CoachClient::Partnership.new(coach_client, user, username)
-    partnership.delete
+  def destroy(username)
+    partnership = CoachClient::Partnership.new(@coach_user.client, @coach_user, username)
+    partnership.cancel
   end
 end
 

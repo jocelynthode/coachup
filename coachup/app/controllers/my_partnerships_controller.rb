@@ -1,8 +1,7 @@
 class MyPartnershipsController < ApplicationController
 
   def index
-    partnerships = current_user_partnerships.find(coach_client)
-    partnerships.select! { |p| p.user1_confirmed }
+    partnerships = current_user_partnerships.find
     @partners = []
     partnerships.each do |p|
        user = User.find_by(username: p.user2.username)
@@ -20,11 +19,8 @@ class MyPartnershipsController < ApplicationController
 
   def courses_index
     @courses = []
-    coach_user = CoachClient::User.new(coach_client, current_user.username,
-                                         password: session[:password])
     begin
-      coach_user.update
-      partnerships = coach_user.partnerships
+      partnerships = current_user_partnerships.find
     rescue CoachClient::Exception
       return
     end
@@ -43,7 +39,7 @@ class MyPartnershipsController < ApplicationController
     def partnership_action(action, username)
       message = {}
       begin
-        current_user_partnerships.method(action).call(coach_client, username)
+        current_user_partnerships.method(action).call(username)
       rescue CoachClient::Exception
         message[:alert] = "Partnership action failed"
       end
