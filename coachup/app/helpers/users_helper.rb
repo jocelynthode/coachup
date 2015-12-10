@@ -1,14 +1,14 @@
 module UsersHelper
   def full_name(username)
+    user = User.find_by(username: username)
+    return nil if user.nil?
+
     begin
-      user = coach_client.get_user(username)
-      if user_signed_in? && current_user.username == username
-        user.password = session[:password]
-        user.update
-      end
-      user.realname
+      coach_user = CoachClient::User.new(coach_client, username, password: user.password)
+      coach_user.update
+      coach_user.realname
     rescue CoachClient::Exception
-      ''
+      nil
     end
   end
 end
