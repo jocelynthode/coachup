@@ -1,7 +1,7 @@
 class CoursesController < ApplicationController
   skip_before_action :require_login, only: [:index, :show]
   before_action :require_authorization, only: [:edit, :update, :destroy]
-  before_action :permit_edit, only: [:edit, :update, :apply]
+  before_action :permit_edit, only: [:edit, :update]
 
   def index
     if params[:user_id]  # /users/:id/courses
