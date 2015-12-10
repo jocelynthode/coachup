@@ -20,8 +20,7 @@ gem 'coffee-rails', '~> 4.1.0'
 # gem 'therubyracer', platforms: :ruby
 # Use RestClient for RESTful requests
 gem 'rest-client'
-gem 'coach_client', '~> 0.1.0',
-  git: 'https://github.com/jungomi/coach_client', branch: 'stable'
+gem 'coach_client', '~> 0.1.1'
 
 # Use ransack to build search functionality
 gem 'ransack', '~> 1.7.0'

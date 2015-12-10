@@ -1,13 +1,4 @@
 GIT
-  remote: https://github.com/jungomi/coach_client
-  revision: ee044ccc5087c7fa42f900811bc521303de34375
-  branch: stable
-  specs:
-    coach_client (0.1.0)
-      gyoku (~> 1.3.1)
-      rest-client (~> 1.8)
-
-GIT
   remote: https://github.com/ryanto/acts_as_votable.git
   revision: 9ded371ec0720d07fa7a169109da05c835a2cb51
   ref: 9ded371ec0720d07fa7a169109da05c835a2cb51
@@ -96,6 +87,9 @@ GEM
     cloudinary (1.1.0)
       aws_cf_signer
       rest-client
+    coach_client (0.1.1)
+      gyoku (~> 1.3.1)
+      rest-client (~> 1.8)
     coderay (1.1.0)
     coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
@@ -318,7 +312,7 @@ DEPENDENCIES
   bootstrap3-datetimepicker-rails (~> 4.17.37)
   carrierwave
   cloudinary
-  coach_client (~> 0.1.0)!
+  coach_client (~> 0.1.1)
   coffee-rails (~> 4.1.0)
   dotenv-rails (~> 2.0)
   font-awesome-rails
