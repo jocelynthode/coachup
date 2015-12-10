@@ -18,9 +18,7 @@ gem 'uglifier', '>= 1.3.0'
 gem 'coffee-rails', '~> 4.1.0'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
-# Use RestClient for RESTful requests
-gem 'rest-client'
-gem 'coach_client', '~> 0.1.1'
+gem 'coach_client', '~> 0.2.0'
 
 # Use ransack to build search functionality
 gem 'ransack', '~> 1.7.0'

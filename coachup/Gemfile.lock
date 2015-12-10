@@ -87,7 +87,7 @@ GEM
     cloudinary (1.1.0)
       aws_cf_signer
       rest-client
-    coach_client (0.1.1)
+    coach_client (0.2.0)
       gyoku (~> 1.3.1)
       rest-client (~> 1.8)
     coderay (1.1.0)
@@ -312,7 +312,7 @@ DEPENDENCIES
   bootstrap3-datetimepicker-rails (~> 4.17.37)
   carrierwave
   cloudinary
-  coach_client (~> 0.1.1)
+  coach_client (~> 0.2.0)
   coffee-rails (~> 4.1.0)
   dotenv-rails (~> 2.0)
   font-awesome-rails
@@ -331,7 +331,6 @@ DEPENDENCIES
   rails (= 4.2.4)
   ransack (~> 1.7.0)
   recurring_select
-  rest-client
   sass-rails (~> 5.0)
   sdoc (~> 0.4.0)
   social-share-button (~> 0.1.6)
