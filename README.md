@@ -4,6 +4,8 @@ CoachUP!
 
 ## Installation guide
 
+Prior Notice for external services : In your facebook app, add http://<your-domain>/auth/facebook/callback as a valid OAuth redirect URI for example
+
 #### Install on Heroku:
 1. Pull the repo and create an app on your Heroku account
 
@@ -20,7 +22,10 @@ CoachUP!
   FACEBOOK_SECRET=
   ```
   
-3. Install the Schedule add-on on Heroku and schedule two daily tasks for session_reminder and training_entries
+3. Install the Schedule add-on on Heroku and schedule two daily tasks with the following commands: 
+
+   * `rake jobs:training_entries`
+   * `rake jobs:session_reminder`
 
 4. Use `git subtree push --prefix coachup heroku master` from the root folder to push the app folder to Heroku
 
@@ -36,7 +41,7 @@ CoachUP!
 
 3. Fill in the `.env.example` file right next to your `Gemfile` and rename it to `.env`
 
-4. Create the database
+4. Create the database (`rake db:create`)
 
 5. Run `bin/rails server`
 
