@@ -29,7 +29,7 @@
 
     <ul class="nav navbar-top-links navbar-right">
       <% if user_signed_in? %>
-        <%= menu_item current_user.username, user_path %>
+        <%= menu_item current_user.username, user_path(current_user) %>
       <% else %>
         <%= menu_item 'Sign Up', register_path %>
         <%= menu_item fa_icon('sign-in fw', text: 'Log In'), login_path %>
