@@ -19,7 +19,8 @@
               <% if @user.avatar_url.present? %>
                 <%= image_tag @user.avatar_url(:display), class: 'profile-image' %>
               <% else %>
-                <%= cl_image_tag('default', class: 'profile-image') %>
+                <%= image_tag cloudinary_url('default', height: 200, width: 200, crop: :fill),
+                              class: 'profile-image' %>
               <% end %>
             </div>
             <div class="col-sm-5 col-md-12">
