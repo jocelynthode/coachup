@@ -43,6 +43,7 @@ class CoursesController < ApplicationController
     if @course.save
       redirect_to courses_path
     else
+      @location = @course.build_location
       render 'new'
     end
 
