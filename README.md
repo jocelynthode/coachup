@@ -35,7 +35,7 @@ CoachUP!
 
 4. Create the database
 
-5. Run `rails s`
+5. Run `bin/rails server`
 
 ## Course
 
