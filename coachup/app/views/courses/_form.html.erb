@@ -96,7 +96,7 @@
         <div id="map-canvas"></div>
         <div id="geocoding_fields">
           <!--<input name="search" type="text" id="search_box_geocoding" class="search_box" >-->
-          <%= text_field_tag 'search_box_geocoding', @course.location.address, name: 'search', class: 'search_box' %>
+          <%= text_field_tag 'search_box_geocoding', @course.location.try(:address), name: 'search', class: 'search_box' %>
           <button id="submit_button_geocoding"  type="button" class="submit_button">Search</button>
         </div>
       </div>
