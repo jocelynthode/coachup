@@ -50,29 +50,34 @@ class CoursesController < ApplicationController
 
   def update
     @course = Course.find(params[:id])
-
-    if @course.update(course_params)
-      begin
-        user = CoachClient::User.new(coach_client, session[:username],
-                                     password: session[:password])
-        subscription = CoachClient::UserSubscription.new(coach_client, user,
-                                                         course_params[:sport],
-                                                         publicvisible: 2)
-        subscription.save
-      rescue CoachClient::Exception
-        flash[:alert] = "Could not save changes"
-        redirect_to edit_course_path(@course)
+    success = false
+    Course.transaction do
+      if @course.update(course_params)
+        begin
+          user = CoachClient::User.new(coach_client, session[:username],
+                                       password: session[:password])
+          subscription = CoachClient::UserSubscription.new(coach_client, user,
+                                                           course_params[:sport],
+                                                           publicvisible: 2)
+          subscription.save
+        rescue CoachClient::Exception
+          flash[:alert] = "Could not save changes"
+          redirect_to edit_course_path(@course)
+          raise ActiveRecord::Rollback
+        end
+        success = true
+        flash[:notice] = "Successfully updated course"
+        redirect_to @course
+      else
+        unless @course.errors.any?
+          # Only give this error if we don't have anything more specific to say
+          flash[:alert] = "Could not save changes"
+        end
+        render 'edit'
       end
-      CourseMailer.details_update(@course).deliver_now
-      flash[:notice] = "Successfully updated course"
-      redirect_to @course
-    else
-      unless @course.errors.any?
-        # Only give this error if we don't have anything more specific to say
-        flash[:alert] = "Could not save changes"
-      end
-      render 'edit'
     end
+    # send mails outside of the transaction
+    CourseMailer.details_update(@course).deliver_now if success
   end
 
   def destroy
@@ -90,23 +95,26 @@ class CoursesController < ApplicationController
 
   def apply
     @course = Course.find(params[:course_id])
-    @msg, @channel = @course.apply(current_user)
+    success = false
+    Course.transaction do
+      @msg, @channel = @course.apply(current_user)
 
-    # TODO: Check if request went well before applying the user in the DB and sending a mail
-    # Notify coach
-    CourseMailer.user_application(@course, current_user).deliver_now
-
-    user = CoachClient::User.new(coach_client, session[:username],
-                                 password: session[:password])
-    subscription = CoachClient::UserSubscription.new(coach_client, user,
-                                                     @course.sport,
-                                                     publicvisible: 2)
-    begin
-      subscription.save
-    rescue CoachClient::Exception
-      flash[:alert] = "Could not create subscriptions"
+      user = CoachClient::User.new(coach_client, session[:username],
+                                   password: session[:password])
+      subscription = CoachClient::UserSubscription.new(coach_client, user,
+                                                       @course.sport,
+                                                       publicvisible: 2)
+      begin
+        subscription.save
+        success = true
+      rescue CoachClient::Exception
+        flash[:alert] = "Could not create subscriptions"
+        raise ActiveRecord::Rollback
+      end
     end
 
+    # Notify coach
+    CourseMailer.user_application(@course, current_user).deliver_now if success
     redirect_to course_path(@course)
   end
 
