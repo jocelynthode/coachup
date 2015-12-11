@@ -35,6 +35,7 @@ class CourseMailer < ApplicationMailer
   # we pass subscriptions here as the course is already removed at this stage
   def course_deleted(removed_course, subscriptions)
     @course = removed_course
+    return if subscriptions.empty?
     recipients = subscriptions.map do |sub|
       sub.user.email
     end
