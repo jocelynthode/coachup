@@ -24,6 +24,9 @@ CoachUP!
 4. If needed run `heroku run rake db:migrate`
 
 #### Install on your server:
+:warning: You'll have to create your own cron jobs to schedule the email sending and the entry writing in the database (Take a look at the file jobs.rake) :warning:
+
+
 1. Install PostgreSQL and have an instance running
 
 2. Pull the repo
