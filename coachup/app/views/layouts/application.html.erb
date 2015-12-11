@@ -69,67 +69,51 @@
             <!-- /input-group -->
           </li>
           <li>
-            <%= link_to courses_path do %>
-                <span class="glyphicon glyphicon-home"></span>
-                Courses Overview
-            <% end %>
+            <%= link_to fa_icon('book fw', text: 'Courses Overview'), courses_path %>
           </li>
           <% if user_signed_in? %>
             <li>
               <a id="courses_button" href="#">
-                <i class="glyphicon glyphicon-tasks" ></i> Courses<span class="fa arrow"></span>
+                <%= fa_icon('bars fw', text: 'Courses') %><span class="fa arrow"></span>
               </a>
               <ul class="nav nav-second-level collapse" id="courses_submenu">
                 <li>
-                  <%= link_to user_subscriptions_path(current_user) do %>
-                      <span class="glyphicon glyphicon-ok"></span>
-                      Courses Taken
-                  <% end %>
+                  <%= link_to fa_icon('book fw', text: 'Courses Taken'),
+                              user_subscriptions_path(current_user) %>
                 </li>
                 <li>
-                  <%= link_to user_courses_path(current_user) do %>
-                        <span class="glyphicon glyphicon-ok"></span>
-                        Courses Given
-                  <% end %>
+                  <%= link_to fa_icon('book fw', text: 'Courses Given'),
+                              user_courses_path(current_user) %>
                 </li>
                 <li>
-                  <%= link_to coaches_courses_user_subscriptions_path(current_user) do %>
-                      <span class="glyphicon glyphicon-ok"></span>
-                      Courses By My Coaches
-                  <% end %>
-                  <%= link_to partnerships_courses_path do %>
-                      <span class="glyphicon glyphicon-ok"></span>
-                      Courses By My Favorites
-                  <% end %>
+                  <%= link_to fa_icon('book fw', text: 'Courses By My Coaches'),
+                                      coaches_courses_user_subscriptions_path(current_user) %>
+                </li>
+                <li>
+                  <%= link_to fa_icon('book fw', text: 'Courses By My Favorites'),
+                              partnerships_courses_path %>
                 </li>
               </ul>
               <!-- /.nav-second-level -->
             </li>
-
             <li>
-              <%= link_to partnerships_path do %>
-                  <span class="fa fa-users"></span>
-                  My Favorite Coaches
-              <% end %>
+              <%= link_to fa_icon('graduation-cap fw', text: 'My Coaches'),
+                          coaches_user_subscriptions_path(current_user) %>
             </li>
             <li>
-              <%= link_to coaches_user_subscriptions_path(current_user) do %>
-                  <span class="fa fa-user-secret"></span>
-                  My Coaches
-              <% end %>
+              <%= link_to fa_icon('star fw', text: 'My Favorite Coaches'),
+                          partnerships_path %>
             </li>
           <% end %>
           <li>
-            <%= link_to users_path do %>
-                <span class="glyphicon glyphicon-star"></span>
-                User Profiles
-            <% end %>
+            <%= link_to fa_icon('users fw', text: 'Users Profiles'), users_path%>
           </li>
 
 
         <% if user_signed_in? %>
             <li>
-              <a href="#"><i class="glyphicon glyphicon-calendar" ></i> Upcoming Sessions
+
+              <a href="#"><%= fa_icon('calendar fw', text: 'Upcoming Sessions') %>
                 <input type="checkbox" data-size="mini" name="my-checkbox"checked>
               </a>
             </li><br>
