@@ -1,5 +1,4 @@
 class SubscriptionsController < ApplicationController
-
   def index
     @user = User.find params[:user_id]
     @courses = @user.courses
@@ -10,14 +9,13 @@ class SubscriptionsController < ApplicationController
     @subscription.user = current_user
 
     if @subscription.save
-      redirect_to  @subscription
+      redirect_to @subscription
     else
       render 'new'
     end
   end
 
   def destroy
-
   end
 
   def coaches_index
@@ -27,23 +25,22 @@ class SubscriptionsController < ApplicationController
 
   def coaches_courses_index
     coaches_index
-    @courses = @coaches.flat_map {|coach| coach.taught_courses}
+    @courses = @coaches.flat_map(&:taught_courses)
   end
 
   private
 
-    def get_coaches(user)
-      coaches = Array.new
-      user.subscriptions.find_each do |subscription|
-        unless coaches.include?(subscription.course.coach)
-          coaches << subscription.course.coach
-        end
+  def get_coaches(user)
+    coaches = []
+    user.subscriptions.find_each do |subscription|
+      unless coaches.include?(subscription.course.coach)
+        coaches << subscription.course.coach
       end
-      return coaches
     end
+    coaches
+  end
 
-    def subscription_params
-      params.require(:subscription).permit(:course_id,:user_id)
-    end
-
+  def subscription_params
+    params.require(:subscription).permit(:course_id, :user_id)
+  end
 end

@@ -4,15 +4,15 @@ class CoursesController < ApplicationController
   before_action :permit_edit, only: [:edit, :update]
 
   def index
-    if params[:user_id]  # /users/:id/courses
+    if params[:user_id] # /users/:id/courses
       @user = User.find(params[:user_id])
       @courses = @user.taught_courses
-    elsif params[:q] == nil
+    elsif params[:q].nil?
       @courses = Course.all
     else
       @courses = Course.search(params[:q]).result
-      #Do we want to check for users too ? if so we'll have to move the search result to a different page
-      #@users = User.search(username_or_name_or_last_name_cont: params[:q]).result
+      # Do we want to check for users too ? if so we'll have to move the search result to a different page
+      # @users = User.search(username_or_name_or_last_name_cont: params[:q]).result
     end
   end
 
@@ -46,7 +46,6 @@ class CoursesController < ApplicationController
       @course.build_location if @course.location.nil?
       render 'new'
     end
-
   end
 
   def update
@@ -70,7 +69,7 @@ class CoursesController < ApplicationController
         flash[:notice] = "Successfully updated course"
         redirect_to @course
       else
-        if not @course.errors.any?
+        unless @course.errors.any?
           # Only give this error if we don't have anything more specific to say
           flash[:alert] = "Could not save changes"
         end
@@ -93,7 +92,6 @@ class CoursesController < ApplicationController
       redirect_to @course
     end
   end
-
 
   def apply
     @course = Course.find(params[:course_id])
@@ -142,12 +140,12 @@ class CoursesController < ApplicationController
   end
 
   private
+
   def course_params
     params.require(:course).permit(:title, :description, :price, :coach_id, :sport, :max_participants, :schedule,
                                    :starts_at, :ends_at, :duration,
                                    location_attributes: [:id, :address, :latitude, :longitude])
   end
-
 
   def permit_edit
     course = Course.find(params[:id])
@@ -164,4 +162,3 @@ class CoursesController < ApplicationController
     redirect_to course_path unless course && current_user == course.coach
   end
 end
-

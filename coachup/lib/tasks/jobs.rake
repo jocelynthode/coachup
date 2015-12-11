@@ -1,7 +1,6 @@
 require 'dotenv/tasks' if Rails.env == 'development'
 
 namespace :jobs do
-
   desc "Add CyberCoach entries for training sessions that happened yesterday"
   task :training_entries => :environment do
     yesterday = 1.day.ago
@@ -19,8 +18,8 @@ namespace :jobs do
       }
       course.subscriptions.each do |sub|
         coach_sub = CoachClient::UserSubscription.new(coach_client,
-                                                     sub.user.username,
-                                                     course.sport)
+                                                      sub.user.username,
+                                                      course.sport)
         coach_sub.user.password = sub.user.password
         coach_entry = CoachClient::Entry.new(coach_client, coach_sub, entry)
         begin
@@ -36,10 +35,9 @@ namespace :jobs do
   task :session_reminder => :environment do
     tomorrow = 1.day.from_now
     Course.where('ends_at > ?', 2.day.ago).each do |course|
-      if course.retrieve_schedule.occurs_on? tomorrow then
-        course.subscriptions.each do |sub|
-          CourseMailer.session_reminder(sub).deliver_now
-        end
+      next unless course.retrieve_schedule.occurs_on?(tomorrow)
+      course.subscriptions.each do |sub|
+        CourseMailer.session_reminder(sub).deliver_now
       end
     end
   end
