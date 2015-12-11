@@ -29,13 +29,10 @@
 
     <ul class="nav navbar-top-links navbar-right">
       <% if user_signed_in? %>
-        <%= current_user.username %>
+        <%= menu_item current_user.username, user_path %>
       <% else %>
-        <%= link_to 'Sign Up', register_path %>
-        <%= link_to login_path do %>
-          <span class="glyphicon glyphicon-log-in"></span>
-          Log In
-        <% end %>
+        <%= menu_item 'Sign Up', register_path %>
+        <%= menu_item fa_icon('sign-in fw', text: 'Log In'), login_path %>
       <% end %>
       <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
