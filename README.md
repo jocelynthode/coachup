@@ -41,7 +41,7 @@ Prior Notice for external services : In your facebook app, add `http://<your-dom
 
 3. Fill in the `.env.example` file right next to your `Gemfile` and rename it to `.env`
 
-4. Create the database (`rake db:create`)
+4. Create the database (`rake db:create && rake db:migrate`) 
 
 5. Run `bin/rails server`
 
