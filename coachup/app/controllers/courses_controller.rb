@@ -28,7 +28,7 @@ class CoursesController < ApplicationController
 
   def new
     @course = Course.new
-    @location = @course.build_location
+    @course.build_location
     @course[:starts_at] = 1.day.from_now
   end
 
@@ -43,6 +43,7 @@ class CoursesController < ApplicationController
     if @course.save
       redirect_to courses_path
     else
+      @course.build_location if @course.location.nil?
       render 'new'
     end
 
