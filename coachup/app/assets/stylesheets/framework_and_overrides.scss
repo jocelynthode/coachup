@@ -2,8 +2,24 @@
 
 $side-menu-width: 250px;
 
-// Bootstrap override
+// Bootstrap default
 $grid-gutter-width: 30px;
+$brand-primary: darken(#428bca, 6.5%);
+
+
+// Bootstrap overrides
 $container-tablet:             (720px + $grid-gutter-width - $side-menu-width);
 $container-desktop:            (940px + $grid-gutter-width - $side-menu-width);
 $container-large-desktop:      (1140px + $grid-gutter-width - $side-menu-width);
+
+$navbar-default-color: $brand-primary;
+$navbar-default-link-color: $brand-primary;
+$navbar-default-link-hover-color: darken($brand-primary, 15%);  // link-hover-color
+$navbar-default-link-active-color: $brand-primary;  // link-hover-color
+$navbar-default-link-active-bg: #eee;
+
+
+// CSS override for application layout
+#nav-profile-links {
+  padding-right: 20px;
+}
