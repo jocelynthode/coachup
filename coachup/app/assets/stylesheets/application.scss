@@ -37,6 +37,14 @@
   padding-right: 30px;
 }
 
+// CSS override for navbar
+#nav-profile-links {
+  @media(min-width: $screen-sm-min) {
+    padding-right: 20px;
+  }
+  // Fix weird space on the right of the page
+  margin-right: 0;
+}
 
 /* change arrow in metismenu */
 .sidebar-nav.toggled #courses_button span:before {content:"\f107";}
