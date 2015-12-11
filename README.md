@@ -32,6 +32,7 @@ CoachUP!
 4. Create the database
 
 5. Run `rails s`
+
 ## Course
 
 Project done for the Advanced Software Engineering Course at UniFR
