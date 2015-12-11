@@ -32,6 +32,9 @@ Rails.application.routes.draw do
   get '/auth/:provider/callback', to: 'sessions#token'
   get '/auth/failure', to: 'sessions#omniauth_failure'
 
+  # Note: partnerships (favorite coaches) should probably be a nested resource of users.
+  # We did it this way because at first we chose to not store the password of each user in the DB,
+  # which mean we could only get partnerships for the user currently logged in.
   get '/partnerships/', to: 'my_partnerships#index' , as: 'partnerships'
   post '/partnerships/:username', to: 'my_partnerships#create', as: 'partnership'
   delete '/partnerships/:username', to: 'my_partnerships#destroy'
