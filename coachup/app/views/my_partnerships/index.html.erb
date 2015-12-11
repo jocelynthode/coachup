@@ -1,14 +1,14 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <h3 class="page-header"> My Partnerships </h3>
+      <h3 class="page-header"> My Favorite Coaches </h3>
     </div>
   </div>
 
   <% if @partners.present? %>
     <%= render partial: 'users/user', collection: @partners %>
   <% else %>
-    <h4>You have no partnerships yet...</h4>
+    <h4>You have no favorite coaches yet...</h4>
   <% end %>
   </div>
 </div>
