@@ -22,7 +22,9 @@ class ApplicationController < ActionController::Base
 
   def current_user_partnerships
     if session[:username].present?
-      Partnership.new(session[:username], session[:password])
+      coach_user = CoachClient::User.new(coach_client, session[:username],
+                                         password: session[:password])
+      Partnership.new(coach_user)
     end
   end
   

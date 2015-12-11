@@ -3,12 +3,7 @@
     <div class="header-cover"></div>
     <div class="user-profile-inner">
       <h5 class="white">
-        <% name = full_name(user.username) %>
-        <% if name.nil? %>
-            Unknown Name
-        <% else %>
-          <%= name %>
-        <% end %>
+        <%= full_name(user.username) or 'Unknown Name' %>
       </h5>
       <% if user.avatar_url.present? %>
           <%= image_tag user.avatar_url(:display), class: 'img-circle profile-avatar' %>
