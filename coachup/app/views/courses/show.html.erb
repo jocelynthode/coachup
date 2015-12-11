@@ -19,87 +19,90 @@
   <%= link_to 'Back', :back, :class => "pull-right btn btn-default" %>
   <div class="row">
     <div class="col-md-10 center-block nofloat">
-        <% if @course.sport=='Running' %>
-            <%= image_tag("running.png", :class => "img-rounded center-block") %>
-        <% elsif @course.sport=='Boxing' %>
-            <%= image_tag("boxing.png", :class => "img-rounded center-block") %>
-        <% elsif @course.sport=='Cycling' %>
-            <%= image_tag("cycling.png", :class => "img-rounded center-block") %>
-        <% elsif @course.sport=='Soccer' %>
-            <%= image_tag("soccer.png", :class => "img-rounded center-block") %>
+      <% if @course.sport=='Running' %>
+          <%= image_tag("running.png", :class => "img-rounded center-block") %>
+      <% elsif @course.sport=='Boxing' %>
+          <%= image_tag("boxing.png", :class => "img-rounded center-block") %>
+      <% elsif @course.sport=='Cycling' %>
+          <%= image_tag("cycling.png", :class => "img-rounded center-block") %>
+      <% elsif @course.sport=='Soccer' %>
+          <%= image_tag("soccer.png", :class => "img-rounded center-block") %>
+      <% end %>
+      <dl class="centered-dl-horizontal">
+        <% @schedule = @course.retrieve_schedule.next_occurrences(10) %>
+
+        <% if @schedule.count == 0 %>
+            <h4 class="text-center"><%= tag_label 'Course is over', :danger %></h4>
         <% end %>
-           <dl class="centered-dl-horizontal">
-             <% @schedule = @course.retrieve_schedule.next_occurrences(10) %>
 
-             <% if @schedule.count == 0 %>
-                 <h4 class="text-center"><%= tag_label 'Course is over', :danger %></h4>
-             <% end %>
+        <dt>Title</dt>
+        <dd> <%= @course.title %></dd>
 
-              <dt>Title</dt>
-              <dd> <%= @course.title %></dd>
+        <dt>Description</dt>
+        <dd> <%= simple_format @course.description %></dd>
 
-              <dt>Description</dt>
-              <dd> <%= simple_format @course.description %></dd>
+        <% if @schedule.count == 1 %>
+            <dt>Session</dt>
+        <% elsif @schedule.count == 0 %>
+        <% else %>
+            <dt>Next <%= @schedule.count %> Sessions</dt>
+        <% end %>
 
-              <% if @schedule.count == 1 %>
-                 <dt>Session</dt>
-              <% elsif @schedule.count == 0 %>
-              <% else%>
-                 <dt>Next <%= @schedule.count %> Sessions</dt>
-              <% end %>
+        <dd>
+          <% @schedule.each do |occ| %>
+              <%= occ.to_time.strftime('%d.%m.%Y - %H:%M') %>
+              <br>
+          <% end %>
+          </ul>
+        </dd>
 
-              <dd>
-                 <% @schedule.each do |occ| %>
-                   <%= occ.to_time.strftime("%d.%m.%Y - %H:%M") %>
-                   <br>
-                 <% end %>
-               </ul>
-              </dd>
+        <dt>Duration</dt>
+        <dd><%= @course.duration.strftime('%Hh%M') %></dd>
 
-              <dt>Duration</dt>
-              <dd><%= @course.duration.strftime('%Hh%M') %></dd>
+        <dt>Price</dt>
+        <dd> <%= @course.price %>.- CHF</dd>
 
-              <dt>Price</dt>
-              <dd> <%= @course.price %>.- CHF</dd>
+        <dt>Coach</dt>
+        <dd> <%= link_to @course.coach.username, user_path(@course.coach) %></dd>
 
-              <dt>Coach</dt>
-              <dd> <%= link_to @course.coach.username, user_path(@course.coach) %></dd>
+        <dt>Sport</dt>
+        <dd>  <%= @course.sport %></dd>
 
-              <dt>Sport</dt>
-              <dd>  <%= @course.sport %></dd>
+        <dt>Address</dt>
+        <dd>
+          <%= @course.location.address if @course.location !=nil %>
+          <%= link_to image_tag('pin.png', :width => 15, :height => 15),
+                      '#mymodal', :data => {:toggle => 'modal'} %>
+        </dd>
 
-              <dt>Address</dt>
-              <dd>
-                <%= @course.location.address if @course.location !=nil %>
-                <%= link_to image_tag("pin.png", :width => 15, :height => 15), "#mymodal", :data => {:toggle => "modal"} %>
-              </dd>
-
-              <dt>Participants</dt>
-              <dd> <%= @course.subscriptions.count %> / <%= @course.max_participants %></dd>
-              <dt>Share</dt>
-              <dd><%= social_share_button_tag(@course.title, :popup => "true") %></dd>
-              <% if @course.coach == current_user || @course.subscriptions.exists?(user: current_user) %>
-                  <dt>Calendar</dt>
-                  <dd> <%= link_to 'Export', course_export_path(@course), method: :post %></dd>
-              <% end %>
-            </dl>
-          <div class="centered-buttons center-block">
-            <% unless @course.coach == current_user || @course.subscriptions.exists?(user: current_user) || @course.subscriptions.count == @course.max_participants %>
-                <%= link_to course_apply_path(@course), method: :post, :class => "btn btn-success", data: {confirm: 'Would you like to subscribe to the course?'} do %>
-                    <span class="glyphicon glyphicon-ok"></span>
-                    Apply
-                <% end %>
+        <dt>Participants</dt>
+        <dd> <%= @course.subscriptions.count %> / <%= @course.max_participants %></dd>
+        <dt>Share</dt>
+        <dd><%= social_share_button_tag(@course.title, :popup => 'true') %></dd>
+        <% if @course.coach == current_user || @course.subscriptions.exists?(user: current_user) %>
+            <dt>Calendar</dt>
+            <dd> <%= link_to 'Export', course_export_path(@course), method: :post %></dd>
+        <% end %>
+      </dl>
+      <div class="centered-buttons center-block">
+        <% unless @course.coach == current_user || @course.subscriptions.exists?(user: current_user) || @course.subscriptions.count == @course.max_participants %>
+            <%= link_to course_apply_path(@course), method: :post, :class => 'btn btn-success',
+                        data: {confirm: 'Would you like to subscribe to the course?'} do %>
+                <span class="glyphicon glyphicon-ok"></span>
+                Apply
             <% end %>
-            <% if @course.subscriptions.exists?(user: current_user) %>
-                <%= link_to course_leave_path(@course), method: :post, :class => "btn btn-danger", data: {confirm: 'Would you like to leave the course?'} do %>
-                    <span class="glyphicon glyphicon-remove"></span>
-                    Leave
-                <% end %>
+        <% end %>
+        <% if @course.subscriptions.exists?(user: current_user) %>
+            <%= link_to course_leave_path(@course), method: :post, :class => 'btn btn-danger',
+                        data: {confirm: 'Would you like to leave the course?'} do %>
+                <span class="glyphicon glyphicon-remove"></span>
+                Leave
             <% end %>
+        <% end %>
       </div>
     </div>
   </div>
-<!-- /.col-lg-6 -->
+  <!-- /.col-lg-6 -->
 </div>
 
 
