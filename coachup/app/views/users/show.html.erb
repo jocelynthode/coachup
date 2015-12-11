@@ -2,7 +2,13 @@
 <div class="container-fluid view-profile">
   <div class="row">
     <div class="col-lg-12">
-      <h2 class="page-header"> Profile</h2>
+      <h2 class="page-header">
+        <% if user_signed_in? && current_user == @user %>
+            My Profile
+        <% else %>
+            <%= @user.username %>'s Profile
+        <% end %>
+      </h2>
     </div>
 
   </div>
