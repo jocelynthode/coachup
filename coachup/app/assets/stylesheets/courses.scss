@@ -2,6 +2,29 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+.courses-show {
+  .nofloat {
+    float: none !important;
+  }
+
+  .centered-dl-horizontal {
+    @extend .dl-horizontal;
+    @extend .col-sm-offset-1;
+    @extend .col-md-offset-2;
+    @extend .col-lg-offset-3;
+  }
+
+  @media (min-width: $screen-sm-min) {
+    .centered-buttons {
+      text-align: center;
+    }
+  }
+}
+
+.modal #map {
+  height: 400px;
+}
+
 #map-container
 {
   border-radius: 16px 16px;

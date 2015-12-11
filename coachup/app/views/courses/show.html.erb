@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container courses-show">
   <div class="row">
     <div class="col-lg-12">
       <h3 class="page-header">
@@ -18,8 +18,7 @@
   </div>
   <%= link_to 'Back', :back, :class => "pull-right btn btn-default" %>
   <div class="row">
-    <div class="col-md-10 center-block">
-      <div style="word-break: break-all">
+    <div class="col-md-10 center-block nofloat">
         <% if @course.sport=='Running' %>
             <%= image_tag("running.png", :class => "img-rounded center-block") %>
         <% elsif @course.sport=='Boxing' %>
@@ -29,10 +28,7 @@
         <% elsif @course.sport=='Soccer' %>
             <%= image_tag("soccer.png", :class => "img-rounded center-block") %>
         <% end %>
-
-        <div class="row">
-         <div class="col-md-10 center-block">
-           <dl class="dl-horizontal">
+           <dl class="centered-dl-horizontal">
              <% @schedule = @course.retrieve_schedule.next_occurrences(10) %>
 
              <% if @schedule.count == 0 %>
@@ -87,10 +83,7 @@
                   <dd> <%= link_to 'Export', course_export_path(@course), method: :post %></dd>
               <% end %>
             </dl>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-offset-4">
+          <div class="centered-buttons center-block">
             <% unless @course.coach == current_user || @course.subscriptions.exists?(user: current_user) || @course.subscriptions.count == @course.max_participants %>
                 <%= link_to course_apply_path(@course), method: :post, :class => "btn btn-success", data: {confirm: 'Would you like to subscribe to the course?'} do %>
                     <span class="glyphicon glyphicon-ok"></span>
@@ -103,8 +96,6 @@
                     Leave
                 <% end %>
             <% end %>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -122,8 +113,8 @@
         <h4 class="modal-title" id="exampleModalLabel"><b>Location</b></h4>
       </div>
       <div class="modal-body">
-        <div id="map-container" style='width: 100%;'>
-          <div id="map" style='width: 555px; height: 400px;'></div>
+        <div id="map-container">
+          <div id="map"></div>
         </div>
         <div class="modal-footer">
           <button type="submit" name="submit" class="btn btn-default" data-dismiss="modal">Close</button>
