@@ -6,7 +6,7 @@ class Partnership
   end
 
   def find
-    @coach_user.update
+    @coach_user.update(all: true)
     # slow, but required for user_confirmed
     @coach_user.partnerships.each(&:update).select(&:user1_confirmed)
   end
