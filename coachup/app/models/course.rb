@@ -7,6 +7,8 @@ class Course < ActiveRecord::Base
   accepts_nested_attributes_for :location, reject_if: :no_location
   serialize :schedule, Hash
 
+  scope :desc, -> { order('courses.created_at DESC') }
+
   validates_datetime :starts_at, on_or_after: -> { DateTime.current }
   validates_datetime :ends_at, after: :starts_at
 

@@ -13,7 +13,7 @@
 
   <div class="row">
   <% if @courses.present? %>
-      <%= render partial: 'courses/course', collection: @courses %>
+      <%= render partial: 'courses/course', collection: @courses.desc %>
   <% else %>
       <div class="container">
           <h4><%= empty_text %></h4>
