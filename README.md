@@ -9,7 +9,8 @@ CoachUP!
 
 2. Set the environment variables on Heroku for:
 
-  ```SMTP_USERNAME=
+  ```
+  SMTP_USERNAME=
   SMTP_PASSWORD=
   GOOGLE_CLIENT=
   GOOGLE_SECRET=
