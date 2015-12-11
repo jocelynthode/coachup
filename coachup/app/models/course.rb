@@ -16,6 +16,7 @@ class Course < ActiveRecord::Base
   validates :description, presence: true
   validates :coach_id, presence: true
   validates :location, presence: true
+  validates :price, presence: true
 
   Calendar = Google::Apis::CalendarV3
 
