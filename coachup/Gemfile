@@ -57,7 +57,7 @@ gem 'js_cookie_rails', '~> 1.0'
 gem 'google-api-client', '0.9.pre3', require: 'google/apis/calendar_v3'
 # Google omniauth authentication
 gem 'omniauth-google-oauth2',
-  git: 'https://github.com/zquestz/omniauth-google-oauth2', branch: 'master'
+    git: 'https://github.com/zquestz/omniauth-google-oauth2', branch: 'master'
 # Facebook omniauth for profile-linking
 gem 'omniauth-facebook', '~> 3.0'
 
@@ -84,4 +84,3 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 end
-

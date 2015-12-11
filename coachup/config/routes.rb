@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   get 'login' => 'sessions#new', as: 'login'
   post 'login' => 'sessions#create'
   get 'logout' => 'sessions#destroy', as: 'logout'
@@ -32,7 +31,7 @@ Rails.application.routes.draw do
   get '/auth/:provider/callback', to: 'sessions#token'
   get '/auth/failure', to: 'sessions#omniauth_failure'
 
-  get '/partnerships/', to: 'my_partnerships#index' , as: 'partnerships'
+  get '/partnerships/', to: 'my_partnerships#index', as: 'partnerships'
   post '/partnerships/:username', to: 'my_partnerships#create', as: 'partnership'
   delete '/partnerships/:username', to: 'my_partnerships#destroy'
   get '/partnerships/courses', to: 'my_partnerships#courses_index', as: 'partnerships_courses'
@@ -52,8 +51,6 @@ Rails.application.routes.draw do
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
-
-
 
   # Example resource route with options:
   #   resources :products do

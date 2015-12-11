@@ -1,5 +1,4 @@
 class Partnership
-
   # We assume here that we will only access partnerships owned by the user authenticated, since it
   # makes everything easier and we don't need anything else with our interpretation of partnerships.
   def initialize(coach_user)
@@ -9,7 +8,7 @@ class Partnership
   def find
     @coach_user.update
     # slow, but required for user_confirmed
-    @coach_user.partnerships.each(&:update).select{ |p| p.user1_confirmed }
+    @coach_user.partnerships.each(&:update).select(&:user1_confirmed)
   end
 
   def create(username)
@@ -23,4 +22,3 @@ class Partnership
     partnership.cancel
   end
 end
-

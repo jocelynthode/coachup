@@ -43,7 +43,7 @@ class SessionsController < ApplicationController
   end
 
   def omniauth_failure
-    service_name = (params[:strategy] or '').capitalize
+    service_name = (params[:strategy] || '').capitalize
     flash[:alert] = "Error when connecting with #{service_name}: #{params[:message]}"
     redirect_to params[:origin] || root_path
   end

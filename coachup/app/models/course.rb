@@ -7,7 +7,7 @@ class Course < ActiveRecord::Base
   accepts_nested_attributes_for :location, reject_if: :no_location
   serialize :schedule, Hash
 
-  validates_datetime :starts_at, on_or_after: lambda {DateTime.current}
+  validates_datetime :starts_at, on_or_after: -> { DateTime.current }
   validates_datetime :ends_at, after: :starts_at
 
   validates :starts_at, presence: true
@@ -23,30 +23,30 @@ class Course < ActiveRecord::Base
   def apply(current_user)
     # Use a transaction because the database allow multiple subscriptions
     # for the same user/course !
-    #TODO: fix this in the DB schema instead ?
+    # TODO: fix this in the DB schema instead ?
     Subscription.transaction do
-      if self.coach.id == current_user.id
+      if coach.id == current_user.id
         return ["You are the owner of this course!", :alert]
       end
 
-      if self.max_participants <= self.subscriptions.size
+      if max_participants <= subscriptions.size
         return ["Sorry! Maximum number of participants is already reached!", :alert]
       end
 
-      if self.subscriptions.exists?(user: current_user)
-         return ["You are already subscribed!", :alert]
+      if subscriptions.exists?(user: current_user)
+        return ["You are already subscribed!", :alert]
       end
 
-      self.subscriptions.create(user: current_user)
+      subscriptions.create(user: current_user)
       ["You are now subscribed to the course!", :notice]
     end
   end
 
   def leave(current_user)
     current_subscription = Subscription.find_by(course: self, user: current_user)
-    if self.coach == current_user
+    if coach == current_user
       ["You are the coach - you can't leave ;)", :alert]
-    elsif self.subscriptions.none? { |sub| sub.user == current_user}
+    elsif subscriptions.none? { |sub| sub.user == current_user }
       ["You are not subscribed to the course!", :alert]
     elsif current_subscription.present?
       current_subscription.destroy
@@ -60,7 +60,6 @@ class Course < ActiveRecord::Base
     else
       write_attribute(:schedule, nil)
     end
-
   end
 
   def starts_at=(new_starts_at)
@@ -77,23 +76,23 @@ class Course < ActiveRecord::Base
   end
 
   def ends_at=(new_ends_at)
-      if new_ends_at != ""
-        value = DateTime.strptime(new_ends_at, '%d-%m-%Y %H:%M:%S')
-      else
-        value = nil
-      end
-      write_attribute(:ends_at, value)
+    if new_ends_at != ""
+      value = DateTime.strptime(new_ends_at, '%d-%m-%Y %H:%M:%S')
+    else
+      value = nil
+    end
+    write_attribute(:ends_at, value)
   end
 
   def retrieve_schedule
-      schedule = IceCube::Schedule.new(self.starts_at, end_time: self.ends_at)
-      if !self.schedule.empty?
-        the_rule = RecurringSelect.dirty_hash_to_rule(self.schedule)
-        if RecurringSelect.is_valid_rule?(the_rule)
-          schedule.add_recurrence_rule(the_rule.until(self.ends_at))
-        end
+    schedule = IceCube::Schedule.new(starts_at, end_time: ends_at)
+    unless self.schedule.empty?
+      the_rule = RecurringSelect.dirty_hash_to_rule(self.schedule)
+      if RecurringSelect.is_valid_rule?(the_rule)
+        schedule.add_recurrence_rule(the_rule.until(ends_at))
       end
-      schedule
+    end
+    schedule
   end
 
   def export_schedule(token)
@@ -101,15 +100,15 @@ class Course < ActiveRecord::Base
     schedule = retrieve_schedule
     schedule.occurrences(ends_at).each do |sess|
       dur = duration.seconds_since_midnight
-      startTime = Calendar::EventDateTime.new(date_time: sess.start_time.to_datetime)
-      endTime = Calendar::EventDateTime.new(date_time: sess.start_time.to_datetime + dur.seconds)
-      location_string = "#{location.latitude.to_s},#{location.longitude.to_s}"
+      start_time = Calendar::EventDateTime.new(date_time: sess.start_time.to_datetime)
+      end_time = Calendar::EventDateTime.new(date_time: sess.start_time.to_datetime + dur.seconds)
+      location_string = "#{location.latitude},#{location.longitude}"
       id = title + description + location_string + sess.start_time.strftime("%Y-%m-%dT%l:%M:%S%z") + sess.end_time.strftime("%Y-%m-%dT%l:%M:%S%z") + dur.to_s
       base32_id = id.each_byte.map { |b| b.to_s(32) }.join
       event = Calendar::Event.new(id: base32_id, summary: title,
                                   description: description,
                                   location: location_string,
-                                  start: startTime, end: endTime)
+                                  start: start_time, end: end_time)
       begin
         calendar.insert_event('primary', event, send_notifications: true,
                               options: { authorization: token })

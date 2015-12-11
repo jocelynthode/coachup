@@ -13,21 +13,16 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    if user_signed_in?
-      User.find_by username: session[:username]
-    else
-      nil
-    end
+    User.find_by username: session[:username] if user_signed_in?
   end
 
   def current_user_partnerships
-    if session[:username].present?
-      coach_user = CoachClient::User.new(coach_client, session[:username],
-                                         password: session[:password])
-      Partnership.new(coach_user)
-    end
+    return unless session[:username].present?
+    coach_user = CoachClient::User.new(coach_client, session[:username],
+                                       password: session[:password])
+    Partnership.new(coach_user)
   end
-  
+
   def user_signed_in?
     session[:username].present?
   end

@@ -3,4 +3,3 @@ module CoursesHelper
     CoachClient::Sport.list(coach_client)
   end
 end
-
