@@ -19,9 +19,12 @@ CoachUP!
   FACEBOOK_KEY=
   FACEBOOK_SECRET=
   ```
-3. Use `git subtree push --prefix coachup heroku master` from the root folder to push the app folder to Heroku
+  
+3. Install the Schedule add-on on Heroku and schedule two daily tasks for session_reminder and training_entries
 
-4. If needed run `heroku run rake db:migrate`
+4. Use `git subtree push --prefix coachup heroku master` from the root folder to push the app folder to Heroku
+
+5. If needed run `heroku run rake db:migrate`
 
 #### Install on your server:
 :warning: You'll have to create your own cron jobs to schedule the email sending and the entry writing in the database (Take a look at the file jobs.rake) :warning:
