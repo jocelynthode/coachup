@@ -76,7 +76,7 @@
   text-align: center;
   text-transform: uppercase;
 }
-.event-list > a > li:nth-child(even) > time {
+.event-list > a:nth-child(even) > li > time {
   background-color: rgb(255,255,224)
 }
 .event-list > a > li > time > span {
@@ -125,7 +125,7 @@
 .event-list > a > li > .social > ul > li {
   display: table-cell;
   cursor: pointer;
-  color: rgb(30, 30, 30);
+  color: $brand-primary;
   font-size: 11pt;
   font-weight: 300;
   padding: 3px 0px;
@@ -138,11 +138,12 @@
 }
 .event-list > a > li > .info > ul > li:hover,
 .event-list > a > li > .social > ul > li:hover {
-  color: rgb(30, 30, 30);
   background-color: rgb(200, 200, 200);
 }
 
-@media (min-width: 768px) {
+
+//@media (min-width: $screen-sm-min) {
+// Use the "desktop" styles for every size
 
   .event-list > a > li {
     position: relative;
@@ -205,5 +206,4 @@
     padding: 0px 0px 0px;
   }
 
-}
-
+//}
