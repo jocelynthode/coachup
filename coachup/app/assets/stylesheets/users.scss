@@ -4,8 +4,13 @@
 
 .view-profile {
   .button-follow {
-    width: 100px;
+    padding-left: 10px;
+    padding-right: 15px;
     margin: 15px 5px 0px 0px;
+
+    i {
+      color: $brand-warning;
+    }
   }
 
   .button-appreciation {
