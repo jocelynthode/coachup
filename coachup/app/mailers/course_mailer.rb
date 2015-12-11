@@ -24,6 +24,7 @@ class CourseMailer < ApplicationMailer
 
   def details_update(course)
     @course = course
+    return if course.subscriptions.empty?
     recipients = course.subscriptions.map do |sub|
       sub.user.email
     end
