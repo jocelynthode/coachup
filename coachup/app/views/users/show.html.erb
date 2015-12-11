@@ -1,27 +1,29 @@
-<%= stylesheet_link_tag 'style.min' %>
-<div class="container view-profile">
+<%= stylesheet_link_tag 'profile-theme.min' %>
+<div class="container-fluid view-profile">
   <div class="row">
     <div class="col-lg-12">
       <h2 class="page-header"> Profile</h2>
     </div>
 
   </div>
+
     <!-- start: Content -->
-    <div id="content" class="col-lg-10 col-sm-12 ">
+    <div id="content">
 
       <div class="row profile">
 
-        <div class="col-sm-3">
+        <div class="col-md-3">
 
           <div class="row">
-            <div class="col-xs-7 col-sm-12">
+            <div class="col-sm-7 col-md-12 avatar">
               <% if @user.avatar_url.present? %>
-                <%= image_tag @user.avatar_url(:display, :class=>"profile-image") %>
+                <%= image_tag @user.avatar_url(:display), class: 'profile-image' %>
               <% else %>
-                <%= cl_image_tag('default', :width => 200, :height => 200) %>
+                <%= image_tag cloudinary_url('default', height: 200, width: 200, crop: :fill),
+                              class: 'profile-image' %>
               <% end %>
             </div>
-            <div class="col-xs-5 col-sm-12">
+            <div class="col-sm-5 col-md-12">
 
               <% if user_signed_in? && current_user != @user %>
                 <% if @is_following %>
@@ -111,7 +113,7 @@
 
         </div><!--/col-->
 
-        <div class="col-sm-9">
+        <div class="col-md-9">
 
           <ul class="nav nav-tabs" id="myTab">
             <% if current_user == @user  %>
@@ -145,11 +147,7 @@
 
       </div><!--/profile-->
 
-
-
     </div>
     <!-- end: Content -->
-
-  </div><!--/row-->
 
 </div><!--/container-->

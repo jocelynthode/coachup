@@ -13,6 +13,8 @@
  *= require recurring_select
  */
 
+@import "framework_and_overrides";
+
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "font-awesome";
@@ -21,7 +23,8 @@
 @import 'sb-admin-2';
 @import "overview";
 @import "users";
-@import "framework_and_overrides";
+@import "courses";
+
 @import "social-share-button";
 @import "bootstrap3-switch";
 @import 'bootstrap-datetimepicker';
@@ -29,10 +32,12 @@
 
 /* Cancel margins due to #page-wrapper */
 .cancel-wrapper-margin {
-  margin: 0px -30px;
+  margin: 0px -10px;
   padding-left: 30px;
   padding-right: 30px;
 }
+
+
 /* change arrow in metismenu */
 .sidebar-nav.toggled #courses_button span:before {content:"\f107";}
 
