@@ -4,7 +4,7 @@ CoachUP!
 
 ## Installation guide
 
-Prior Notice for external services : In your facebook app, add http://<your-domain>/auth/facebook/callback as a valid OAuth redirect URI for example
+Prior Notice for external services : In your facebook app, add `http://<your-domain>/auth/facebook/callback` as a valid OAuth redirect URI for example
 
 #### Install on Heroku:
 1. Pull the repo and create an app on your Heroku account
