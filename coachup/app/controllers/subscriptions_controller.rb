@@ -25,7 +25,7 @@ class SubscriptionsController < ApplicationController
 
   def coaches_courses_index
     coaches_index
-    @courses = @coaches.flat_map(&:taught_courses)
+    @courses = Course.where(coach: @coaches)
   end
 
   private

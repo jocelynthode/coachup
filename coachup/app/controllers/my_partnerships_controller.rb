@@ -17,20 +17,15 @@ class MyPartnershipsController < ApplicationController
   end
 
   def courses_index
-    @courses = []
     begin
       partnerships = current_user_partnerships.find
     rescue CoachClient::Exception
       return
     end
 
-    partnerships.each do |partnership|
-      user = User.find_by(username: partnership.user2.username)
-      user_id = user.id if user
-      Course.find_each do |course|
-        @courses << course if course.coach_id == user_id
-      end
-    end
+    usernames = partnerships.map { |ps| ps.user2.username }
+    users = User.where(username: usernames)
+    @courses = Course.where(coach: users)
   end
 
   private
